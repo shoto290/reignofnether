@@ -4,7 +4,6 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.building.buildings.neutral.EndPortal;
 import com.solegendary.reignofnether.building.buildings.neutral.HealingFountain;
-import com.solegendary.reignofnether.building.buildings.villagers.*;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.gamemode.ClientGameModeHelper;
 import com.solegendary.reignofnether.gamemode.GameMode;
@@ -95,9 +94,9 @@ public class SandboxClientEvents {
                 CreeperProd.getPlaceButton(),
                 SlimeProd.getPlaceButton(),
                 WardenProd.getPlaceButton(),
+                NecromancerProd.getPlaceButton(),
                 ZombiePiglinProd.getPlaceButton(),
-                ZoglinProd.getPlaceButton(),
-                NecromancerProd.getPlaceButton()
+                ZoglinProd.getPlaceButton()
             );
             case PIGLINS -> List.of(
                 GruntProd.getPlaceButton(),

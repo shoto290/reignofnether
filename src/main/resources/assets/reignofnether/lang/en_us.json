@@ -593,6 +593,15 @@
     "research.reignofnether.grand_library": "Grand Library",
     "research.reignofnether.grand_library.tooltip1": "Upgrades this library, unlocking more powerful enchantments.",
 
+    "research.reignofnether.beacon_level1": "Iron Beacon",
+    "research.reignofnether.beacon_level1.tooltip1": "Adds a layer of iron, providing a movement speed aura.",
+    "research.reignofnether.beacon_level2": "Gold Beacon",
+    "research.reignofnether.beacon_level2.tooltip1": "Adds a layer of gold, providing a resistance aura.",
+    "research.reignofnether.beacon_level3": "Emerald Beacon",
+    "research.reignofnether.beacon_level3.tooltip1": "Adds a layer of emerald, providing a strength aura.",
+    "research.reignofnether.beacon_level4": "Diamond Beacon",
+    "research.reignofnether.beacon_level4.tooltip1": "Adds a layer of diamond, providing a regeneration aura.",
+
     "resources.reignofnether.food": "Food",
     "resources.reignofnether.wood": "Wood",
     "resources.reignofnether.ore": "Ore",

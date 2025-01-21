@@ -14,7 +14,9 @@ Features
     [✔] Should lock other players into sandbox too
     [✔] Allow placement of neutral buildings on bottom left if nothing is selected
     [❌] Add End portal to build endermen
-    [❌] Add Beacon
+    [🟡] Add Beacon
+        - Auras
+        - Save upgrade level (refactor save data to have upgrade levels)
     [❌] Add Healing fountain
     [❌] save status to level
     [✔] add spawn-unit options
@@ -60,75 +62,3 @@ Piglins
 Monsters
 --------
 [❌] Give witches, portals, towers and sculk catalysts 50% magic resistance
-
-Localisation
-------------
-    "item.reignofnether.royal_guard_unit_spawn_egg": "Spawn Royal Guard Unit",
-    "item.reignofnether.necromancer_unit_spawn_egg": "Spawn Necromancer Unit",
-    "item.reignofnether.piglin_merchant_unit_spawn_egg": "Spawn Piglin Merchant Unit",
-
-    "units.monsters.reignofnether.necromancer": "Necromancer",
-    "units.monsters.reignofnether.necromancer.tooltip1": "A dark mage adept in summoning other monsters and ",
-    "units.monsters.reignofnether.necromancer.tooltip2": "manipulating the night using the souls of the dead. ",
-    "units.monsters.reignofnether.necromancer.tooltip3": "The Necromancer will burn under sunlight.",
-
-    "units.piglins.reignofnether.piglin_merchant": "Piglin Merchant",
-    "units.piglins.reignofnether.piglin_merchant.tooltip1": "A jolly piglin trader with endless supplies of food, ",
-    "units.piglins.reignofnether.piglin_merchant.tooltip2": "loot and explosives, as long as you have the money.",
-
-    "units.villagers.reignofnether.royal_guard": "Royal Guard",
-    "units.villagers.reignofnether.royal_guard.tooltip1": "A heavily armoured illager ready for war, smashing ",
-    "units.villagers.reignofnether.royal_guard.tooltip2": "through front lines and empowering themselves in battle.",
-
-    "server.reignofnether.started_sandbox": "%s has started their game (SANDBOX)",
-
-    "units.monsters.reignofnether.slime.tooltip4": "Slimes are slowed under sunlight",
-
-    "hud.gamemode.reignofnether.sandbox1": "SANDBOX",
-    "hud.gamemode.reignofnether.sandbox2": "Customise your map by freely placing units and, ",
-    "hud.gamemode.reignofnether.sandbox3": "buildings, including special neutral buildings.",
-    "hud.gamemode.reignofnether.sandbox4": "Enables cheats.",
-    "hud.gamemode.reignofnether.sandbox_confirm": "Confirm sandbox mode",
-
-    "sandbox.reignofnether.faction_button1": "Building Faction: %s",
-    "sandbox.reignofnether.faction_button2": "(Click to change)",
-    "sandbox.reignofnether.menu_type_button_buildings": "Menu: Buildings",
-    "sandbox.reignofnether.menu_type_button_units": "Menu: Units",
-    "sandbox.reignofnether.menu_type_button_other": "Menu: Other",
-    "sandbox.reignofnether.menu_type_button1": "(Click to change)",
-    "sandbox.reignofnether.building_cheats_on": "Building Cheats: ON",
-    "sandbox.reignofnether.building_cheats_off": "Building Cheats: OFF",
-    "sandbox.reignofnether.building_cheats1": "Fast auto-build, ignore prerequisites",
-    "sandbox.reignofnether.building_cheats2": "(Click to toggle)",
-    "sandbox.reignofnether.unit_cheats_on": "Unit Cheats: ON",
-    "sandbox.reignofnether.unit_cheats_off": "Unit Cheats: OFF",
-    "sandbox.reignofnether.unit_cheats1": "All upgrades, ignore population cap, ",
-    "sandbox.reignofnether.unit_cheats2": "fast resource gathering, sunlight immunity",
-    "sandbox.reignofnether.unit_cheats3": "(Click to toggle)"
-
-    "time.reignofnether.night_circle_change": "(Click to change)",
-
-    "hud.faction.reignofnether.neutral": "Neutral",
-    "hud.units.reignofnether.hero": "Hero",
-    "units.monsters.reignofnether.warden.tooltip2": "Wardens are slowed under sunlight",
-
-    "units.neutral.reignofnether.enderman.tooltip1": "An enigmatic creature from the end. Can teleport ",
-    "units.neutral.reignofnether.enderman.tooltip2": "at will and automatically dodges all projectiles.",
-
-    "sandbox.reignofnether.relationship_button1": "Relationship: %s",
-    "sandbox.reignofnether.relationship_button2": "(Click to change)",
-
-    "hud.relationship.reignofnether.owned": "Owned",
-    "hud.relationship.reignofnether.allied": "Allied",
-    "hud.relationship.reignofnether.enemy": "Enemy",
-    "hud.relationship.reignofnether.neutral": "Neutral",
-
-    "buildings.neutral.reignofnether.beacon": "Beacon",
-    "buildings.neutral.reignofnether.beacon.tooltip1": "A grand stone pyramid that can be upgraded to produce auras.",
-    "buildings.neutral.reignofnether.beacon.tooltip2": "Controlling a beacon for long enough wins you the game.",
-    "buildings.neutral.reignofnether.end_portal": "End Portal",
-    "buildings.neutral.reignofnether.end_portal.tooltip1": "A mysterious portal that can produce ",
-    "buildings.neutral.reignofnether.end_portal.tooltip2": "creatures from the end dimension.",
-    "buildings.neutral.reignofnether.healing_fountain": "Healing Fountain",
-    "buildings.neutral.reignofnether.healing_fountain.tooltip1": "A magical spring of water that ",
-    "buildings.neutral.reignofnether.healing_fountain.tooltip2": "regenerates all nearby units.",

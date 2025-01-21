@@ -3,6 +3,7 @@ package com.solegendary.reignofnether.building;
 // class for static building functions
 
 import com.solegendary.reignofnether.building.buildings.monsters.*;
+import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.building.buildings.piglins.*;
 import com.solegendary.reignofnether.building.buildings.piglins.BlackstoneBridge;
 import com.solegendary.reignofnether.building.buildings.villagers.OakStockpile;
@@ -83,7 +84,6 @@ public class BuildingUtils {
             case OakBridge.buildingName -> building = new OakBridge(level, pos, rotation, ownerName, isDiagonalBridge);
             case SpruceBridge.buildingName -> building = new SpruceBridge(level, pos, rotation, ownerName, isDiagonalBridge);
             case BlackstoneBridge.buildingName -> building = new BlackstoneBridge(level, pos, rotation, ownerName, isDiagonalBridge);
-
             case OakStockpile.buildingName -> building = new OakStockpile(level, pos, rotation, ownerName);
             case SpruceStockpile.buildingName -> building = new SpruceStockpile(level, pos, rotation, ownerName);
             case VillagerHouse.buildingName -> building = new VillagerHouse(level, pos, rotation, ownerName);
@@ -119,6 +119,8 @@ public class BuildingUtils {
             case WitherShrine.buildingName -> building = new WitherShrine(level, pos, rotation, ownerName);
             case BasaltSprings.buildingName -> building = new BasaltSprings(level, pos, rotation, ownerName);
             case Fortress.buildingName -> building = new Fortress(level, pos, rotation, ownerName);
+
+            case Beacon.buildingName -> building = new Beacon(level, pos, rotation, ownerName);
         }
         if (building != null)
             building.setLevel(level);

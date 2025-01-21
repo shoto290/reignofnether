@@ -31,8 +31,14 @@ import static com.solegendary.reignofnether.building.BuildingUtils.getAbsoluteBl
 public class Beacon extends ProductionBuilding {
 
     public final static String buildingName = "Beacon";
-    public final static String structureName = "beacon";
+    public final static String structureName = "beacon_t0";
+    public final static String structureNameT1 = "beacon_t1";
+    public final static String structureNameT2 = "beacon_t2";
+    public final static String structureNameT3 = "beacon_t3";
+    public final static String structureNameT4 = "beacon_t4";
     public final static ResourceCost cost = ResourceCost.Building(0,0,0,0);
+
+    public final static int MAX_UPGRADE_LEVEL = 4;
 
     public Beacon(Level level, BlockPos originPos, Rotation rotation, String ownerName) {
         super(level, originPos, rotation, ownerName, getAbsoluteBlockData(getRelativeBlockData(level), level, originPos, rotation), false);
@@ -59,6 +65,12 @@ public class Beacon extends ProductionBuilding {
          */
     }
 
+    public void changeStructure(String newStructureName) {
+        ArrayList<BuildingBlock> newBlocks = BuildingBlockData.getBuildingBlocks(newStructureName, this.getLevel());
+        this.blocks = getAbsoluteBlockData(newBlocks, this.getLevel(), originPos, rotation);
+        super.refreshBlocks();
+    }
+
     public Faction getFaction() {return Faction.NONE;}
 
     public static ArrayList<BuildingBlock> getRelativeBlockData(LevelAccessor level) {
@@ -83,5 +95,23 @@ public class Beacon extends ProductionBuilding {
                 ),
                 null
         );
+    }
+
+    public int getUpgradeLevel() {
+        for (BuildingBlock block : blocks) {
+            if (block.getBlockState().getBlock() == Blocks.DIAMOND_BLOCK)
+                return 4;
+            if (block.getBlockState().getBlock() == Blocks.EMERALD_BLOCK)
+                return 3;
+            if (block.getBlockState().getBlock() == Blocks.GOLD_BLOCK)
+                return 2;
+            if (block.getBlockState().getBlock() == Blocks.IRON_BLOCK)
+                return 1;
+        }
+        return 0;
+    }
+
+    public boolean isUpgraded() {
+        return getUpgradeLevel() > 0;
     }
 }
