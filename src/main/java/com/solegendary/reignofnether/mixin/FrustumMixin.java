@@ -5,6 +5,7 @@ import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.extensions.IForgeBlockEntity;
@@ -45,8 +46,10 @@ public class FrustumMixin {
         Beacon beacon = BuildingUtils.getBeacon(true);
         float zoom = Math.max(30, OrthoviewClientEvents.getZoom()) * 2;
 
-        if (OrthoviewClientEvents.isEnabled() && couldBeBeacon && beacon != null && player != null &&
-            beacon.centrePos.distSqr(player.getOnPos()) < (zoom * zoom))
-            cir.setReturnValue(true);
+        if (player != null && OrthoviewClientEvents.isEnabled() && couldBeBeacon && beacon != null) {
+            BlockPos equalYBp = new BlockPos(player.getOnPos().getX(), beacon.centrePos.getY(), player.getOnPos().getZ());
+            if (beacon.centrePos.distSqr(equalYBp) < (zoom * zoom))
+                cir.setReturnValue(true);
+        }
     }
 }

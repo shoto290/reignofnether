@@ -317,6 +317,7 @@
     "buildings.villagers.reignofnether.iron_golem": "Iron Golem",
     "buildings.villagers.reignofnether.iron_golem.tooltip1": "An Iron Golem that can be built in the field.",
     "buildings.villagers.reignofnether.iron_golem.tooltip2": "Requires research and an active Blacksmith",
+    "buildings.villagers.reignofnether.library.upgraded": "Grand Library",
     "buildings.villagers.reignofnether.library": "Library",
     "buildings.villagers.reignofnether.library.tooltip1": "An enchanting table surrounded by pillars of books.",
     "buildings.villagers.reignofnether.library.tooltip2": "Used to research magic upgrades and enchant weapons.",

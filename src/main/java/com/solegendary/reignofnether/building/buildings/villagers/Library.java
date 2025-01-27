@@ -149,7 +149,7 @@ public class Library extends ProductionBuilding implements RangeIndicator {
 
     @Override
     public String getUpgradedName() {
-        return "Grand Library";
+        return I18n.get("buildings.villagers.reignofnether.library.upgraded");
     }
 
     public Faction getFaction() {
