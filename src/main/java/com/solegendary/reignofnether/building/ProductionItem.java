@@ -47,6 +47,8 @@ public abstract class ProductionItem {
     public EntityType<? extends Unit> getEntityType() {return null;}
 
     public boolean canAfford(String ownerName) {
+        if (ResearchServerEvents.playerHasCheat(ownerName, "showmethemoney"))
+            return true;
         for (Resources resources : ResourcesServerEvents.resourcesList)
             if (resources.ownerName.equals(ownerName))
                 return (resources.food >= foodCost &&

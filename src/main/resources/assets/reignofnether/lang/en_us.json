@@ -926,6 +926,11 @@
     "units.neutral.reignofnether.enderman.tooltip1": "An enigmatic creature from the end. Can teleport ",
     "units.neutral.reignofnether.enderman.tooltip2": "at will and automatically dodges all projectiles.",
 
+    "units.neutral.reignofnether.wolf": "Wolf",
+    "units.neutral.reignofnether.polar_bear": "Polar Bear",
+    "units.neutral.reignofnether.grizzly_bear": "Grizzly Bear",
+    "units.neutral.reignofnether.llama": "Llama",
+
     "alliance.reignofnether.sent_request": "\nAlliance request sent to %s.\n",
     "alliance.reignofnether.ally_self": "\nYou can't ally with yourself!\n",
     "alliance.reignofnether.ally_confirm": "\n%s wants to ally with you. Type /allyconfirm %s to confirm.\n",
@@ -988,7 +993,7 @@
     "sandbox.reignofnether.menu_type_button1": "(Click to change)",
     "sandbox.reignofnether.building_cheats_on": "Building Cheats: ON",
     "sandbox.reignofnether.building_cheats_off": "Building Cheats: OFF",
-    "sandbox.reignofnether.building_cheats1": "Fast auto-build, ignore prerequisites",
+    "sandbox.reignofnether.building_cheats1": "Fast auto-build, ignore prerequisites and costs",
     "sandbox.reignofnether.building_cheats2": "(Click to toggle)",
     "sandbox.reignofnether.unit_cheats_on": "Unit Cheats: ON",
     "sandbox.reignofnether.unit_cheats_off": "Unit Cheats: OFF",

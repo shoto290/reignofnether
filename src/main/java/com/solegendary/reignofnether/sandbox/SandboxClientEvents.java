@@ -244,6 +244,7 @@ public class SandboxClientEvents {
         if (MC.player == null)
             return null;
         boolean hasCheats = ResearchClient.hasCheat("warpten") &&
+                            ResearchClient.hasCheat("showmethemoney") &&
                             ResearchClient.hasCheat("modifythephasevariance");
         String playerName = Minecraft.getInstance().player.getName().getString();
         return new Button(
@@ -259,9 +260,11 @@ public class SandboxClientEvents {
                 () -> {
                     if (hasCheats) {
                         ResearchServerboundPacket.removeCheat(playerName, "warpten");
+                        ResearchServerboundPacket.removeCheat(playerName, "showmethemoney");
                         ResearchServerboundPacket.removeCheat(playerName, "modifythephasevariance");
                     } else {
                         ResearchServerboundPacket.addCheat(playerName, "warpten");
+                        ResearchServerboundPacket.addCheat(playerName, "showmethemoney");
                         ResearchServerboundPacket.addCheat(playerName, "modifythephasevariance");
                     }
                 },

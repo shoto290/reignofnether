@@ -24,10 +24,16 @@ Features
         - Require all upgrades to be researched before the win timer begins
         - Greatly increase the cost and time of upgrades
         - Remove the invulnerable flag
+    [❌] Instead of giving infinite resources, add a cheat to ignore resource costs entirely
 
     [❌] Flatten terrain tool
 
     [❌] Add polar bears, wolves, llamas and foxes as neutral unit options
+
+
+
+    [✔] fixed crash when placing bridges
+    [✔] can now delete bridges in sandbox mode
 
 
 

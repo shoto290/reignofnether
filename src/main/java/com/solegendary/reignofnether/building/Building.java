@@ -277,6 +277,8 @@ public abstract class Building {
 
 
     public boolean canAfford(String ownerName) {
+        if (ResearchServerEvents.playerHasCheat(ownerName, "showmethemoney"))
+            return true;
         if (SurvivalServerEvents.isEnabled() &&
             SurvivalServerEvents.ENEMY_OWNER_NAME.equals(ownerName))
             return true;
