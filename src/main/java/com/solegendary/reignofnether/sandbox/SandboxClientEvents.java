@@ -1,10 +1,9 @@
 package com.solegendary.reignofnether.sandbox;
 
 import com.solegendary.reignofnether.ReignOfNether;
-import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.building.buildings.neutral.EndPortal;
 import com.solegendary.reignofnether.building.buildings.neutral.HealingFountain;
-import com.solegendary.reignofnether.building.buildings.neutral.UpgradedBeacon;
+import com.solegendary.reignofnether.building.buildings.neutral.CapturableBeacon;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.gamemode.ClientGameModeHelper;
 import com.solegendary.reignofnether.gamemode.GameMode;
@@ -56,7 +55,7 @@ public class SandboxClientEvents {
 
     public static List<AbilityButton> getNeutralBuildingButtons() {
         return List.of(
-            UpgradedBeacon.getBuildButton(Keybindings.keyQ),
+            CapturableBeacon.getBuildButton(Keybindings.keyQ),
             HealingFountain.getBuildButton(Keybindings.keyW),
             EndPortal.getBuildButton(Keybindings.keyE)
         );

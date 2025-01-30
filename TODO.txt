@@ -23,7 +23,6 @@ Features
         - Make the sandbox beacon always place as fully upgraded
         - Fix warning messages
         - Test it works in wave survival
-        - Free automatic upgrades when placed in sandbox
 
     [❌] Add polar bears, wolves, llamas and foxes as neutral unit options
 

@@ -81,8 +81,8 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
 
     public BlockPos beaconPos;
 
-    public Beacon(Level level, BlockPos originPos, Rotation rotation, String ownerName) {
-        super(level, originPos, rotation, ownerName, getAbsoluteBlockData(getRelativeBlockData(level), level, originPos, rotation), false);
+    public Beacon(Level level, BlockPos originPos, Rotation rotation, String ownerName, String structName) {
+        super(level, originPos, rotation, ownerName, getAbsoluteBlockData(getRelativeBlockData(level, structName), level, originPos, rotation), false);
         this.name = buildingName;
         this.ownerName = ownerName;
         this.portraitBlock = Blocks.BEACON;
@@ -333,8 +333,8 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
 
     public Faction getFaction() {return Faction.NONE;}
 
-    public static ArrayList<BuildingBlock> getRelativeBlockData(LevelAccessor level) {
-        return BuildingBlockData.getBuildingBlocks(structureName, level);
+    public static ArrayList<BuildingBlock> getRelativeBlockData(LevelAccessor level, String structName) {
+        return BuildingBlockData.getBuildingBlocks(structName, level);
     }
 
     protected static boolean beaconsAllowed() {

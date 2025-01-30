@@ -4,7 +4,7 @@ package com.solegendary.reignofnether.building;
 
 import com.solegendary.reignofnether.building.buildings.monsters.*;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
-import com.solegendary.reignofnether.building.buildings.neutral.UpgradedBeacon;
+import com.solegendary.reignofnether.building.buildings.neutral.CapturableBeacon;
 import com.solegendary.reignofnether.building.buildings.piglins.*;
 import com.solegendary.reignofnether.building.buildings.piglins.BlackstoneBridge;
 import com.solegendary.reignofnether.building.buildings.villagers.OakStockpile;
@@ -124,8 +124,8 @@ public class BuildingUtils {
             case WitherShrine.buildingName -> building = new WitherShrine(level, pos, rotation, ownerName);
             case BasaltSprings.buildingName -> building = new BasaltSprings(level, pos, rotation, ownerName);
             case Fortress.buildingName -> building = new Fortress(level, pos, rotation, ownerName);
-            case Beacon.buildingName -> building = new Beacon(level, pos, rotation, ownerName);
-            case UpgradedBeacon.buildingName -> building = new UpgradedBeacon(level, pos, rotation, ownerName);
+            case Beacon.buildingName -> building = new Beacon(level, pos, rotation, ownerName, Beacon.structureName);
+            case CapturableBeacon.buildingName -> building = new CapturableBeacon(level, pos, rotation, ownerName);
         }
         if (building != null)
             building.setLevel(level);

@@ -345,7 +345,7 @@
     "buildings.neutral.reignofnether.upgraded_beacon": "Capturable Beacon",
     "buildings.neutral.reignofnether.upgraded_beacon.tooltip1": "A pyramid that grants a variety of powerful auras.",
     "buildings.neutral.reignofnether.upgraded_beacon.tooltip2": "Controlling it for long enough grants victory.",
-    "buildings.neutral.reignofnether.upgraded_beacon.tooltip3": "This beacon is indestructible but can be captured.",
+    "buildings.neutral.reignofnether.upgraded_beacon.tooltip3": "(Fully upgraded, indestructible and capturable)",
     "buildings.neutral.reignofnether.beacon": "Beacon",
     "buildings.neutral.reignofnether.beacon.tooltip1": "A grand stone pyramid that can be upgraded to produce auras.",
     "buildings.neutral.reignofnether.beacon.tooltip2": "Controlling a fully upgraded beacon for long enough grants victory.",
