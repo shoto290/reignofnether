@@ -446,9 +446,9 @@ public class MiscUtil {
                     BlockState bs;
                     do {
                         bottomBp = topBp.offset(0,-y,0);
-                        bs = level.getBlockState(bottomBp);
+                        bs = level.getBlockState(bottomBp); // TODO: infinite loop negative Y
                         y += 1;
-                    } while (y < 30 && bs.getBlock() instanceof LeavesBlock || !bs.getMaterial().isSolid());
+                    } while (y < 30 && (bs.getBlock() instanceof LeavesBlock || !bs.getMaterial().isSolid()));
                     if (!level.getBlockState(bottomBp.above()).getMaterial().isSolid())
                         bps.add(bottomBp);
                 }

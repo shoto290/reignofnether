@@ -7,24 +7,18 @@ import com.solegendary.reignofnether.alliance.AllianceSystem;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.monsters.Stronghold;
 import com.solegendary.reignofnether.building.buildings.piglins.Fortress;
-import com.solegendary.reignofnether.building.buildings.villagers.ArcaneTower;
-import com.solegendary.reignofnether.building.buildings.villagers.Barracks;
-import com.solegendary.reignofnether.building.buildings.villagers.Blacksmith;
 import com.solegendary.reignofnether.building.buildings.villagers.Castle;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
-import com.solegendary.reignofnether.registrars.GameRuleRegistrar;
-import com.solegendary.reignofnether.research.ResearchServerEvents;
+import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.research.researchItems.*;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.sounds.SoundAction;
 import com.solegendary.reignofnether.sounds.SoundClientboundPacket;
-import com.solegendary.reignofnether.survival.SurvivalClientEvents;
 import com.solegendary.reignofnether.survival.SurvivalServerEvents;
-import com.solegendary.reignofnether.time.NightUtils;
 import com.solegendary.reignofnether.time.TimeClientEvents;
 import com.solegendary.reignofnether.tutorial.TutorialClientEvents;
 import com.solegendary.reignofnether.unit.UnitAction;
@@ -32,26 +26,22 @@ import com.solegendary.reignofnether.unit.interfaces.Unit;
 import com.solegendary.reignofnether.unit.packets.BeaconSyncClientboundPacket;
 import com.solegendary.reignofnether.util.Faction;
 import com.solegendary.reignofnether.util.MiscUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.BeaconMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BeaconBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.*;
@@ -81,8 +71,8 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
 
     public BlockPos beaconPos;
 
-    public Beacon(Level level, BlockPos originPos, Rotation rotation, String ownerName, String structName) {
-        super(level, originPos, rotation, ownerName, getAbsoluteBlockData(getRelativeBlockData(level, structName), level, originPos, rotation), false);
+    public Beacon(Level level, BlockPos originPos, Rotation rotation, String ownerName) {
+        super(level, originPos, rotation, ownerName, getAbsoluteBlockData(getRelativeBlockData(level), level, originPos, rotation), false);
         this.name = buildingName;
         this.ownerName = ownerName;
         this.portraitBlock = Blocks.BEACON;
@@ -130,6 +120,13 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
         for (BuildingBlock bb : blocks)
             if (bb.getBlockState().getBlock() == Blocks.BEACON)
                 beaconPos = bb.getBlockPos();
+    }
+
+    @Override
+    public void destroy(ServerLevel serverLevel) {
+        super.destroy(serverLevel);
+        if (!(this instanceof CapturableBeacon) && !ownerName.isBlank())
+            sendWarning("destroy_warning");
     }
 
     @Override
@@ -259,17 +256,17 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
     public void sendWarning(String msg) {
         if (!level.isClientSide) {
             PlayerServerEvents.sendMessageToAllPlayersNoNewlines("");
-            Beacon beacon = BuildingUtils.getBeacon(true);
+            Beacon beacon = BuildingUtils.getBeacon(level.isClientSide);
             if (beacon != null && msg.equals("upgraded_warning")) {
                 String upgradeName = "";
                 if (beacon.getUpgradeLevel() == 1) upgradeName = "Iron";
-                else if (beacon.getUpgradeLevel() == 1) upgradeName = "Gold";
-                else if (beacon.getUpgradeLevel() == 1) upgradeName = "Emerald";
-                else if (beacon.getUpgradeLevel() == 1) upgradeName = "Diamond";
-                else upgradeName = "Netherite";
+                else if (beacon.getUpgradeLevel() == 2) upgradeName = "Gold";
+                else if (beacon.getUpgradeLevel() == 3) upgradeName = "Emerald";
+                else if (beacon.getUpgradeLevel() == 4) upgradeName = "Diamond";
+                else if (beacon.getUpgradeLevel() == 5) upgradeName = "Netherite";
 
-                PlayerServerEvents.sendMessageToAllPlayersNoNewlines("buildings.neutral.reignofnether.beacon.upgrade",
-                        false, ownerName, upgradeName, beacon.getUpgradeLevel(), Beacon.MAX_UPGRADE_LEVEL);
+                PlayerServerEvents.sendMessageToAllPlayersNoNewlines("buildings.neutral.reignofnether.beacon.upgrade_warning",
+                        true, ownerName, upgradeName, beacon.getUpgradeLevel(), Beacon.MAX_UPGRADE_LEVEL);
             } else {
                 PlayerServerEvents.sendMessageToAllPlayersNoNewlines("buildings.neutral.reignofnether.beacon." + msg,
                         true, ownerName);
@@ -279,7 +276,7 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
                         false, ownerName, PlayerServerEvents.getBeaconWinTime(ownerName));
             }
             PlayerServerEvents.sendMessageToAllPlayersNoNewlines("");
-            SoundClientboundPacket.playSoundForAllPlayers(SoundAction.CHAT);
+            SoundClientboundPacket.playSoundForAllPlayers(SoundAction.ENEMY);
         }
     }
 
@@ -333,13 +330,8 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
 
     public Faction getFaction() {return Faction.NONE;}
 
-    public static ArrayList<BuildingBlock> getRelativeBlockData(LevelAccessor level, String structName) {
-        return BuildingBlockData.getBuildingBlocks(structName, level);
-    }
-
-    protected static boolean beaconsAllowed() {
-        Level mcLevel = Minecraft.getInstance().level;
-        return mcLevel != null && mcLevel.getGameRules().getRule(GameRuleRegistrar.ALLOW_BEACONS).get();
+    public static ArrayList<BuildingBlock> getRelativeBlockData(LevelAccessor level) {
+        return BuildingBlockData.getBuildingBlocks(structureName, level);
     }
 
     public static AbilityButton getBuildButton(Keybinding hotkey) {
@@ -348,11 +340,12 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
                 new ResourceLocation("minecraft", "textures/item/nether_star.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Beacon.class,
-                () -> TutorialClientEvents.isEnabled() || !beaconsAllowed(),
+                () -> TutorialClientEvents.isEnabled() || !BuildingClientEvents.allowBeacons,
                 () -> BuildingClientEvents.getBuildings().stream().filter(b -> b instanceof Beacon).toList().isEmpty() && (
                     BuildingClientEvents.hasFinishedBuilding(Castle.buildingName) ||
                     BuildingClientEvents.hasFinishedBuilding(Stronghold.buildingName) ||
-                    BuildingClientEvents.hasFinishedBuilding(Fortress.buildingName)
+                    BuildingClientEvents.hasFinishedBuilding(Fortress.buildingName) ||
+                    ResearchClient.hasCheat("modifythephasevariance")
                 ),
                 () -> BuildingClientEvents.setBuildingToPlace(Beacon.class),
                 null,

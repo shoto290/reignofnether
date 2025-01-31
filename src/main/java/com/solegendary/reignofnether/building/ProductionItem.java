@@ -47,8 +47,6 @@ public abstract class ProductionItem {
     public EntityType<? extends Unit> getEntityType() {return null;}
 
     public boolean canAfford(String ownerName) {
-        if (ResearchServerEvents.playerHasCheat(ownerName, "showmethemoney"))
-            return true;
         for (Resources resources : ResourcesServerEvents.resourcesList)
             if (resources.ownerName.equals(ownerName))
                 return (resources.food >= foodCost &&
@@ -134,7 +132,7 @@ public abstract class ProductionItem {
                 if (level.isClientSide())
                     this.ticksLeft -= (TPSClientEvents.getCappedTPS() / 20D) * 20;
                 else
-                    this.ticksLeft -= 10;
+                    this.ticksLeft -= 20;
             }
             else {
                 if (level.isClientSide())

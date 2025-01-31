@@ -111,7 +111,7 @@ public class PlayerServerboundPacket {
                     MC.player.sendSystemMessage(Component.literal(""));
                 });
             } else if (ClientGameModeHelper.gameMode == GameMode.CLASSIC) {
-                Beacon beacon = BuildingUtils.getBeacon(false);
+                Beacon beacon = BuildingUtils.getBeacon(true);
                 boolean isKotB = beacon != null && beacon.capturable;
                 if (isKotB) {
                     CompletableFuture.delayedExecutor(2000, TimeUnit.MILLISECONDS).execute(() -> {

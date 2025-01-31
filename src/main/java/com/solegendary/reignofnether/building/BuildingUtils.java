@@ -124,7 +124,7 @@ public class BuildingUtils {
             case WitherShrine.buildingName -> building = new WitherShrine(level, pos, rotation, ownerName);
             case BasaltSprings.buildingName -> building = new BasaltSprings(level, pos, rotation, ownerName);
             case Fortress.buildingName -> building = new Fortress(level, pos, rotation, ownerName);
-            case Beacon.buildingName -> building = new Beacon(level, pos, rotation, ownerName, Beacon.structureName);
+            case Beacon.buildingName -> building = new Beacon(level, pos, rotation, ownerName);
             case CapturableBeacon.buildingName -> building = new CapturableBeacon(level, pos, rotation, ownerName);
         }
         if (building != null)

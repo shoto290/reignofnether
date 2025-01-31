@@ -27,9 +27,11 @@ Features
     [❌] Add polar bears, wolves, llamas and foxes as neutral unit options
 
 
+    [🟡] Can still attack indestructible beacons
+    [❌] Can't place neutral and enemy buildings
+
 
     [✔] fixed crash when placing bridges
-    [✔] can now delete bridges in sandbox mode
 
 
 

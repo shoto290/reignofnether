@@ -41,12 +41,8 @@ public abstract class EnchantAbility extends Ability {
     public boolean canAfford(Building buildingUsing) {
         Resources res = null;
         if (buildingUsing.getLevel().isClientSide()) {
-            if (ResearchClient.hasCheat("showmethemoney"))
-                return true;
             res = ResourcesClientEvents.getOwnResources();
         } else {
-            if (ResearchServerEvents.playerHasCheat(buildingUsing.ownerName, "showmethemoney"))
-                return true;
             for (Resources resources : ResourcesServerEvents.resourcesList)
                 if (resources.ownerName.equals(buildingUsing.ownerName))
                     res = resources;

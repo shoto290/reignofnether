@@ -13,6 +13,7 @@ import com.solegendary.reignofnether.building.buildings.villagers.Library;
 import com.solegendary.reignofnether.fogofwar.FrozenChunkClientboundPacket;
 import com.solegendary.reignofnether.nether.NetherBlocks;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
+import com.solegendary.reignofnether.player.RTSPlayer;
 import com.solegendary.reignofnether.registrars.GameRuleRegistrar;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.resources.*;
@@ -258,14 +259,13 @@ public class BuildingServerEvents {
                     Portal.PortalType.BASIC,
                     false
                 );
+                ResourcesServerEvents.addSubtractResources(new Resources(ownerName,
+                    -newBuilding.foodCost,
+                    -newBuilding.woodCost,
+                    -newBuilding.oreCost
+                ));
 
-                if (!SandboxServer.isAnyoneASandboxPlayer())
-                    ResourcesServerEvents.addSubtractResources(new Resources(ownerName,
-                        -newBuilding.foodCost,
-                        -newBuilding.woodCost,
-                        -newBuilding.oreCost
-                    ));
-                else if (ownerName.isEmpty() || ownerName.equals("Enemy"))
+                if (ownerName.isEmpty() || ownerName.equals("Enemy"))
                     newBuilding.selfBuilding = true;
 
                 assignBuilderUnits(builderUnitIds, queue, newBuilding);

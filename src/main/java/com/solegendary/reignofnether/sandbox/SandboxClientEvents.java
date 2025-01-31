@@ -244,7 +244,6 @@ public class SandboxClientEvents {
         if (MC.player == null)
             return null;
         boolean hasCheats = ResearchClient.hasCheat("warpten") &&
-                            ResearchClient.hasCheat("showmethemoney") &&
                             ResearchClient.hasCheat("modifythephasevariance");
         String playerName = Minecraft.getInstance().player.getName().getString();
         return new Button(
@@ -260,15 +259,13 @@ public class SandboxClientEvents {
                 () -> {
                     if (hasCheats) {
                         ResearchServerboundPacket.removeCheat(playerName, "warpten");
-                        ResearchServerboundPacket.removeCheat(playerName, "showmethemoney");
                         ResearchServerboundPacket.removeCheat(playerName, "modifythephasevariance");
                     } else {
                         ResearchServerboundPacket.addCheat(playerName, "warpten");
-                        ResearchServerboundPacket.addCheat(playerName, "showmethemoney");
                         ResearchServerboundPacket.addCheat(playerName, "modifythephasevariance");
                     }
                 },
-                ClientGameModeHelper::cycleGameMode,
+                null,
                 List.of(hasCheats ? fcs(I18n.get("sandbox.reignofnether.building_cheats_on")) :
                                     fcs(I18n.get("sandbox.reignofnether.building_cheats_off")),
                                     fcs(I18n.get("sandbox.reignofnether.building_cheats1")),
@@ -309,7 +306,7 @@ public class SandboxClientEvents {
                         ResearchServerboundPacket.addCheat(playerName, "slipslopslap");
                     }
                 },
-                ClientGameModeHelper::cycleGameMode,
+                null,
                 List.of(hasCheats ? fcs(I18n.get("sandbox.reignofnether.unit_cheats_on")) :
                                     fcs(I18n.get("sandbox.reignofnether.unit_cheats_off")),
                                     fcs(I18n.get("sandbox.reignofnether.unit_cheats1")),

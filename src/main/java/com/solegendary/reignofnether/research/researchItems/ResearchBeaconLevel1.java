@@ -27,6 +27,9 @@ public class ResearchBeaconLevel1 extends ProductionItem {
         this.onComplete = (Level level) -> {
             if (this.building instanceof Beacon beacon) {
                 beacon.changeStructure(1);
+                if (!level.isClientSide()) {
+                    beacon.sendWarning("upgraded_warning");
+                }
             }
         };
         this.foodCost = cost.food;

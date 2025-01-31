@@ -277,8 +277,10 @@ public abstract class Building {
 
 
     public boolean canAfford(String ownerName) {
-        if (ResearchServerEvents.playerHasCheat(ownerName, "showmethemoney"))
+        if (SandboxServer.isAnyoneASandboxPlayer() &&
+            (ownerName.isEmpty() || ownerName.equals("Enemy")))
             return true;
+
         if (SurvivalServerEvents.isEnabled() &&
             SurvivalServerEvents.ENEMY_OWNER_NAME.equals(ownerName))
             return true;

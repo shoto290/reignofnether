@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.Rotation;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.solegendary.reignofnether.building.BuildingUtils.getAbsoluteBlockData;
+
 public class CapturableBeacon extends Beacon {
 
     public final static String buildingName = "The Beacon";
@@ -27,7 +29,10 @@ public class CapturableBeacon extends Beacon {
     public final static ResourceCost cost = ResourceCost.Building(0,0,0,0);
 
     public CapturableBeacon(Level level, BlockPos originPos, Rotation rotation, String ownerName) {
-        super(level, originPos, rotation, ownerName, structureName);
+        super(level, originPos, rotation, ownerName);
+
+        this.blocks = getAbsoluteBlockData(getRelativeBlockData(level), level, originPos, rotation);
+
         this.name = buildingName;
         this.ownerName = ownerName;
         this.portraitBlock = Blocks.BEACON;
@@ -58,7 +63,7 @@ public class CapturableBeacon extends Beacon {
                 new ResourceLocation("minecraft", "textures/item/nether_star.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == CapturableBeacon.class,
-                () -> TutorialClientEvents.isEnabled() || !beaconsAllowed(),
+                () -> TutorialClientEvents.isEnabled() || !BuildingClientEvents.allowBeacons,
                 () -> BuildingClientEvents.getBuildings().stream().filter(b -> b instanceof CapturableBeacon).toList().isEmpty(),
                 () -> BuildingClientEvents.setBuildingToPlace(CapturableBeacon.class),
                 null,
