@@ -60,6 +60,7 @@ public class ResearchBeaconLevel3 extends ProductionItem {
                         ResourceCosts.getFormattedTime(cost),
                         FormattedCharSequence.forward("", Style.EMPTY),
                         FormattedCharSequence.forward(I18n.get("research.reignofnether.beacon_level3.tooltip1"), Style.EMPTY),
+                        FormattedCharSequence.forward("", Style.EMPTY),
                         FormattedCharSequence.forward(I18n.get("research.reignofnether.beacon_level_win"), Style.EMPTY)
                 )
         );

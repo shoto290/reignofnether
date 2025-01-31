@@ -52,7 +52,7 @@ import static com.solegendary.reignofnether.building.BuildingUtils.getAbsoluteBl
 
 public class Beacon extends ProductionBuilding implements RangeIndicator {
 
-    public final static String buildingName = "Beacon";
+    public final static String buildingName = "Stone Beacon";
     public final static String structureName = "beacon_t0";
     public final static String structureNameT1 = "beacon_t1";
     public final static String structureNameT2 = "beacon_t2";

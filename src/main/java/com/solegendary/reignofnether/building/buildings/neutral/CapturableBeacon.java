@@ -24,7 +24,7 @@ import static com.solegendary.reignofnether.building.BuildingUtils.getAbsoluteBl
 
 public class CapturableBeacon extends Beacon {
 
-    public final static String buildingName = "The Beacon";
+    public final static String buildingName = "Beacon";
     public final static String structureName = "beacon_t5";
     public final static ResourceCost cost = ResourceCost.Building(0,0,0,0);
 
