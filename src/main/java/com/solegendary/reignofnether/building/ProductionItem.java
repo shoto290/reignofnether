@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.building;
 
+import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.Button;
 import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
@@ -96,7 +97,7 @@ public abstract class ProductionItem {
         for (Resources resources : ResourcesServerEvents.resourcesList) {
             if (resources.ownerName.equals(building.ownerName)) {
                 if (this.building.level.isClientSide())
-                    return (currentPop + popCost) <= UnitClientEvents.maxPopulation;
+                    return (currentPop + popCost) <= GameruleClient.maxPopulation;
                 else
                     return (currentPop + popCost) <= UnitServerEvents.maxPopulation;
             }

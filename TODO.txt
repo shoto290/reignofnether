@@ -48,11 +48,13 @@ Quality of Life
 ---------------
 [🟡] Ally everyone by default if wave survival is enabled
 
+[❌] Right click to garrison and mount
+
 [❌] Prevent damage from fire blocks inside a flame sanctuary
 
-[❌] Gamerule GUI
+[🟡] Gamerule GUI
 
-[❌] Move F6 to bottom right options
+[🟡] Move F6 to bottom right options
 
 
 Balancing

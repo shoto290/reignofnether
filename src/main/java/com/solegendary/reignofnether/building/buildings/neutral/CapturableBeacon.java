@@ -3,6 +3,7 @@ package com.solegendary.reignofnether.building.buildings.neutral;
 import com.solegendary.reignofnether.building.BuildingBlock;
 import com.solegendary.reignofnether.building.BuildingBlockData;
 import com.solegendary.reignofnether.building.BuildingClientEvents;
+import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.resources.ResourceCost;
@@ -63,7 +64,7 @@ public class CapturableBeacon extends Beacon {
                 new ResourceLocation("minecraft", "textures/item/nether_star.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == CapturableBeacon.class,
-                () -> TutorialClientEvents.isEnabled() || !BuildingClientEvents.allowBeacons,
+                () -> TutorialClientEvents.isEnabled() || !GameruleClient.allowBeacons,
                 () -> BuildingClientEvents.getBuildings().stream().filter(b -> b instanceof CapturableBeacon).toList().isEmpty(),
                 () -> BuildingClientEvents.setBuildingToPlace(CapturableBeacon.class),
                 null,

@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
@@ -22,32 +23,43 @@ public class GameruleServerboundPacket {
     String playerName;
     Long value;
 
-    public static void syncMaxPopulation(long maxPopulation) {
+    public static void setLogFalling(boolean logFalling) {
+        PacketHandler.INSTANCE.sendToServer(
+            new GameruleServerboundPacket(GameruleAction.SET_LOG_FALLING, "", logFalling ? 1L : 0L));
+    }
+    public static void setNeutralAggro(boolean neutralAggro) {
+        PacketHandler.INSTANCE.sendToServer(
+                new GameruleServerboundPacket(GameruleAction.SET_NEUTRAL_AGGRO, "", neutralAggro ? 1L : 0L));
+    }
+    public static void setMaxPopulation(long maxPopulation) {
         PacketHandler.INSTANCE.sendToServer(
             new GameruleServerboundPacket(GameruleAction.SET_MAX_POPULATION, "", maxPopulation));
     }
-
-    public static void setOrthoviewMinY(long orthoviewMinY) {
+    public static void setUnitGriefing(boolean unitGriefing) {
         PacketHandler.INSTANCE.sendToServer(
-            new GameruleServerboundPacket(GameruleAction.SET_GROUND_Y_LEVEL, "", orthoviewMinY));
+            new GameruleServerboundPacket(GameruleAction.SET_UNIT_GRIEFING, "", unitGriefing ? 1L : 0L));
     }
-
+    public static void setPlayerGriefing(boolean playerGriefing) {
+        PacketHandler.INSTANCE.sendToServer(
+            new GameruleServerboundPacket(GameruleAction.SET_PLAYER_GRIEFING, "", playerGriefing ? 1L : 0L));
+    }
     public static void setImprovedPathfinding(boolean improvedPathfinding) {
         PacketHandler.INSTANCE.sendToServer(
-            new GameruleServerboundPacket(GameruleAction.SET_IMPROVED_PATHFINDING, "", improvedPathfinding ? 1L : 0L));
+                new GameruleServerboundPacket(GameruleAction.SET_IMPROVED_PATHFINDING, "", improvedPathfinding ? 1L : 0L));
     }
-
-    public static void syncNeutralAggro(boolean neutralAggro) {
+    public static void setGroundYLevel(long groundYLevel) {
         PacketHandler.INSTANCE.sendToServer(
-            new GameruleServerboundPacket(GameruleAction.SET_NEUTRAL_AGGRO, "", neutralAggro ? 1L : 0L));
+            new GameruleServerboundPacket(GameruleAction.SET_GROUND_Y_LEVEL, "", groundYLevel));
     }
-
-    public static void syncAllowBeacons(boolean allowBeacons) {
+    public static void setFlyingMaxYLevel(long flyingMaxYLevel) {
+        PacketHandler.INSTANCE.sendToServer(
+            new GameruleServerboundPacket(GameruleAction.SET_FLYING_MAX_Y_LEVEL, "", flyingMaxYLevel));
+    }
+    public static void setAllowBeacons(boolean allowBeacons) {
         PacketHandler.INSTANCE.sendToServer(
             new GameruleServerboundPacket(GameruleAction.SET_ALLOW_BEACONS, "", allowBeacons ? 1L : 0L));
     }
-
-    public static void syncClassicAndBeaconModeOnly(boolean pvpModesOnly) {
+    public static void setPvpModesOnly(boolean pvpModesOnly) {
         PacketHandler.INSTANCE.sendToServer(
             new GameruleServerboundPacket(GameruleAction.PVP_MODES_ONLY, "", pvpModesOnly ? 1L : 0L));
     }
@@ -82,20 +94,31 @@ public class GameruleServerboundPacket {
             }
             MinecraftServer server = player.getLevel().getServer();
             GameRules gameRules = player.getLevel().getGameRules();
+            boolean booleanValue = value == 1L;
 
             switch (action) {
+                case SET_LOG_FALLING -> {
+                    gameRules.getRule(GameRuleRegistrar.LOG_FALLING).set(booleanValue, server);
+                    GameruleClientboundPacket.setLogFalling(booleanValue);
+                }
+                case SET_NEUTRAL_AGGRO -> {
+                    gameRules.getRule(GameRuleRegistrar.NEUTRAL_AGGRO).set(booleanValue, server);
+                    GameruleClientboundPacket.setNeutralAggro(booleanValue);
+                }
                 case SET_MAX_POPULATION -> {
                     UnitServerEvents.maxPopulation = Math.toIntExact(value);
                     gameRules.getRule(GameRuleRegistrar.MAX_POPULATION).set(UnitServerEvents.maxPopulation, server);
-                    GameruleClientboundPacket.syncMaxPopulation(UnitServerEvents.maxPopulation);
+                    GameruleClientboundPacket.setMaxPopulation(UnitServerEvents.maxPopulation);
                 }
-                case SET_GROUND_Y_LEVEL -> {
-                    double groundYLevel = value;
-                    gameRules.getRule(GameRuleRegistrar.GROUND_Y_LEVEL).set(UnitServerEvents.maxPopulation, server);
-                    GameruleClientboundPacket.setOrthoviewMinY((long) groundYLevel + 30);
+                case SET_UNIT_GRIEFING -> {
+                    gameRules.getRule(GameRuleRegistrar.DO_UNIT_GRIEFING).set(booleanValue, server);
+                    GameruleClientboundPacket.setUnitGriefing(booleanValue);
+                }
+                case SET_PLAYER_GRIEFING -> {
+                    gameRules.getRule(GameRuleRegistrar.DO_PLAYER_GRIEFING).set(booleanValue, server);
+                    GameruleClientboundPacket.setPlayerGriefing(booleanValue);
                 }
                 case SET_IMPROVED_PATHFINDING -> {
-                    boolean booleanValue = value == 1L;
                     gameRules.getRule(GameRuleRegistrar.IMPROVED_PATHFINDING).set(booleanValue, server);
                     for (LivingEntity le : UnitServerEvents.getAllUnits()) {
                         UnitServerEvents.improvedPathfinding = booleanValue;
@@ -105,20 +128,21 @@ public class GameruleServerboundPacket {
                     }
                     GameruleClientboundPacket.setImprovedPathfinding(booleanValue);
                 }
-                case SET_NEUTRAL_AGGRO -> {
-                    boolean booleanValue = value == 1L;
-                    gameRules.getRule(GameRuleRegistrar.NEUTRAL_AGGRO).set(booleanValue, server);
-                    GameruleClientboundPacket.syncNeutralAggro(booleanValue);
+                case SET_GROUND_Y_LEVEL -> {
+                    gameRules.getRule(GameRuleRegistrar.GROUND_Y_LEVEL).set(Math.toIntExact(value), server);
+                    GameruleClientboundPacket.setGroundYLevel(value);
+                }
+                case SET_FLYING_MAX_Y_LEVEL -> {
+                    gameRules.getRule(GameRuleRegistrar.FLYING_MAX_Y_LEVEL).set(Math.toIntExact(value), server);
+                    GameruleClientboundPacket.setFlyingMaxYLevel(value);
                 }
                 case SET_ALLOW_BEACONS -> {
-                    boolean booleanValue = value == 1L;
                     gameRules.getRule(GameRuleRegistrar.ALLOW_BEACONS).set(booleanValue, server);
-                    GameruleClientboundPacket.syncAllowBeacons(booleanValue);
+                    GameruleClientboundPacket.setAllowBeacons(booleanValue);
                 }
                 case PVP_MODES_ONLY -> {
-                    boolean booleanValue = value == 1L;
                     gameRules.getRule(GameRuleRegistrar.PVP_MODES_ONLY).set(booleanValue, server);
-                    GameruleClientboundPacket.syncClassicAndBeaconModeOnly(booleanValue);
+                    GameruleClientboundPacket.setPvpModesOnly(booleanValue);
                 }
             }
             success.set(true);

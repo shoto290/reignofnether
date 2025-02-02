@@ -9,6 +9,7 @@ import com.solegendary.reignofnether.building.buildings.shared.AbstractBridge;
 import com.solegendary.reignofnether.building.buildings.villagers.IronGolemBuilding;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.fogofwar.FogOfWarClientEvents;
+import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.HudClientEvents;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.minimap.MinimapClientEvents;
@@ -70,11 +71,6 @@ public class UnitClientEvents {
 
     private static final Minecraft MC = Minecraft.getInstance();
 
-    public static boolean improvedPathfinding = true;
-
-    // max possible pop you can have regardless of buildings, adjustable via /gamerule maxPopulation cheat
-    public static int maxPopulation = ResourceCosts.DEFAULT_MAX_POPULATION;
-
     // list of vecs used in RenderChunkRegionMixin to replace leaf rendering
     private static final int WINDOW_RADIUS = 5; // size of area to hide leaves
     public static final int WINDOW_UPDATE_TICKS_MAX = 5; // size of area to hide leaves
@@ -93,8 +89,6 @@ public class UnitClientEvents {
     private static final ArrayList<LivingEntity> allUnits = new ArrayList<>();
 
     @Nullable private static UnitActionItem lastClientUAIActioned = null;
-
-    public static boolean neutralAggro = false;
 
     public static ArrayList<LivingEntity> getPreselectedUnits() { return preselectedUnits; }
     public static ArrayList<LivingEntity> getSelectedUnits() {
@@ -605,7 +599,7 @@ public class UnitClientEvents {
                 // right click -> attack unfriendly unit
                 if (preselectedUnits.size() == 1 &&
                     !targetingSelf() &&
-                    ((neutralAggro && getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.NEUTRAL) ||
+                    ((GameruleClient.neutralAggro && getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.NEUTRAL) ||
                     getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.HOSTILE ||
                      ResourceSources.isHuntableAnimal(preselectedUnits.get(0)))) {
 
@@ -620,7 +614,7 @@ public class UnitClientEvents {
                         (preSelBuilding != null) &&
                         !preSelBuilding.invulnerable &&
                         !(preSelBuilding instanceof AbstractBridge) &&
-                        ((neutralAggro && getPlayerToBuildingRelationship(preSelBuilding) == Relationship.NEUTRAL) ||
+                        ((GameruleClient.neutralAggro && getPlayerToBuildingRelationship(preSelBuilding) == Relationship.NEUTRAL) ||
                         getPlayerToBuildingRelationship(preSelBuilding) == Relationship.HOSTILE)) {
                     sendUnitCommand(UnitAction.ATTACK_BUILDING);
                 }
@@ -986,10 +980,6 @@ public class UnitClientEvents {
             double d2 = rand.nextGaussian() * 0.2;
             level.addParticle(ParticleTypes.POOF, entity.getX(), entity.getY(), entity.getZ(), d0, d1, d2);
         }
-    }
-
-    public static void setMaxPopulation(int value) {
-        maxPopulation = value;
     }
 
     public static void makeVillagerVeteran(int unitId) {

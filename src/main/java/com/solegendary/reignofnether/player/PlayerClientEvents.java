@@ -4,6 +4,7 @@ import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.BuildingClientEvents;
 import com.solegendary.reignofnether.fogofwar.FogOfWarClientEvents;
 import com.solegendary.reignofnether.gamemode.ClientGameModeHelper;
+import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.HudClientEvents;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
@@ -96,17 +97,10 @@ public class PlayerClientEvents {
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.toggle_fow","/rts-fog enable/disable"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.surrender","/rts-surrender"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.reset", "/rts-reset"));
+                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.hard_reset", "/rts-hard-reset"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.lock", "/rts-lock enable/disable"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.ally", "/ally"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.disband", "/disband"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.do_log_falling", "/gamerule doLogFalling"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.neutral_aggro", "/gamerule neutralAggro"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.max_population", "/gamerule maxPopulation"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.unit_griefing", "/gamerule doUnitGriefing"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.player_griefing", "/gamerule doPlayerGriefing"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.ground_y_level", "/gamerule groundYLevel"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.flying_max_y_level", "/gamerule flyingMaxYLevel"));
-                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.gamerule.improved_pathfinding", "/gamerule improvedPathfinding"));
             }
             return 1;
         }));
@@ -116,7 +110,6 @@ public class PlayerClientEvents {
                 MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.toggle_cam"));
                 MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.refresh_chunks"));
                 MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.toggle_fps_tps"));
-                MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.toggle_leaves"));
                 MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.deselect"));
                 MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.command"));
                 MC.player.sendSystemMessage(Component.translatable("controls.reignofnether.create_group"));
@@ -157,13 +150,13 @@ public class PlayerClientEvents {
         if (MC.player == null || !MC.player.getName().getString().equals(playerName)) {
             return;
         }
-
         MC.gui.setTitle(Component.translatable("titles.reignofnether.victorious"));
-        //MC.player.playSound(SoundRegistrar.VICTORY.get(), 0.5f, 1.0f);
+        MC.player.playSound(SoundRegistrar.VICTORY.get(), 0.5f, 1.0f);
     }
 
     public static void enableRTS(String playerName) {
         if (MC.player != null && MC.player.getName().getString().equals(playerName)) {
+            GameruleClient.gamerulesMenuOpen = false;
             isRTSPlayer = true;
         }
     }

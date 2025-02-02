@@ -8,6 +8,7 @@ import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.monsters.Stronghold;
 import com.solegendary.reignofnether.building.buildings.piglins.Fortress;
 import com.solegendary.reignofnether.building.buildings.villagers.Castle;
+import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.keybinds.Keybindings;
@@ -340,7 +341,7 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
                 new ResourceLocation("minecraft", "textures/item/nether_star.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Beacon.class,
-                () -> TutorialClientEvents.isEnabled() || !BuildingClientEvents.allowBeacons,
+                () -> TutorialClientEvents.isEnabled() || !GameruleClient.allowBeacons,
                 () -> BuildingClientEvents.getBuildings().stream().filter(b -> b instanceof Beacon).toList().isEmpty() && (
                     BuildingClientEvents.hasFinishedBuilding(Castle.buildingName) ||
                     BuildingClientEvents.hasFinishedBuilding(Stronghold.buildingName) ||

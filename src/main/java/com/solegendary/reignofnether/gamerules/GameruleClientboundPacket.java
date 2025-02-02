@@ -1,10 +1,9 @@
 package com.solegendary.reignofnether.gamerules;
 
-import com.solegendary.reignofnether.building.BuildingClientEvents;
 import com.solegendary.reignofnether.gamemode.ClientGameModeHelper;
+import com.solegendary.reignofnether.gamemode.GameMode;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
 import com.solegendary.reignofnether.registrars.PacketHandler;
-import com.solegendary.reignofnether.unit.UnitClientEvents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -20,32 +19,43 @@ public class GameruleClientboundPacket {
     String playerName;
     Long value;
 
-    public static void syncMaxPopulation(long maxPopulation) {
+    public static void setLogFalling(boolean logFalling) {
+        PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
+                new GameruleClientboundPacket(GameruleAction.SET_LOG_FALLING, "", logFalling ? 1L : 0L));
+    }
+    public static void setNeutralAggro(boolean neutralAggro) {
+        PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
+                new GameruleClientboundPacket(GameruleAction.SET_NEUTRAL_AGGRO, "", neutralAggro ? 1L : 0L));
+    }
+    public static void setMaxPopulation(long maxPopulation) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
                 new GameruleClientboundPacket(GameruleAction.SET_MAX_POPULATION, "", maxPopulation));
     }
-
-    public static void setOrthoviewMinY(long orthoviewMinY) {
+    public static void setUnitGriefing(boolean unitGriefing) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
-                new GameruleClientboundPacket(GameruleAction.SET_GROUND_Y_LEVEL, "", orthoviewMinY));
+                new GameruleClientboundPacket(GameruleAction.SET_UNIT_GRIEFING, "", unitGriefing ? 1L : 0L));
     }
-
+    public static void setPlayerGriefing(boolean playerGriefing) {
+        PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
+                new GameruleClientboundPacket(GameruleAction.SET_PLAYER_GRIEFING, "", playerGriefing ? 1L : 0L));
+    }
     public static void setImprovedPathfinding(boolean improvedPathfinding) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
                 new GameruleClientboundPacket(GameruleAction.SET_IMPROVED_PATHFINDING, "", improvedPathfinding ? 1L : 0L));
     }
-
-    public static void syncNeutralAggro(boolean neutralAggro) {
+    public static void setGroundYLevel(long groundYLevel) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
-                new GameruleClientboundPacket(GameruleAction.SET_NEUTRAL_AGGRO, "", neutralAggro ? 1L : 0L));
+                new GameruleClientboundPacket(GameruleAction.SET_GROUND_Y_LEVEL, "", groundYLevel));
     }
-
-    public static void syncAllowBeacons(boolean allowBeacons) {
+    public static void setFlyingMaxYLevel(long flyingMaxYLevel) {
+        PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
+                new GameruleClientboundPacket(GameruleAction.SET_FLYING_MAX_Y_LEVEL, "", flyingMaxYLevel));
+    }
+    public static void setAllowBeacons(boolean allowBeacons) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
                 new GameruleClientboundPacket(GameruleAction.SET_ALLOW_BEACONS, "", allowBeacons ? 1L : 0L));
     }
-
-    public static void syncClassicAndBeaconModeOnly(boolean pvpModesOnly) {
+    public static void setPvpModesOnly(boolean pvpModesOnly) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
                 new GameruleClientboundPacket(GameruleAction.PVP_MODES_ONLY, "", pvpModesOnly ? 1L : 0L));
     }
@@ -76,12 +86,24 @@ public class GameruleClientboundPacket {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
                     () -> () -> {
                         switch (action) {
-                            case SET_MAX_POPULATION -> UnitClientEvents.setMaxPopulation(Math.toIntExact(value));
-                            case SET_GROUND_Y_LEVEL -> OrthoviewClientEvents.setMinOrthoviewY(value);
-                            case SET_IMPROVED_PATHFINDING -> UnitClientEvents.improvedPathfinding = value == 1L;
-                            case SET_NEUTRAL_AGGRO -> UnitClientEvents.neutralAggro = value == 1L;
-                            case SET_ALLOW_BEACONS -> BuildingClientEvents.allowBeacons = value == 1L;
-                            case PVP_MODES_ONLY -> ClientGameModeHelper.setPvpModesOnly(value == 1L);
+                            case SET_LOG_FALLING -> GameruleClient.doLogFalling = value == 1L;
+                            case SET_NEUTRAL_AGGRO -> GameruleClient.neutralAggro = value == 1L;
+                            case SET_MAX_POPULATION -> GameruleClient.maxPopulation = Math.toIntExact(value);
+                            case SET_UNIT_GRIEFING -> GameruleClient.doUnitGriefing = value == 1L;
+                            case SET_PLAYER_GRIEFING -> GameruleClient.doPlayerGriefing = value == 1L;
+                            case SET_IMPROVED_PATHFINDING -> GameruleClient.improvedPathfinding = value == 1L;
+                            case SET_GROUND_Y_LEVEL -> {
+                                GameruleClient.groundYLevel = value;
+                                OrthoviewClientEvents.setMinOrthoviewY(value);
+                            }
+                            case SET_FLYING_MAX_Y_LEVEL -> GameruleClient.flyingMaxYLevel = value;
+                            case SET_ALLOW_BEACONS -> GameruleClient.allowBeacons = value == 1L;
+                            case PVP_MODES_ONLY -> {
+                                GameruleClient.pvpModesOnly = value == 1L;
+                                if (GameruleClient.pvpModesOnly) {
+                                    ClientGameModeHelper.gameMode = GameMode.CLASSIC;
+                                }
+                            }
                         }
                         success.set(true);
                     });

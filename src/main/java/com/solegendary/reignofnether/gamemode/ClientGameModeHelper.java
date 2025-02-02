@@ -30,13 +30,6 @@ public class ClientGameModeHelper {
         }
     }
 
-    public static void setPvpModesOnly(boolean value) {
-        pvpModesOnly = value;
-        if (pvpModesOnly) {
-            gameMode = GameMode.CLASSIC;
-        }
-    }
-
     public static void cycleWaveDifficulty() {
         switch (SurvivalClientEvents.difficulty) {
             case BEGINNER -> SurvivalClientEvents.difficulty = WaveDifficulty.EASY;

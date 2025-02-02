@@ -12,6 +12,7 @@ import com.solegendary.reignofnether.building.buildings.villagers.Castle;
 import com.solegendary.reignofnether.building.buildings.villagers.Library;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.fogofwar.FogOfWarClientEvents;
+import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.HudClientEvents;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.nether.NetherBlocks;
@@ -66,11 +67,9 @@ public class BuildingClientEvents {
 
     static final Minecraft MC = Minecraft.getInstance();
 
-    public static boolean allowBeacons = true;
-
     public static int getTotalPopulationSupply(String playerName) {
         if (ResearchClient.hasCheat("foodforthought")) {
-            return UnitClientEvents.maxPopulation;
+            return GameruleClient.maxPopulation;
         }
 
         int totalPopulationSupply = 0;
@@ -79,7 +78,7 @@ public class BuildingClientEvents {
                 totalPopulationSupply += building.popSupply;
             }
 
-        return Math.min(UnitClientEvents.maxPopulation, totalPopulationSupply);
+        return Math.min(GameruleClient.maxPopulation, totalPopulationSupply);
     }
 
     // clientside buildings used for tracking position (for cursor selection)

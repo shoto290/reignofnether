@@ -262,7 +262,7 @@ public class HudClientEvents {
         mouseY = evt.getMouseY();
 
         // where to start drawing the centre hud (from left to right: portrait, stats, unit icon buttons)
-        int hudStartingXPos = Button.iconFrameSize * 6 + (Button.iconFrameSize / 2);
+        int hudStartingXPos = Button.DEFAULT_ICON_FRAME_SIZE * 6 + (Button.DEFAULT_ICON_FRAME_SIZE / 2);
 
         ArrayList<LivingEntity> selUnits = UnitClientEvents.getSelectedUnits();
         ArrayList<Building> selBuildings = BuildingClientEvents.getSelectedBuildings();
@@ -272,7 +272,7 @@ public class HudClientEvents {
         int screenHeight = MC.getWindow().getGuiScaledHeight();
 
         int iconSize = 14;
-        int iconFrameSize = Button.iconFrameSize;
+        int iconFrameSize = Button.DEFAULT_ICON_FRAME_SIZE;
 
         // screenWidth ranges roughly between 440-540
         int buttonsPerRow = (int) Math.ceil((float) (screenWidth - 340) / iconFrameSize);
@@ -528,7 +528,7 @@ public class HudClientEvents {
                         .toList();
                 }
                 if (buildingAbilities.size() > 0) {
-                    blitY -= Button.iconFrameSize;
+                    blitY -= Button.DEFAULT_ICON_FRAME_SIZE;
                 }
 
                 // production buttons on bottom row
@@ -537,7 +537,7 @@ public class HudClientEvents {
                         .filter(b -> !b.isHidden.get())
                         .toList();
                     if (visibleProdButtons.size() > MAX_BUTTONS_PER_ROW) {
-                        blitY -= Button.iconFrameSize;
+                        blitY -= Button.DEFAULT_ICON_FRAME_SIZE;
                     }
 
                     int rowButtons = 0;
@@ -546,7 +546,7 @@ public class HudClientEvents {
                         if (rowButtons > MAX_BUTTONS_PER_ROW) {
                             rowButtons = 0;
                             blitX = 0;
-                            blitY += Button.iconFrameSize;
+                            blitY += Button.DEFAULT_ICON_FRAME_SIZE;
                         }
                         prodButton.render(evt.getPoseStack(), blitX, blitY, mouseX, mouseY);
                         productionButtons.add(prodButton);
@@ -554,7 +554,7 @@ public class HudClientEvents {
                         blitX += iconFrameSize;
                     }
                 }
-                blitY += Button.iconFrameSize;
+                blitY += Button.DEFAULT_ICON_FRAME_SIZE;
                 blitX = 0;
                 for (AbilityButton abilityButton : buildingAbilities) {
                     if (!abilityButton.isHidden.get()) {
@@ -1085,7 +1085,7 @@ public class HudClientEvents {
                 if (resourceName.equals("population")) {
                     tooltip = List.of(FormattedCharSequence.forward(I18n.get("hud.reignofnether.max_resources",
                         I18n.get(key),
-                        maxPopulation
+                        GameruleClient.maxPopulation
                     ), Style.EMPTY));
                 } else {
                     tooltip = List.of(FormattedCharSequence.forward(I18n.get(key), Style.EMPTY));
@@ -1252,14 +1252,15 @@ public class HudClientEvents {
                 }
 
                 Button gamerulesButton = GameruleClient.getGamerulesButton();
-                if (MC.player != null && MC.player.hasPermissions(4) &&
-                    gamemodeButton != null && !gamemodeButton.isHidden.get() && !TutorialClientEvents.isEnabled()) {
+                if (MC.player != null && MC.player.hasPermissions(4) && !gamerulesButton.isHidden.get() && !TutorialClientEvents.isEnabled()) {
                     int xr = screenWidth - (StartButtons.ICON_SIZE * 8);
                     int yr = 40;
-                    gamemodeButton.render(evt.getPoseStack(), xr, yr, mouseX, mouseY);
-                    renderedButtons.add(gamemodeButton);
-                    List<Button> gameruleButtons = GameruleClient.renderGamerulesGUI(evt.getPoseStack(), xr, yr);
-                    renderedButtons.addAll(gameruleButtons);
+                    gamerulesButton.render(evt.getPoseStack(), xr, yr, mouseX, mouseY);
+                    renderedButtons.add(gamerulesButton);
+                    if (GameruleClient.gamerulesMenuOpen) {
+                        List<Button> gameruleButtons = GameruleClient.renderGamerulesGUI(evt.getPoseStack(), xr, yr, mouseX, mouseY);
+                        renderedButtons.addAll(gameruleButtons);
+                    }
                 }
 
                 if (ClientGameModeHelper.gameMode != GameMode.SANDBOX) {
