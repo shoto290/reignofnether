@@ -46,7 +46,7 @@ public class SlimeProd extends ProductionItem {
     public static AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/zombie_villager.png"),
+                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/slime.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -57,12 +57,12 @@ public class SlimeProd extends ProductionItem {
                 },
                 null,
                 List.of(
-                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.zombie_villager"), Style.EMPTY.withBold(true)),
+                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.slime"), Style.EMPTY.withBold(true)),
                         FormattedCharSequence.forward("", Style.EMPTY),
-                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.zombie_villager.tooltip1"), Style.EMPTY),
-                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.zombie_villager.tooltip2"), Style.EMPTY),
+                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.slime.tooltip1"), Style.EMPTY),
+                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.slime.tooltip2"), Style.EMPTY),
                         FormattedCharSequence.forward("", Style.EMPTY),
-                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.zombie_villager.tooltip3"), Style.EMPTY)
+                        FormattedCharSequence.forward(I18n.get("units.monsters.reignofnether.slime.tooltip4"), Style.EMPTY)
                 ),
                 null
         );

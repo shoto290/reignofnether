@@ -675,8 +675,12 @@ public class UnitServerEvents {
         ArrayList<Entity> entities = UnitServerEvents.spawnMobs(entityType, level, pos,1, ownerName);
         if (entities.isEmpty())
             return null;
-        else
+        else {
+            if (entities.get(0) instanceof SlimeUnit slimeUnit)
+                slimeUnit.setSize(2, true);
             return entities.get(0);
+        }
+
     }
 
     public static ArrayList<Entity> spawnMobs(

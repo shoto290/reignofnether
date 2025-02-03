@@ -103,6 +103,7 @@ public class SandboxClientEvents {
                 BruteProd.getPlaceButton(),
                 HeadhunterProd.getPlaceButton(),
                 HoglinProd.getPlaceButton(),
+                BlazeProd.getPlaceButton(),
                 WitherSkeletonProd.getPlaceButton(),
                 MagmaCubeProd.getPlaceButton(),
                 GhastProd.getPlaceButton(),
