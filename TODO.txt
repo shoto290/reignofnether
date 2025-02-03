@@ -5,9 +5,13 @@
 [🟡] Partially done and/or needs testing
 [❌] Not done, including unmerged PRs
 
-TESTING
 
-[❌] Beacon and Non-beacon team victory when last opponent surrenders
+
+
+[❌] add notification if other players ally each other
+
+[❌] regen doesn't work
+
 
 
 Features

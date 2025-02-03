@@ -223,7 +223,7 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
         if (tickLevel.isClientSide && tickAgeAfterBuilt > 0 && tickAgeAfterBuilt % 100 == 0)
             updateBorderBps();
 
-        if (isBeaconActive() && tickAgeAfterBuilt > 0 && tickAgeAfterBuilt % 10 == 0 &&
+        if (isBeaconActive() && tickAgeAfterBuilt > 0 && tickAgeAfterBuilt % 20 == 0 &&
                 !this.level.isClientSide() && this.level.isDay()) {
 
             List<LivingEntity> nearbyEntities = MiscUtil.getEntitiesWithinRange(
@@ -237,8 +237,12 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
                 boolean isFriendlyPlayer = le instanceof Player player && !player.isCreative() && !player.isSpectator() &&
                         (player.getName().getString().equals(ownerName) || AlliancesServer.isAllied(player.getName().getString(), ownerName));
 
-                if ((isOwnedUnit || isFriendlyPlayer) && (isFriendlyPlayer || auraEffect != MobEffects.LUCK) && getBeaconBlockEntity() != null)
-                    le.addEffect(new MobEffectInstance(auraEffect, 15, 1));
+                if ((isOwnedUnit || isFriendlyPlayer) && (isFriendlyPlayer || auraEffect != MobEffects.LUCK) && getBeaconBlockEntity() != null) {
+                    if (auraEffect != MobEffects.REGENERATION)
+                        le.addEffect(new MobEffectInstance(auraEffect, 25, 0));
+                    else if (tickAgeAfterBuilt % 80 == 0) // only 1hp/4s
+                        le.addEffect(new MobEffectInstance(auraEffect, 60, 0));
+                }
             }
         }
     }

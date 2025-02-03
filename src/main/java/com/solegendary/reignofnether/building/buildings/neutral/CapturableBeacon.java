@@ -64,7 +64,7 @@ public class CapturableBeacon extends Beacon {
                 new ResourceLocation("minecraft", "textures/item/nether_star.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == CapturableBeacon.class,
-                () -> TutorialClientEvents.isEnabled() || !GameruleClient.allowBeacons,
+                TutorialClientEvents::isEnabled,
                 () -> BuildingClientEvents.getBuildings().stream().filter(b -> b instanceof CapturableBeacon).toList().isEmpty(),
                 () -> BuildingClientEvents.setBuildingToPlace(CapturableBeacon.class),
                 null,
