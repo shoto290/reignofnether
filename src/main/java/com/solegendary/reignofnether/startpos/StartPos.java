@@ -14,12 +14,18 @@ public class StartPos {
         this.colorId = colorId;
     }
 
+    public StartPos(BlockPos pos, boolean reserved, int colorId) {
+        this.pos = pos;
+        this.reserved = reserved;
+        this.colorId = colorId;
+    }
+
     public ResourceLocation getIcon() {
         if (colorId == MaterialColor.COLOR_MAGENTA.id) return getIcon("magenta");
         else if (colorId == MaterialColor.COLOR_LIGHT_BLUE.id) return getIcon("light_blue");
         else if (colorId == MaterialColor.COLOR_ORANGE.id) return getIcon("orange");
         else if (colorId == MaterialColor.COLOR_YELLOW.id) return getIcon("yellow");
-        else if (colorId == MaterialColor.COLOR_LIGHT_GREEN.id) return getIcon("light_green");
+        else if (colorId == MaterialColor.COLOR_LIGHT_GREEN.id) return getIcon("lime");
         else if (colorId == MaterialColor.COLOR_PINK.id) return getIcon("pink");
         else if (colorId == MaterialColor.COLOR_GRAY.id) return getIcon("gray");
         else if (colorId == MaterialColor.COLOR_LIGHT_GRAY.id) return getIcon("light_gray");

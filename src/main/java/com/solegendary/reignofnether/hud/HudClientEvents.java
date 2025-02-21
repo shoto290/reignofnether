@@ -28,6 +28,7 @@ import com.solegendary.reignofnether.resources.ResourcesClientEvents;
 import com.solegendary.reignofnether.sandbox.SandboxActionButtons;
 import com.solegendary.reignofnether.sandbox.SandboxClientEvents;
 import com.solegendary.reignofnether.sandbox.SandboxMenuType;
+import com.solegendary.reignofnether.startpos.StartPosClientEvents;
 import com.solegendary.reignofnether.survival.SurvivalClientEvents;
 import com.solegendary.reignofnether.tutorial.TutorialClientEvents;
 import com.solegendary.reignofnether.tutorial.TutorialStage;
@@ -1254,6 +1255,28 @@ public class HudClientEvents {
         // ------------------------------
         if (!PlayerClientEvents.isRTSPlayer && !PlayerClientEvents.rtsLocked) {
 
+            Button startPosButton = StartPosClientEvents.getPositionsButton();
+            if (!startPosButton.isHidden.get()) {
+                startPosButton.render(evt.getPoseStack(),
+                        screenWidth - (StartButtons.ICON_SIZE * 6),
+                        40,
+                        mouseX,
+                        mouseY
+                );
+                renderedButtons.add(startPosButton);
+            }
+
+            Button startButton = StartPosClientEvents.getStartButton();
+            if (!startButton.isHidden.get()) {
+                startButton.render(evt.getPoseStack(),
+                        screenWidth - (StartButtons.ICON_SIZE * 4),
+                        40,
+                        mouseX,
+                        mouseY
+                );
+                renderedButtons.add(startButton);
+            }
+
             Button diffsButton = ConfigClientEvents.getDiffsButton();
             if (!diffsButton.isHidden.get()) {
                 diffsButton.render(evt.getPoseStack(),
@@ -1289,32 +1312,63 @@ public class HudClientEvents {
             }
 
             if (ClientGameModeHelper.gameMode != GameMode.SANDBOX) {
-                if (!StartButtons.villagerStartButton.isHidden.get()) {
-                    StartButtons.villagerStartButton.render(evt.getPoseStack(),
-                            screenWidth - (StartButtons.ICON_SIZE * 6),
-                            StartButtons.ICON_SIZE / 2,
-                            mouseX,
-                            mouseY
-                    );
-                    renderedButtons.add(StartButtons.villagerStartButton);
-                }
-                if (!StartButtons.monsterStartButton.isHidden.get()) {
-                    StartButtons.monsterStartButton.render(evt.getPoseStack(),
-                            (int) (screenWidth - (StartButtons.ICON_SIZE * 4f)),
-                            StartButtons.ICON_SIZE / 2,
-                            mouseX,
-                            mouseY
-                    );
-                    renderedButtons.add(StartButtons.monsterStartButton);
-                }
-                if (!StartButtons.piglinStartButton.isHidden.get()) {
-                    StartButtons.piglinStartButton.render(evt.getPoseStack(),
-                            screenWidth - (StartButtons.ICON_SIZE * 2),
-                            StartButtons.ICON_SIZE / 2,
-                            mouseX,
-                            mouseY
-                    );
-                    renderedButtons.add(StartButtons.piglinStartButton);
+
+                if (StartPosClientEvents.startPoses.isEmpty()) {
+                    if (!StartButtons.villagerStartButton.isHidden.get()) {
+                        StartButtons.villagerStartButton.render(evt.getPoseStack(),
+                                screenWidth - (StartButtons.ICON_SIZE * 6),
+                                StartButtons.ICON_SIZE / 2,
+                                mouseX,
+                                mouseY
+                        );
+                        renderedButtons.add(StartButtons.villagerStartButton);
+                    }
+                    if (!StartButtons.monsterStartButton.isHidden.get()) {
+                        StartButtons.monsterStartButton.render(evt.getPoseStack(),
+                                (int) (screenWidth - (StartButtons.ICON_SIZE * 4f)),
+                                StartButtons.ICON_SIZE / 2,
+                                mouseX,
+                                mouseY
+                        );
+                        renderedButtons.add(StartButtons.monsterStartButton);
+                    }
+                    if (!StartButtons.piglinStartButton.isHidden.get()) {
+                        StartButtons.piglinStartButton.render(evt.getPoseStack(),
+                                screenWidth - (StartButtons.ICON_SIZE * 2),
+                                StartButtons.ICON_SIZE / 2,
+                                mouseX,
+                                mouseY
+                        );
+                        renderedButtons.add(StartButtons.piglinStartButton);
+                    }
+                } else {
+                    if (!StartButtons.villagerReadyButton.isHidden.get()) {
+                        StartButtons.villagerReadyButton.render(evt.getPoseStack(),
+                                screenWidth - (StartButtons.ICON_SIZE * 6),
+                                StartButtons.ICON_SIZE / 2,
+                                mouseX,
+                                mouseY
+                        );
+                        renderedButtons.add(StartButtons.villagerReadyButton);
+                    }
+                    if (!StartButtons.monsterReadyButton.isHidden.get()) {
+                        StartButtons.monsterReadyButton.render(evt.getPoseStack(),
+                                (int) (screenWidth - (StartButtons.ICON_SIZE * 4f)),
+                                StartButtons.ICON_SIZE / 2,
+                                mouseX,
+                                mouseY
+                        );
+                        renderedButtons.add(StartButtons.monsterReadyButton);
+                    }
+                    if (!StartButtons.piglinReadyButton.isHidden.get()) {
+                        StartButtons.piglinReadyButton.render(evt.getPoseStack(),
+                                screenWidth - (StartButtons.ICON_SIZE * 2),
+                                StartButtons.ICON_SIZE / 2,
+                                mouseX,
+                                mouseY
+                        );
+                        renderedButtons.add(StartButtons.piglinReadyButton);
+                    }
                 }
             } else if (!StartButtons.sandboxStartButton.isHidden.get()) {
                 StartButtons.sandboxStartButton.render(evt.getPoseStack(),

@@ -1,9 +1,6 @@
 package com.solegendary.reignofnether.startpos;
 
 import com.solegendary.reignofnether.registrars.PacketHandler;
-import com.solegendary.reignofnether.survival.SurvivalClientEvents;
-import com.solegendary.reignofnether.survival.SurvivalSyncAction;
-import com.solegendary.reignofnether.survival.WaveDifficulty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,44 +14,48 @@ import java.util.function.Supplier;
 public class StartPosClientboundPacket {
 
     StartPosAction action;
+    boolean reserved;
     BlockPos blockPos;
     int colorId;
 
-    public static void addPos(BlockPos pos, int colorId) {
+    public static void addPos(StartPos startPos) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
-                new StartPosClientboundPacket(StartPosAction.ADD, pos, colorId));
+                new StartPosClientboundPacket(StartPosAction.ADD, startPos.pos, startPos.reserved, startPos.colorId));
     }
 
     public static void removePos(BlockPos pos) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
-                new StartPosClientboundPacket(StartPosAction.REMOVE, pos, 0));
+                new StartPosClientboundPacket(StartPosAction.REMOVE, pos, false,0));
     }
 
     public static void reservePos(BlockPos pos) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
-                new StartPosClientboundPacket(StartPosAction.RESERVE, pos, 0));
+                new StartPosClientboundPacket(StartPosAction.RESERVE, pos,false,0));
     }
 
     public static void unreservePos(BlockPos pos) {
         PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
-                new StartPosClientboundPacket(StartPosAction.UNRESERVE, pos, 0));
+                new StartPosClientboundPacket(StartPosAction.UNRESERVE, pos,false,0));
     }
 
-    public StartPosClientboundPacket(StartPosAction action, BlockPos blockPos, int colorId) {
+    public StartPosClientboundPacket(StartPosAction action, BlockPos blockPos, boolean reserved, int colorId) {
         this.action = action;
         this.blockPos = blockPos;
+        this.reserved = reserved;
         this.colorId = colorId;
     }
 
     public StartPosClientboundPacket(FriendlyByteBuf buffer) {
         this.action = buffer.readEnum(StartPosAction.class);
         this.blockPos = buffer.readBlockPos();
+        this.reserved = buffer.readBoolean();
         this.colorId = buffer.readInt();
     }
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeEnum(this.action);
         buffer.writeBlockPos(this.blockPos);
+        buffer.writeBoolean(this.reserved);
         buffer.writeInt(this.colorId);
     }
 
@@ -67,14 +68,14 @@ public class StartPosClientboundPacket {
                     () -> () -> {
                         switch (action) {
                             case ADD -> {
-                                StartPosClient.startPoses.removeIf(sp -> sp.pos.equals(blockPos));
-                                StartPosClient.startPoses.add(new StartPos(blockPos, colorId));
+                                StartPosClientEvents.startPoses.removeIf(sp -> sp.pos.equals(blockPos));
+                                StartPosClientEvents.startPoses.add(new StartPos(blockPos, reserved, colorId));
                             }
                             case REMOVE -> {
-                                StartPosClient.startPoses.removeIf(sp -> sp.pos.equals(blockPos));
+                                StartPosClientEvents.startPoses.removeIf(sp -> sp.pos.equals(blockPos));
                             }
                             case RESERVE -> {
-                                for (StartPos startPos : StartPosClient.startPoses) {
+                                for (StartPos startPos : StartPosClientEvents.startPoses) {
                                     if (startPos.pos.equals(blockPos)) {
                                         startPos.reserved = true;
                                         break;
@@ -82,7 +83,7 @@ public class StartPosClientboundPacket {
                                 }
                             }
                             case UNRESERVE -> {
-                                for (StartPos startPos : StartPosClient.startPoses) {
+                                for (StartPos startPos : StartPosClientEvents.startPoses) {
                                     if (startPos.pos.equals(blockPos)) {
                                         startPos.reserved = false;
                                         break;

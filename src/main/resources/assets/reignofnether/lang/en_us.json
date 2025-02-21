@@ -445,12 +445,19 @@
     "hud.map.reignofnether.lock_map.tooltip1.disabled": "Map centre lock: Disabled",
     "hud.map.reignofnether.lock_map.tooltip2": "(click to toggle)",
 
-    "hud.startbuttons.villagers.reignofnether.first": "Join the game as the Villager Faction.",
+    "hud.startbuttons.villagers.reignofnether.first": "Join the game as Villagers",
     "hud.startbuttons.villagers.reignofnether.second": "Spawns 3 villagers at the target location.",
-    "hud.startbuttons.monsters.reignofnether.first": "Join the game as the Monster Faction.",
+    "hud.startbuttons.monsters.reignofnether.first": "Join the game as Monsters",
     "hud.startbuttons.monsters.reignofnether.second": "Spawns 3 zombie villagers at the target location.",
-    "hud.startbuttons.piglins.reignofnether.first": "Join the game as the Piglin Faction.",
+    "hud.startbuttons.piglins.reignofnether.first": "Join the game as Piglins",
     "hud.startbuttons.piglins.reignofnether.second": "Spawns 3 piglin grunts at the target location.",
+
+    "hud.startbuttons.villagers.reignofnether.first_startpos": "Ready for game as Villagers",
+    "hud.startbuttons.villagers.reignofnether.second_startpos": "Start with a Town Centre and 3 villagers.",
+    "hud.startbuttons.monsters.reignofnether.first_startpos": "Ready for game as Monsters",
+    "hud.startbuttons.monsters.reignofnether.second_startpos": "Start with a Mausoleum and 3 zombie villagers.",
+    "hud.startbuttons.piglins.reignofnether.first_startpos": "Ready for game as Piglins",
+    "hud.startbuttons.piglins.reignofnether.second_startpos": "Start with a Central Portal and 3 piglin grunts.",
 
     "hud.orthoview.reignofnether.hiding_leaves_around": "Hiding leaves: around units and cursor",
     "hud.orthoview.reignofnether.hiding_leaves_all": "Hiding leaves: all",
@@ -1047,5 +1054,11 @@
     "sandbox.reignofnether.unit_cheats2": "fast resource gathering, sunlight immunity",
     "sandbox.reignofnether.unit_cheats3": "(Click to toggle)",
     "sandbox.reignofnether.exit1": "Reset & Exit Sandbox Mode",
-    "sandbox.reignofnether.exit2": "(Destroys all non-neutrals)"
+    "sandbox.reignofnether.exit2": "(Destroys all non-neutrals)",
+
+    "startpos.reignofnether.positions_button.tooltip1": "Starting Locations",
+    "startpos.reignofnether.positions_button.tooltip2": "Click to go to next",
+    "startpos.reignofnether.positions_button.tooltip3": "%d/%d have been taken",
+    "startpos.reignofnether.start_button.tooltip1": "Start the game",
+    "startpos.reignofnether.start_button.tooltip2": "(%d players)"
 }

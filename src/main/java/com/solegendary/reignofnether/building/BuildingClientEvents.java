@@ -92,6 +92,8 @@ public class BuildingClientEvents {
     private static Rotation buildingRotation = Rotation.NONE;
     private static Vec3i buildingDimensions = new Vec3i(0, 0, 0);
 
+    public static ArrayList<BuildingBlock> getBlocksToDraw() { return blocksToDraw; }
+
     private static long lastLeftClickTime = 0; // to track double clicks
     private static final long DOUBLE_CLICK_TIME_MS = 500;
 
@@ -227,6 +229,9 @@ public class BuildingClientEvents {
     // based on whether the location is valid or not
     // location should be 1 space above the selected spot
     public static void drawBuildingToPlace(PoseStack matrix, BlockPos originPos) {
+        if (buildingToPlace == null)
+            return;
+
         boolean valid = isBuildingPlacementValid(originPos);
 
         int minX = 999999;
@@ -600,9 +605,7 @@ public class BuildingClientEvents {
             return;
         }
 
-        if (buildingToPlace != null) {
-            drawBuildingToPlace(evt.getPoseStack(), getOriginPos());
-        }
+        drawBuildingToPlace(evt.getPoseStack(), getOriginPos());
 
         Building preselectedBuilding = getPreselectedBuilding();
 

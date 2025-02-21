@@ -48,6 +48,7 @@ public class StartPosServerboundPacket {
                     for (StartPos startPos : StartPosServerEvents.startPoses) {
                         if (startPos.pos.equals(blockPos)) {
                             startPos.reserved = true;
+                            StartPosClientboundPacket.reservePos(blockPos);
                             break;
                         }
                     }
@@ -56,6 +57,7 @@ public class StartPosServerboundPacket {
                     for (StartPos startPos : StartPosServerEvents.startPoses) {
                         if (startPos.pos.equals(blockPos)) {
                             startPos.reserved = false;
+                            StartPosClientboundPacket.unreservePos(blockPos);
                             break;
                         }
                     }
