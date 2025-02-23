@@ -40,6 +40,10 @@ import java.util.List;
 
 public class WitchUnit extends Witch implements Unit {
     // region
+    private BlockPos anchorPos = new BlockPos(0,0,0);
+    public void setAnchor(BlockPos bp) { anchorPos = bp; }
+    public BlockPos getAnchor() { return anchorPos; }
+
     private final ArrayList<Checkpoint> checkpoints = new ArrayList<>();
     public ArrayList<Checkpoint> getCheckpoints() { return checkpoints; };
 
@@ -92,7 +96,7 @@ public class WitchUnit extends Witch implements Unit {
     public float getUnitMaxHealth() {return maxHealth;}
     public float getUnitArmorValue() {return armorValue;}
     @Nullable
-    public int getPopCost() {return ResourceCosts.WITCH.population;}
+    public ResourceCost getCost() {return ResourceCosts.WITCH;}
 
     public void setFollowTarget(@Nullable LivingEntity target) { this.followTarget = target; }
 

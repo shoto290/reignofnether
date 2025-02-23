@@ -1,5 +1,5 @@
 
-1.19.2-1.1.1c
+1.19.2-1.1.2
 
 [✔] Done and tested
 [🟡] Partially done and/or needs testing
@@ -7,53 +7,59 @@
 
 Features
 --------
-[❌] Neutral animals:
-    - Grizzly bear
-    - Llama
-    - Wolf
+[✔] Neutral animals: panda, grizzly, wolf, polar bear
 
-[❌] Leash range for neutral units
-    - Save position to map
-    - Respawn on /rts-reset
-    - Show original marker
-    - Reset to original button
-    - Retreat to position if too far away
-    - Credit resources on kill (instead of dropping resources)
+[❌] Neutral animal den
 
-[❌] Add End portal to build endermen
-    - Make endermen not teleport on taking water damage (but still take damage)
+[🟡] Leash range for neutral units
+    [✔] Save position to map data
+    [✔] Show original marker
+    [✔] Reset to original button
+    [✔] Retreat to position if too far away
+    [✔] Credit resources on kill (instead of dropping resources)
+
+[✔] Add End portal to build endermen
 [❌] Add Healing fountain
 [❌] Ancient transport portals
-    - End themed?
+    - Always neutral, usable by anyone
+    - Should look slightly different to piglin ones
+    - Allow vanilla players to use them, on onEntityTravelToDimension
+
+[❌] Starting blocks
+    - locations saved to world data when placed or broken
+    - limit of 16 total (any additional placed are cancelled)
+    - if any are detected, forces RTS players to select them to start
+        - Have a button that cycles through them
+        - when announcing a player joining, announce x/y RTS players in the game
+        - change regular start buttons
+            - when clicked, shows a placement of the capitol at the location and reserves the spot
+            - spawn workers when game starts
+    - add button to start the game after a 5 second countdown
+        - add tooltip to show how many players have reserved a starting spot
+    - behave like /rts-lock when at max capacity
+        - different warning message though
+
+    [❌] syncing not working when joining a game that's started
+
+
 
 Bugfixes
 --------
-[✔] Fixed a crash when a player wins by Beacon control
-[✔] Magma cubes are no longer slowed during the day
-[✔] Rate-limited the number of packets sent when dragging the minimap to prevent being kicked
-[✔] Fixed a tooltip error in the wave survival helper
+[✔] Fixed being unable to start sandbox mode when a world border is set
+[✔] Fixed being unable to upgrade multiple libraries, labs or castles at the same time
+
 
 Quality of Life
 ---------------
-[✔] The camera more accurately centers on units and buildings at different Y levels
-[✔] Fire and lava blocks in Basalt Springs no longer damage piglin units
-[✔] Webs in spider lairs no longer slow down monster units
-[✔] Added /gamerule beaconWinMinutes to control how long it takes to win with a beacon
-[✔] You can now control-click a unit instead of double-clicking to select all nearby units of the same type
-[✔] You can now use /rts-camera instead of F12 to toggle the RTS camera
-[✔] You can now specify a resource when using the greedisgood cheatcode (eg. "greedisgood food 100")
+
+
 
 Balancing
 ---------
-[✔] Worker units can no longer capture beacons
-[✔] Beacon auras now affect allies
-[✔] All enemy units and portals are destroyed upon a Beacon victory in Wave Survival
 
 
 Villagers
 ---------
-
-
 
 Piglins
 -------

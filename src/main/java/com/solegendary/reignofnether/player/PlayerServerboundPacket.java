@@ -4,18 +4,14 @@ import com.solegendary.reignofnether.building.BuildingUtils;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.gamemode.ClientGameModeHelper;
 import com.solegendary.reignofnether.gamemode.GameMode;
-import com.solegendary.reignofnether.gamemode.GameModeClientboundPacket;
 import com.solegendary.reignofnether.gamemode.GameModeServerboundPacket;
 import com.solegendary.reignofnether.hud.HudClientEvents;
 import com.solegendary.reignofnether.registrars.PacketHandler;
-import com.solegendary.reignofnether.sounds.SoundAction;
-import com.solegendary.reignofnether.sounds.SoundClientboundPacket;
+import com.solegendary.reignofnether.startpos.StartPosServerEvents;
 import com.solegendary.reignofnether.survival.SurvivalClientEvents;
-import com.solegendary.reignofnether.survival.SurvivalServerEvents;
 import com.solegendary.reignofnether.survival.SurvivalServerboundPacket;
 import com.solegendary.reignofnether.survival.WaveDifficulty;
 import com.solegendary.reignofnether.util.Faction;
-import net.minecraft.client.Game;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -75,7 +71,6 @@ public class PlayerServerboundPacket {
     }
 
     public static void startRTS(Faction faction, Double x, Double y, Double z) {
-
         Minecraft MC = Minecraft.getInstance();
 
         if (MC.player != null && MC.level != null) {
@@ -148,9 +143,26 @@ public class PlayerServerboundPacket {
         }
     }
 
+    public static void startRTSEveryone() {
+        Minecraft MC = Minecraft.getInstance();
+        if (MC.player != null && MC.level != null) {
+            GameModeServerboundPacket.setAndLockAllClientGameModes(ClientGameModeHelper.gameMode);
+            PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.START_RTS_EVERYONE, MC.player.getId(), 0d,0d,0d));
+        }
+    }
+
+    public static void cancelStartRTSEveryone() {
+        Minecraft MC = Minecraft.getInstance();
+        if (MC.player != null && MC.level != null) {
+            PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.CANCEL_START_RTS_EVERYONE, MC.player.getId(), 0d,0d,0d));
+        }
+    }
+
     public static void resetRTS() {
         PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.RESET_RTS, 0, 0d, 0d, 0d));
     }
+
+    // resets and also removes all neutral units and buildings
     public static void resetRTSHard() {
         PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.RESET_RTS_HARD, 0, 0d, 0d, 0d));
     }
@@ -237,6 +249,8 @@ public class PlayerServerboundPacket {
                     PlayerServerEvents.startRTS(this.playerId, new Vec3(this.x, this.y, this.z), Faction.PIGLINS);
                 case START_RTS_SANDBOX ->
                     PlayerServerEvents.startRTS(this.playerId, new Vec3(this.x, this.y, this.z), Faction.NONE);
+                case START_RTS_EVERYONE -> StartPosServerEvents.startGameCountdown();
+                case CANCEL_START_RTS_EVERYONE -> StartPosServerEvents.cancelStartGameCountdown(false);
                 case DEFEAT -> PlayerServerEvents.defeat(this.playerId, Component.translatable("server.reignofnether.surrendered").getString());
                 case RESET_RTS -> PlayerServerEvents.resetRTS(false);
                 case RESET_RTS_HARD -> PlayerServerEvents.resetRTS(true);

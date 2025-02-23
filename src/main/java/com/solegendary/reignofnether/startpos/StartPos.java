@@ -1,0 +1,53 @@
+package com.solegendary.reignofnether.startpos;
+
+import com.solegendary.reignofnether.util.Faction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.MaterialColor;
+
+public class StartPos {
+    public BlockPos pos;
+    public Faction faction = Faction.NONE; // if != NONE, is reserved by a player
+    public String playerName = ""; // name of player who has reserved this spot
+    public int colorId;
+
+    public StartPos(BlockPos pos, int colorId) {
+        this.pos = pos;
+        this.colorId = colorId;
+    }
+
+    public StartPos(BlockPos pos, Faction faction, String playerName, int colorId) {
+        this.pos = pos;
+        this.faction = faction;
+        this.playerName = playerName;
+        this.colorId = colorId;
+    }
+
+    public void reset() {
+        this.faction = Faction.NONE;
+        this.playerName = "";
+    }
+
+    public ResourceLocation getIcon() {
+        if (colorId == MaterialColor.COLOR_MAGENTA.id) return getIcon("magenta");
+        else if (colorId == MaterialColor.COLOR_LIGHT_BLUE.id) return getIcon("light_blue");
+        else if (colorId == MaterialColor.COLOR_ORANGE.id) return getIcon("orange");
+        else if (colorId == MaterialColor.COLOR_YELLOW.id) return getIcon("yellow");
+        else if (colorId == MaterialColor.COLOR_LIGHT_GREEN.id) return getIcon("lime");
+        else if (colorId == MaterialColor.COLOR_PINK.id) return getIcon("pink");
+        else if (colorId == MaterialColor.COLOR_GRAY.id) return getIcon("gray");
+        else if (colorId == MaterialColor.COLOR_LIGHT_GRAY.id) return getIcon("light_gray");
+        else if (colorId == MaterialColor.COLOR_CYAN.id) return getIcon("cyan");
+        else if (colorId == MaterialColor.COLOR_PURPLE.id) return getIcon("purple");
+        else if (colorId == MaterialColor.COLOR_BLUE.id) return getIcon("blue");
+        else if (colorId == MaterialColor.COLOR_BROWN.id) return getIcon("brown");
+        else if (colorId == MaterialColor.COLOR_GREEN.id) return getIcon("green");
+        else if (colorId == MaterialColor.COLOR_RED.id) return getIcon("red");
+        else if (colorId == MaterialColor.COLOR_BLACK.id) return getIcon("black");
+        else return getIcon("white");
+    }
+
+    private ResourceLocation getIcon(String colorName) {
+        return new ResourceLocation("reignofnether", "textures/block/rts_start_block_" + colorName + ".png");
+    }
+}

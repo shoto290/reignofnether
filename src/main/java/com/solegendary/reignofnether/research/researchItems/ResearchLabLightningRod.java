@@ -47,7 +47,7 @@ public class ResearchLabLightningRod extends ProductionItem {
             new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
-            () -> prodBuilding.productionQueue.stream().map(ProductionItem::getItemName).toList().contains(itemName) ||
+            () -> ProductionItem.itemIsBeingProduced(ResearchLabLightningRod.itemName, prodBuilding) ||
                     (prodBuilding instanceof Laboratory lab && lab.getUpgradeLevel() > 0),
             () -> BuildingClientEvents.hasFinishedBuilding(Dungeon.buildingName),
             () -> BuildingServerboundPacket.startProduction(prodBuilding.originPos, itemName),

@@ -12,6 +12,7 @@ import com.solegendary.reignofnether.registrars.SoundRegistrar;
 import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.resources.ResourcesClientEvents;
 import com.solegendary.reignofnether.sandbox.SandboxClientEvents;
+import com.solegendary.reignofnether.startpos.StartPosClientEvents;
 import com.solegendary.reignofnether.survival.SurvivalClientEvents;
 import com.solegendary.reignofnether.unit.UnitClientEvents;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
@@ -265,6 +266,7 @@ public class PlayerClientEvents {
         ClientGameModeHelper.gameModeLocked = false;
         PlayerClientEvents.beaconOwnerTicks.clear();
         SurvivalClientEvents.reset();
+        StartPosClientEvents.reset();
     }
 
     public static void setRTSLock(boolean lock) {

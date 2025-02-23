@@ -11,9 +11,7 @@ import com.solegendary.reignofnether.player.PlayerServerEvents;
 import com.solegendary.reignofnether.registrars.EntityRegistrar;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.research.researchItems.ResearchHeavyTridents;
-import com.solegendary.reignofnether.resources.ResourceCosts;
-import com.solegendary.reignofnether.resources.ResourceSource;
-import com.solegendary.reignofnether.resources.ResourceSources;
+import com.solegendary.reignofnether.resources.*;
 import com.solegendary.reignofnether.sandbox.SandboxServer;
 import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;
 import com.solegendary.reignofnether.unit.interfaces.ConvertableUnit;
@@ -71,6 +69,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 import static com.solegendary.reignofnether.player.PlayerServerEvents.isRTSPlayer;
+import static com.solegendary.reignofnether.resources.ResourcesServerEvents.NEUTRAL_UNIT_BOUNTY_PERCENT;
 
 public class UnitServerEvents {
 
@@ -129,7 +128,7 @@ public class UnitServerEvents {
         getAllUnits().forEach(e -> {
             if (e instanceof Unit unit) {
                 // Save unit data as usual
-                data.units.add(new UnitSave(e.getName().getString(), unit.getOwnerName(), e.getStringUUID()));
+                data.units.add(new UnitSave(e.getName().getString(), unit.getOwnerName(), e.getStringUUID(), unit.getAnchor()));
             }
         });
         data.save();
@@ -213,7 +212,7 @@ public class UnitServerEvents {
         for (LivingEntity entity : allUnits)
             if (entity instanceof Unit unit) {
                 if (unit.getOwnerName().equals(ownerName)) {
-                    currentPopulation += unit.getPopCost();
+                    currentPopulation += unit.getCost().population;
                 }
             }
         for (Building building : BuildingServerEvents.getBuildings())
@@ -344,8 +343,10 @@ public class UnitServerEvents {
                 savedUnits.removeIf(su -> {
                     if (su.uuid.equals(entity.getStringUUID())) {
                         unit.setOwnerName(su.ownerName);
+                        unit.setAnchor(su.anchorPos);
                         UnitSyncClientboundPacket.sendSyncResourcesPacket(unit);
                         UnitSyncClientboundPacket.sendSyncOwnerNamePacket(unit);
+                        UnitSyncClientboundPacket.sendSyncAnchorPosPacket(entity, unit.getAnchor());
                         ReignOfNether.LOGGER.info(
                                 "loaded unit in serverevents: " + su.ownerName + "|" + su.name + "|" + su.uuid);
                         return true;
@@ -398,15 +399,17 @@ public class UnitServerEvents {
         }
 
         // if a player has no more units, then they are defeated
-        if (evt.getEntity() instanceof Unit unit) {
-            int unitsOwned = allUnits.stream()
-                .filter(u -> (u instanceof Unit unit1 && unit1.getOwnerName().equals(unit.getOwnerName())))
-                .toList()
-                .size();
-            if (!SandboxServer.isSandboxPlayer(unit.getOwnerName()) &&
-                unitsOwned == 0 && isRTSPlayer(unit.getOwnerName())
-                && BuildingUtils.getTotalCompletedBuildingsOwned(false, unit.getOwnerName()) == 0) {
-                PlayerServerEvents.defeat(unit.getOwnerName(), Component.translatable("server.reignofnether.lost_all").getString());
+        synchronized (allUnits) {
+            if (evt.getEntity() instanceof Unit unit) {
+                int unitsOwned = allUnits.stream()
+                        .filter(u -> (u instanceof Unit unit1 && unit1.getOwnerName().equals(unit.getOwnerName())))
+                        .toList()
+                        .size();
+                if (!SandboxServer.isSandboxPlayer(unit.getOwnerName()) &&
+                        unitsOwned == 0 && isRTSPlayer(unit.getOwnerName())
+                        && BuildingUtils.getTotalCompletedBuildingsOwned(false, unit.getOwnerName()) == 0) {
+                    PlayerServerEvents.defeat(unit.getOwnerName(), Component.translatable("server.reignofnether.lost_all").getString());
+                }
             }
         }
     }
@@ -494,7 +497,7 @@ public class UnitServerEvents {
                     false
                 );
                 if (entity instanceof SlimeUnit sUnit && evt.getEntity() instanceof Unit originalEntity) {
-                    sUnit.setSize(Mth.clamp(originalEntity.getPopCost() - 1, 1, 5), true);
+                    sUnit.setSize(Mth.clamp(originalEntity.getCost().population - 1, 1, 5), true);
                 }
                 if (entity instanceof Unit convertedUnit) {
                     convertedUnit.setOwnerName(unit.getOwnerName());
@@ -508,6 +511,21 @@ public class UnitServerEvents {
             vUnit.incrementHunterExp();
             if (!(evt.getEntity() instanceof Chicken))
                 vUnit.incrementHunterExp();
+        }
+
+        if (evt.getEntity() instanceof Unit unitKilled && unitKilled.getOwnerName().isEmpty()) {
+            if (evt.getSource().getEntity() instanceof Unit unit) {
+                ResourceCost cost = unitKilled.getCost();
+                Resources resources = new Resources(unit.getOwnerName(),
+                        (int) (cost.food * NEUTRAL_UNIT_BOUNTY_PERCENT),
+                        (int) (cost.wood * NEUTRAL_UNIT_BOUNTY_PERCENT),
+                        (int) (cost.ore * NEUTRAL_UNIT_BOUNTY_PERCENT)
+                );
+                if (resources.getTotalValue() > 0) {
+                    ResourcesClientboundPacket.showFloatingText(resources, evt.getEntity().getOnPos());
+                    ResourcesServerEvents.addSubtractResources(resources);
+                }
+            }
         }
     }
 
@@ -550,6 +568,10 @@ public class UnitServerEvents {
                 if (entity instanceof Unit unit) {
                     UnitSyncClientboundPacket.sendSyncResourcesPacket(unit);
                     UnitSyncClientboundPacket.sendSyncStatsPacket(entity);
+                    if (unit.getAnchor() != null)
+                        UnitSyncClientboundPacket.sendSyncAnchorPosPacket(entity, unit.getAnchor());
+                    else
+                        UnitSyncClientboundPacket.sendRemoveAnchorPosPacket(entity);
                     if (entity instanceof VillagerUnit vUnit && vUnit.isVeteran())
                         UnitSyncClientboundPacket.makeVillagerVeteran(vUnit);
                 }

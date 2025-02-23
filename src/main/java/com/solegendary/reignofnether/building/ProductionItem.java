@@ -115,6 +115,13 @@ public abstract class ProductionItem {
         return false;
     }
 
+    public static boolean itemIsBeingProduced(String itemName, ProductionBuilding pBuilding) {
+        for (ProductionItem prodItem : pBuilding.productionQueue)
+            if (prodItem.getItemName().equals(itemName))
+                return true;
+        return false;
+    }
+
     // Button object to build - start buttons are static as they aren't tied to an existing prodItem
     public static Button getStartButton(ProductionBuilding prodBuilding) {
         return null;

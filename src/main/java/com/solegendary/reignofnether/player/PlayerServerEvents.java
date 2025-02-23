@@ -4,7 +4,10 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.alliance.AlliancesServer;
 import com.solegendary.reignofnether.alliance.AllyCommand;
 import com.solegendary.reignofnether.building.*;
+import com.solegendary.reignofnether.building.buildings.monsters.Mausoleum;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
+import com.solegendary.reignofnether.building.buildings.piglins.CentralPortal;
+import com.solegendary.reignofnether.building.buildings.villagers.TownCentre;
 import com.solegendary.reignofnether.gamemode.GameMode;
 import com.solegendary.reignofnether.gamemode.GameModeClientboundPacket;
 import com.solegendary.reignofnether.guiscreen.TopdownGuiContainer;
@@ -16,6 +19,8 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.Resources;
 import com.solegendary.reignofnether.resources.ResourcesServerEvents;
 import com.solegendary.reignofnether.sandbox.SandboxServer;
+import com.solegendary.reignofnether.startpos.StartPosClientboundPacket;
+import com.solegendary.reignofnether.startpos.StartPosServerEvents;
 import com.solegendary.reignofnether.survival.SurvivalServerEvents;
 import com.solegendary.reignofnether.time.TimeUtils;
 import com.solegendary.reignofnether.tutorial.TutorialServerEvents;
@@ -27,6 +32,7 @@ import com.solegendary.reignofnether.unit.packets.UnitSyncClientboundPacket;
 import com.solegendary.reignofnether.util.Faction;
 import com.solegendary.reignofnether.util.MiscUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
@@ -39,6 +45,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.MenuConstructor;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.ServerChatEvent;
@@ -286,6 +293,14 @@ public class PlayerServerEvents {
     }
 
     public static void startRTS(int playerId, Vec3 pos, Faction faction) {
+        startRTS(playerId, pos, faction, false);
+    }
+
+    // readied start is a simultaneous start from players using RTS start pos blocks, difference being:
+    // - places the capitol foundations automatically
+    // - spawns workers outside the foundations
+    // - no start messages are sent other than the one from the countdown
+    public static void startRTS(int playerId, Vec3 pos, Faction faction, boolean readiedStart) {
         synchronized (rtsPlayers) {
             ServerPlayer serverPlayer = null;
             for (ServerPlayer player : players)
@@ -308,7 +323,7 @@ public class PlayerServerEvents {
                 serverPlayer.sendSystemMessage(Component.literal(""));
                 return;
             }
-            if (serverPlayer.getLevel().getWorldBorder().getDistanceToBorder(pos.x, pos.z) < 1) {
+            if (serverPlayer.getLevel().getWorldBorder().getDistanceToBorder(pos.x, pos.z) < 1 && faction != Faction.NONE) {
                 serverPlayer.sendSystemMessage(Component.literal(""));
                 serverPlayer.sendSystemMessage(Component.translatable("server.reignofnether.outside_border"));
                 serverPlayer.sendSystemMessage(Component.literal(""));
@@ -328,6 +343,7 @@ public class PlayerServerEvents {
             PlayerClientboundPacket.enableRTSStatus(playerName);
 
             ServerLevel level = serverPlayer.getLevel();
+            ArrayList<Entity> workers = new ArrayList<>();
             for (int i = -1; i <= 1; i++) {
                 Entity entity = entityType != null ? entityType.create(level) : null;
                 if (entity != null) {
@@ -336,9 +352,12 @@ public class PlayerServerEvents {
                         .above();
                     ((Unit) entity).setOwnerName(playerName);
                     entity.moveTo(bp, 0, 0);
-                    level.addFreshEntity(entity);
+                    if (!readiedStart)
+                        level.addFreshEntity(entity);
+                    workers.add(entity);
                 }
             }
+
             if (faction != Faction.NONE) {
                 if (SurvivalServerEvents.isEnabled()) {
                     level.setDayTime(TimeUtils.DAWN + getWaveSurvivalTimeModifier(SurvivalServerEvents.getDifficulty()));
@@ -351,7 +370,36 @@ public class PlayerServerEvents {
             }
             ResourcesServerEvents.resetResources(playerName);
 
-            if (!TutorialServerEvents.isEnabled()) {
+            if (readiedStart) {
+                String buildingName = null;
+                ArrayList<BuildingBlock> blocks = null;
+
+                switch (faction) {
+                    case VILLAGERS -> {
+                        buildingName = TownCentre.buildingName;
+                        blocks = TownCentre.getRelativeBlockData(level);
+                    }
+                    case MONSTERS -> {
+                        buildingName = Mausoleum.buildingName;
+                        blocks = Mausoleum.getRelativeBlockData(level);
+                    }
+                    case PIGLINS -> {
+                        buildingName = CentralPortal.buildingName;
+                        blocks = CentralPortal.getRelativeBlockData(level);
+                    }
+                };
+                if (buildingName != null) {
+                    BlockPos bp = getBuildingOriginPos(new BlockPos(pos.x, pos.y, pos.z), blocks);
+                    for (int i = 0; i < workers.size(); i++) {
+                        workers.get(i).moveTo(bp.offset(i, 0, 0), 0, 0);
+                        level.addFreshEntity(workers.get(i));
+                    }
+                    int[] workerIds = workers.stream().map(Entity::getId).mapToInt(Integer::intValue).toArray();
+                    BuildingServerEvents.placeBuilding(buildingName, bp, Rotation.NONE, playerName, workerIds, false, false);
+                }
+            }
+
+            if (!TutorialServerEvents.isEnabled() && !readiedStart) {
                 serverPlayer.sendSystemMessage(Component.literal(""));
                 if (faction == Faction.NONE)
                     sendMessageToAllPlayers("server.reignofnether.started_sandbox", true, playerName);
@@ -362,6 +410,13 @@ public class PlayerServerEvents {
             PlayerClientboundPacket.syncRtsGameTime(rtsGameTicks);
             saveRTSPlayers();
         }
+    }
+
+    public static BlockPos getBuildingOriginPos(BlockPos bp, ArrayList<BuildingBlock> blocks) {
+        Vec3i buildingDimensions = BuildingUtils.getBuildingSize(blocks);
+        int xRadius = buildingDimensions.getX() / 2;
+        int zRadius = buildingDimensions.getZ() / 2;
+        return bp.offset(-xRadius, 0 , -zRadius);
     }
 
     public static void startRTSBot(String name, Vec3 pos, Faction faction) {
@@ -726,6 +781,8 @@ public class PlayerServerEvents {
     }
 
     public static void resetRTS(boolean hardReset) {
+        StartPosServerEvents.cancelStartGameCountdown(true);
+
         synchronized (rtsPlayers) {
             rtsPlayers.clear();
 
@@ -773,6 +830,10 @@ public class PlayerServerEvents {
     }
 
     public static void setRTSLock(boolean lock) {
+        setRTSLock(lock, false);
+    }
+
+    public static void setRTSLock(boolean lock, boolean noMsg) {
         rtsLocked = lock;
         serverLevel.players().forEach(p -> {
             if (rtsLocked) {
@@ -781,10 +842,12 @@ public class PlayerServerEvents {
                 PlayerClientboundPacket.unlockRTS(p.getName().getString());
             }
         });
-        if (rtsLocked) {
-            sendMessageToAllPlayers("server.reignofnether.match_locked");
-        } else {
-            sendMessageToAllPlayers("server.reignofnether.match_unlocked");
+        if (!noMsg) {
+            if (rtsLocked) {
+                sendMessageToAllPlayers("server.reignofnether.match_locked");
+            } else {
+                sendMessageToAllPlayers("server.reignofnether.match_unlocked");
+            }
         }
     }
 

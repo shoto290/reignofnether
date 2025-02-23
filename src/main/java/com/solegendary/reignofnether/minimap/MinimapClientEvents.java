@@ -17,7 +17,11 @@ import com.solegendary.reignofnether.fogofwar.FogOfWarClientEvents;
 import com.solegendary.reignofnether.hud.Button;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
+import com.solegendary.reignofnether.player.PlayerClientEvents;
+import com.solegendary.reignofnether.player.PlayerServerEvents;
 import com.solegendary.reignofnether.player.PlayerServerboundPacket;
+import com.solegendary.reignofnether.startpos.StartPos;
+import com.solegendary.reignofnether.startpos.StartPosClientEvents;
 import com.solegendary.reignofnether.time.NightCircleMode;
 import com.solegendary.reignofnether.time.TimeClientEvents;
 import com.solegendary.reignofnether.tutorial.TutorialClientEvents;
@@ -77,6 +81,8 @@ public class MinimapClientEvents {
     private static final int PLAYER_THICKNESS = 1;
     private static final int BUILDING_RADIUS = 7;
     private static final int BUILDING_THICKNESS = 2;
+    private static final int START_POS_RADIUS = 7;
+    private static final int START_POS_THICKNESS = 2;
 
     // rate-limit teleporting from dragging the minimap to prevent being kicked from packet spamming
     private static long lastDragTeleportTimestamp = System.currentTimeMillis();
@@ -570,6 +576,13 @@ public class MinimapClientEvents {
                 }
             }
         }
+        // draw starting locations
+        if (MC.level != null && StartPosClientEvents.isEnabled() &&
+                !StartPosClientEvents.isStarting &&
+                !PlayerClientEvents.rtsLocked) {
+            drawStartingPosesOnMap();
+        }
+
         // draw players
         if (MC.level != null) {
             for (Player player : MC.level.players()) {
@@ -625,8 +638,8 @@ public class MinimapClientEvents {
 
                     // if pixel is on the edge of the square keep it coloured black
                     if (!(
-                        x0 < UNIT_THICKNESS || x0 >= (UNIT_RADIUS * 2) - UNIT_THICKNESS ||
-                        z0 < UNIT_THICKNESS || z0 >= (UNIT_RADIUS * 2) - UNIT_THICKNESS
+                            x0 < UNIT_THICKNESS || x0 >= (UNIT_RADIUS * 2) - UNIT_THICKNESS ||
+                                    z0 < UNIT_THICKNESS || z0 >= (UNIT_RADIUS * 2) - UNIT_THICKNESS
                     )) {
                         switch (relationship) {
                             case OWNED -> rgb = 0x00FF00;
@@ -663,8 +676,8 @@ public class MinimapClientEvents {
 
                     // if pixel is on the edge of the square keep it coloured black
                     if (!(
-                        x0 < PLAYER_THICKNESS || x0 >= (PLAYER_RADIUS * 2) - PLAYER_THICKNESS ||
-                        z0 < PLAYER_THICKNESS || z0 >= (PLAYER_RADIUS * 2) - PLAYER_THICKNESS
+                            x0 < PLAYER_THICKNESS || x0 >= (PLAYER_RADIUS * 2) - PLAYER_THICKNESS ||
+                                    z0 < PLAYER_THICKNESS || z0 >= (PLAYER_RADIUS * 2) - PLAYER_THICKNESS
                     )) {
                         if (AlliancesClient.isAllied(thisPlayerName, thatPlayerName))
                             rgb = 0x3232FF;
@@ -675,6 +688,42 @@ public class MinimapClientEvents {
                     int zN = z - zc_world + (mapGuiRadius * 2);
 
                     mapColoursOverlays[xN][zN] = MiscUtil.reverseHexRGB(rgb) | (0xFF << 24);
+                }
+            }
+        }
+    }
+
+    private static void drawStartingPosesOnMap() {
+        if (MC.player == null)
+            return;
+
+        for (StartPos startPos : StartPosClientEvents.startPoses) {
+            int xc = startPos.pos.getX();
+            int zc = startPos.pos.getZ();
+
+            for (int x = xc - START_POS_RADIUS; x < xc + START_POS_RADIUS; x++) {
+                for (int z = zc - START_POS_RADIUS; z < zc + START_POS_RADIUS; z++) {
+                    if (isWorldXZinsideMap(x, z)) {
+                        int x0 = x - xc + START_POS_RADIUS;
+                        int z0 = z - zc + START_POS_RADIUS;
+                        int rgb = 0x000000;
+
+                        // if pixel is on the edge of the square keep it coloured black
+                        if (!(x0 < START_POS_THICKNESS || x0 >= (START_POS_RADIUS * 2) - START_POS_THICKNESS ||
+                              z0 < START_POS_THICKNESS || z0 >= (START_POS_RADIUS * 2) - START_POS_THICKNESS
+                        )) {
+                            rgb = switch (MiscUtil.getClientsideRelationship(MC.player.getName().getString(), startPos.playerName)) {
+                                case OWNED -> 0x00FF00;
+                                case FRIENDLY -> 0x3232FF;
+                                case HOSTILE -> 0xFF0000;
+                                case NEUTRAL -> 0xFFFF00;
+                            };
+                        }
+                        int xN = x - xc_world + (mapGuiRadius * 2);
+                        int zN = z - zc_world + (mapGuiRadius * 2);
+
+                        mapColoursOverlays[xN][zN] = MiscUtil.reverseHexRGB(rgb) | (0xFF << 24);
+                    }
                 }
             }
         }

@@ -18,8 +18,9 @@ import com.solegendary.reignofnether.player.PlayerServerboundPacket;
 import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.research.ResearchServerboundPacket;
 import com.solegendary.reignofnether.unit.Relationship;
+import com.solegendary.reignofnether.unit.UnitClientEvents;
 import com.solegendary.reignofnether.unit.units.monsters.*;
-import com.solegendary.reignofnether.unit.units.neutral.EndermanProd;
+import com.solegendary.reignofnether.unit.units.neutral.*;
 import com.solegendary.reignofnether.unit.units.piglins.*;
 import com.solegendary.reignofnether.unit.units.villagers.*;
 import com.solegendary.reignofnether.util.Faction;
@@ -51,7 +52,11 @@ public class SandboxClientEvents {
 
     public static boolean isSandboxPlayer(String playerName) {
         return MC.player != null && playerName.equals(MC.player.getName().getString()) &&
-            PlayerClientEvents.isRTSPlayer && ClientGameModeHelper.gameMode == GameMode.SANDBOX;
+                PlayerClientEvents.isRTSPlayer && ClientGameModeHelper.gameMode == GameMode.SANDBOX;
+    }
+
+    public static boolean isSandboxPlayer() {
+        return PlayerClientEvents.isRTSPlayer && ClientGameModeHelper.gameMode == GameMode.SANDBOX;
     }
 
     public static List<AbilityButton> getNeutralBuildingButtons() {
@@ -111,7 +116,11 @@ public class SandboxClientEvents {
                 PiglinMerchantProd.getPlaceButton()
             );
             case NONE -> List.of(
-                EndermanProd.getPlaceButton()
+                EndermanProd.getPlaceButton(),
+                PolarBearProd.getPlaceButton(),
+                GrizzlyBearProd.getPlaceButton(),
+                PandaProd.getPlaceButton(),
+                WolfProd.getPlaceButton()
             );
         };
     }
@@ -346,24 +355,28 @@ public class SandboxClientEvents {
             return;
         }
 
-        if (evt.getButton() == GLFW.GLFW_MOUSE_BUTTON_1) {
-           SandboxAction sandboxAction = CursorClientEvents.getLeftClickSandboxAction();
+        SandboxAction sandboxAction = CursorClientEvents.getLeftClickSandboxAction();
+        if (evt.getButton() == GLFW.GLFW_MOUSE_BUTTON_1 && sandboxAction != null) {
 
-           String ownerName = switch (relationship) {
+            String ownerName = switch (relationship) {
                case NEUTRAL -> "";
                case HOSTILE -> "Enemy";
                default -> MC.player.getName().getString();
-           };
+            };
 
-           if (sandboxAction != null && sandboxAction.name().toLowerCase().contains("spawn_") && !spawnUnitName.isBlank()) {
-                SandboxServerboundPacket.spawnUnit(CursorClientEvents.getLeftClickSandboxAction(),
-                        ownerName, spawnUnitName, CursorClientEvents.getPreselectedBlockPos());
-           }
+            int entityId = 0;
+            if (!UnitClientEvents.getSelectedUnits().isEmpty())
+                entityId = UnitClientEvents.getSelectedUnits().get(0).getId();
 
-           if (!Keybindings.shiftMod.isDown()) {
-               spawnUnitName = "";
-               CursorClientEvents.setLeftClickSandboxAction(null);
-           }
+            switch (sandboxAction) {
+                case SPAWN_UNIT -> SandboxServerboundPacket.spawnUnit(CursorClientEvents.getLeftClickSandboxAction(), ownerName, spawnUnitName, CursorClientEvents.getPreselectedBlockPos());
+                case SET_ANCHOR -> SandboxServerboundPacket.setAnchor(CursorClientEvents.getPreselectedBlockPos(), entityId);
+            }
+
+            if (!Keybindings.shiftMod.isDown()) {
+                spawnUnitName = "";
+                CursorClientEvents.setLeftClickSandboxAction(null);
+            }
         }
         if (evt.getButton() == GLFW.GLFW_MOUSE_BUTTON_2) {
             spawnUnitName = "";

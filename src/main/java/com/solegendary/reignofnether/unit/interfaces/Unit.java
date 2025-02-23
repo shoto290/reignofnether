@@ -3,6 +3,7 @@ package com.solegendary.reignofnether.unit.interfaces;
 import com.solegendary.reignofnether.building.BuildingUtils;
 import com.solegendary.reignofnether.building.buildings.shared.AbstractBridge;
 import com.solegendary.reignofnether.hud.AbilityButton;
+import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.nether.NetherBlocks;
 import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
@@ -23,12 +24,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -41,12 +44,18 @@ import java.util.List;
 
 public interface Unit {
 
+    static int ANCHOR_RETREAT_RANGE = 30;
+
     static int PIGLIN_HEALING_TICKS = 8 * ResourceCost.TICKS_PER_SECOND;
     static int MONSTER_HEALING_TICKS = 12 * ResourceCost.TICKS_PER_SECOND;
 
     // used for increasing pathfinding calculation range, default is 16 for most mobs
     static int FOLLOW_RANGE_IMPROVED = 64;
     static int FOLLOW_RANGE = 16;
+
+    // position that neutral units run back to when past leash range
+    public void setAnchor(BlockPos bp);
+    public BlockPos getAnchor();
 
     public static int getFollowRange() {
         return UnitServerEvents.improvedPathfinding ? FOLLOW_RANGE_IMPROVED : FOLLOW_RANGE;
@@ -75,7 +84,7 @@ public interface Unit {
     public float getMovementSpeed();
     public float getUnitMaxHealth();
     public float getUnitArmorValue();
-    public int getPopCost();
+    public ResourceCost getCost();
 
     public LivingEntity getFollowTarget();
     public boolean getHoldPosition();
@@ -121,7 +130,7 @@ public interface Unit {
         } else {
             int totalRes = Resources.getTotalResourcesFromItems(unit.getItems()).getTotalValue();
             if (unitMob.canPickUpLoot()) {
-                for (ItemEntity itementity : unitMob.level.getEntitiesOfClass(ItemEntity.class, unitMob.getBoundingBox().inflate(1,0,1))) {
+                for (ItemEntity itementity : unitMob.level.getEntitiesOfClass(ItemEntity.class, unitMob.getBoundingBox().inflate(1, 0, 1))) {
                     if (!itementity.isRemoved() && !itementity.getItem().isEmpty() && !itementity.hasPickUpDelay() && unitMob.isAlive()) {
 
                         if (!Unit.atMaxResources(unit)) {
@@ -191,12 +200,32 @@ public interface Unit {
         }
 
         if (le.isInWater() && // stuck in bridge
-            BuildingUtils.findBuilding(le.level.isClientSide(), le.getOnPos().above()) instanceof AbstractBridge) {
-            le.setDeltaMovement(0,0.2,0);
+                BuildingUtils.findBuilding(le.level.isClientSide(), le.getOnPos().above()) instanceof AbstractBridge) {
+            le.setDeltaMovement(0, 0.2, 0);
         }
 
         if (!le.getLevel().getWorldBorder().isWithinBounds(le.getOnPos()))
             le.kill();
+
+        if (unitMob.tickCount % 20 == 0)
+            checkAndRetreatToAnchor(unit);
+    }
+
+    public static boolean hasAnchor(Unit unit) {
+        return unit.getAnchor() != null && !unit.getAnchor().equals(new BlockPos(0,0,0));
+    }
+
+    private static void checkAndRetreatToAnchor(Unit unit) {
+        LivingEntity le = (LivingEntity) unit;
+        if (!hasAnchor(unit) || le.getLevel().isClientSide())
+            return;
+
+        if ((unit.isIdle() || le.distanceToSqr(Vec3.atCenterOf(unit.getAnchor())) > ANCHOR_RETREAT_RANGE * ANCHOR_RETREAT_RANGE) &&
+            !le.getOnPos().equals(unit.getAnchor())) {
+            fullResetBehaviours(unit);
+            unit.getMoveGoal().setMoveTarget(unit.getAnchor());
+            System.out.println("retreating!");
+        }
     }
 
     private static int getThresholdResources(Unit unit) {
@@ -219,6 +248,19 @@ public interface Unit {
     public default boolean hasLivingTarget() {
         Mob unitMob = (Mob) this;
         return unitMob.getTarget() != null && unitMob.getTarget().isAlive();
+    }
+
+    public static void fullResetBehaviours(Unit unit) {
+        if (((Entity) unit).getLevel().isClientSide() && !Keybindings.shiftMod.isDown())
+            unit.getCheckpoints().clear();
+        unit.resetBehaviours();
+        Unit.resetBehaviours(unit);
+        if (unit instanceof WorkerUnit workerUnit) {
+            WorkerUnit.resetBehaviours(workerUnit);
+        }
+        if (unit instanceof AttackerUnit attackerUnit) {
+            AttackerUnit.resetBehaviours(attackerUnit);
+        }
     }
 
     public static void resetBehaviours(Unit unit) {

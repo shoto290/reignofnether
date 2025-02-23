@@ -6,6 +6,7 @@ import com.solegendary.reignofnether.hud.Button;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.resources.ResourceCosts;
+import com.solegendary.reignofnether.startpos.StartPosClientEvents;
 import com.solegendary.reignofnether.util.MyRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -44,7 +45,7 @@ public class GameruleClient {
                 (Keybinding) null,
                 () -> false,
                 () -> false,
-                () -> true,
+                () -> !StartPosClientEvents.isStarting,
                 () -> gamerulesMenuOpen = !gamerulesMenuOpen,
                 null,
                 MC.player != null && MC.player.hasPermissions(4) ?
@@ -67,7 +68,7 @@ public class GameruleClient {
                     (Keybinding) null,
                     () -> false,
                     () -> false,
-                    () -> MC.player != null && MC.player.hasPermissions(4),
+                    () -> MC.player != null && MC.player.hasPermissions(4) && !StartPosClientEvents.isStarting,
                     onLeftClick,
                     null,
                     List.of(fcs(tooltip))
@@ -96,7 +97,7 @@ public class GameruleClient {
                 (Keybinding) null,
                 () -> false,
                 () -> false,
-                () -> MC.player != null && MC.player.hasPermissions(4),
+                () -> MC.player != null && MC.player.hasPermissions(4) && !StartPosClientEvents.isStarting,
                 onLeftClick,
                 onRightClick,
                 tooltipLines

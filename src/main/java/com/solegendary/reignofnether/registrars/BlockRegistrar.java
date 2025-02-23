@@ -2,7 +2,9 @@ package com.solegendary.reignofnether.registrars;
 
 import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.blocks.FallingRotatedPillarBlock;
+import com.solegendary.reignofnether.blocks.RTSStartBlock;
 import com.solegendary.reignofnether.blocks.WalkableMagmaBlock;
+import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
@@ -101,6 +103,71 @@ public class BlockRegistrar {
             .isValidSpawn((p_187421_, p_187422_, p_187423_, p_187424_) -> p_187424_.fireImmune())
             .hasPostProcess(BlockRegistrar::always).emissiveRendering(BlockRegistrar::always)),
             CreativeModeTab.TAB_BUILDING_BLOCKS);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_BLUE = registerBlock("rts_start_block_blue", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_YELLOW = registerBlock("rts_start_block_yellow", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_YELLOW)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_GREEN = registerBlock("rts_start_block_green", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_RED = registerBlock("rts_start_block_red", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_ORANGE = registerBlock("rts_start_block_orange", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_CYAN = registerBlock("rts_start_block_cyan", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_CYAN)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_MAGENTA = registerBlock("rts_start_block_magenta", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_MAGENTA)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_BROWN = registerBlock("rts_start_block_brown", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BROWN)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_WHITE = registerBlock("rts_start_block_white", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SNOW)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_BLACK = registerBlock("rts_start_block_black", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_LIGHT_BLUE = registerBlock("rts_start_block_light_blue", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_LIME = registerBlock("rts_start_block_lime", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GREEN)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_LIGHT_GRAY = registerBlock("rts_start_block_light_gray", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_GRAY = registerBlock("rts_start_block_gray", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_PURPLE = registerBlock("rts_start_block_purple", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_PURPLE)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
+    public static final RegistryObject<Block> RTS_START_BLOCK_PINK = registerBlock("rts_start_block_pink", () ->
+            new RTSStartBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_PINK)
+                    .strength(-1.0F, 3600000.0F).noLootTable()), CreativeModeTab.TAB_MISC);
+
 
     private static boolean always(BlockState p_50775_, BlockGetter p_50776_, BlockPos p_50777_) {
         return true;

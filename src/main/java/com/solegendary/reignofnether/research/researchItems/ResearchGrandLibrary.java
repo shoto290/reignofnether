@@ -45,7 +45,7 @@ public class ResearchGrandLibrary extends ProductionItem {
                 new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
                 hotkey,
                 () -> false,
-                () -> ProductionItem.itemIsBeingProduced(ResearchGrandLibrary.itemName, prodBuilding.ownerName) ||
+                () -> ProductionItem.itemIsBeingProduced(ResearchGrandLibrary.itemName, prodBuilding) ||
                         (prodBuilding instanceof Library library && library.getUpgradeLevel() > 0),
                 () -> true,
                 () -> BuildingServerboundPacket.startProduction(prodBuilding.originPos, itemName),

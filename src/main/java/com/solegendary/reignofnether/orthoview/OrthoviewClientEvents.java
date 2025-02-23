@@ -344,7 +344,7 @@ public class OrthoviewClientEvents {
 
         float offset = (float) (Math.sqrt(getZoom()) / (Math.sqrt(ZOOM_MAX)));
 
-        int yDiff = (int) (MC.player.getY() - pos.y) - 35;
+        int yDiff = (int) (MC.player.getY() - pos.y) - 40;
 
         Vec2 XZRotatedOffset = MyMath.rotateCoords(0, -(offset * 35) - yDiff, -camRotX - camRotAdjX);
 

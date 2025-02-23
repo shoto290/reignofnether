@@ -42,7 +42,6 @@ Quality of Life Features
 [❌] restore ores on /rts-reset
     - Have to track each ore block when it is mined or converted into nether terrain
 
-[❌] Special block to allow spawn location picking
 
 
 Balancing
