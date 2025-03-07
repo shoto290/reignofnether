@@ -119,8 +119,6 @@ public interface AttackerUnit {
                 rangedAttackGoal.tickAttackCooldown();
             else if (attackerUnit.getAttackGoal() instanceof UnitBowAttackGoal rangedAttackGoal)
                 rangedAttackGoal.tickAttackCooldown();
-            else if (attackerUnit.getAttackGoal() instanceof UnitCrossbowAttackGoal rangedAttackGoal)
-                rangedAttackGoal.tickAttackCooldown();
 
             if (attackerUnit.getAttackBuildingGoal() != null && attackerUnit.canAttackBuildings())
                 attackerUnit.getAttackBuildingGoal().tick();
