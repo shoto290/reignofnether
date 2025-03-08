@@ -53,12 +53,14 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.solegendary.reignofnether.building.BuildingServerEvents.saveBuildings;
 import static com.solegendary.reignofnether.time.TimeUtils.getWaveSurvivalTimeModifier;
 
 // this class tracks all available players so that any serverside functions that need to affect the player can be
@@ -137,6 +139,13 @@ public class PlayerServerEvents {
         }
     }
 
+    private static final int SAVE_TICKS_MAX = 1200;
+    private static int saveTicks = 0;
+    @SubscribeEvent
+    public static void onServerStopping(ServerStoppingEvent evt) {
+        saveRTSPlayers();
+    }
+
     public static boolean isRTSPlayer(String playerName) {
         synchronized (rtsPlayers) {
             return rtsPlayers.stream().filter(p -> p.name.equals(playerName)).toList().size() > 0;
@@ -200,6 +209,16 @@ public class PlayerServerEvents {
                             PlayerClientboundPacket.syncBeaconOwnerTicks(rtsPlayer.name, rtsPlayer.beaconOwnerTicks);
                         }
                     }
+                }
+            }
+        }
+        if (evt.phase == TickEvent.Phase.END) {
+            saveTicks += 1;
+            if (saveTicks >= SAVE_TICKS_MAX) {
+                ServerLevel level = evt.getServer().getLevel(Level.OVERWORLD);
+                if (level != null) {
+                    saveRTSPlayers();
+                    saveTicks = 0;
                 }
             }
         }
@@ -821,7 +840,7 @@ public class PlayerServerEvents {
 
             // clear all saved data
             saveRTSPlayers();
-            BuildingServerEvents.saveBuildings(serverLevel);
+            saveBuildings(serverLevel);
             BuildingServerEvents.saveNetherZones(serverLevel);
             UnitServerEvents.saveUnits(serverLevel);
             UnitServerEvents.saveGatherTargets(serverLevel);

@@ -47,7 +47,7 @@ public class RTSPlayerSaveData extends SavedData {
                 int beaconOwnerTicks = ptag.getInt("beaconOwnerTicks");
                 Faction faction = Faction.valueOf(ptag.getString("faction"));
 
-                data.rtsPlayers.add(RTSPlayer.getFromSave(name, id, ticksWithoutCapitol, faction));
+                data.rtsPlayers.add(RTSPlayer.getFromSave(name, id, ticksWithoutCapitol, faction, beaconOwnerTicks));
 
                 ReignOfNether.LOGGER.info("RTSPlayerSaveData.load: " + name + "|" + id + "|" + faction);
             }

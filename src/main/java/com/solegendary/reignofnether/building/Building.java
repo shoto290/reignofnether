@@ -12,13 +12,11 @@ import com.solegendary.reignofnether.building.buildings.piglins.Fortress;
 import com.solegendary.reignofnether.building.buildings.piglins.Portal;
 import com.solegendary.reignofnether.building.buildings.shared.AbstractBridge;
 import com.solegendary.reignofnether.building.buildings.shared.AbstractStockpile;
-import com.solegendary.reignofnether.building.buildings.villagers.Castle;
 import com.solegendary.reignofnether.building.buildings.villagers.Watchtower;
 import com.solegendary.reignofnether.fogofwar.*;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.hud.Button;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
-import com.solegendary.reignofnether.player.RTSPlayer;
 import com.solegendary.reignofnether.registrars.BlockRegistrar;
 import com.solegendary.reignofnether.registrars.EntityRegistrar;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
@@ -26,8 +24,6 @@ import com.solegendary.reignofnether.research.researchItems.ResearchAdvancedPort
 import com.solegendary.reignofnether.research.researchItems.ResearchSilverfish;
 import com.solegendary.reignofnether.resources.*;
 import com.solegendary.reignofnether.sandbox.SandboxServer;
-import com.solegendary.reignofnether.sounds.SoundAction;
-import com.solegendary.reignofnether.sounds.SoundClientboundPacket;
 import com.solegendary.reignofnether.survival.SurvivalServerEvents;
 import com.solegendary.reignofnether.tutorial.TutorialClientEvents;
 import com.solegendary.reignofnether.tutorial.TutorialServerEvents;
@@ -42,7 +38,6 @@ import com.solegendary.reignofnether.unit.units.villagers.VillagerUnitProfession
 import com.solegendary.reignofnether.util.Faction;
 import com.solegendary.reignofnether.util.MiscUtil;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -62,6 +57,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
@@ -530,7 +526,10 @@ public abstract class Building {
         this.forceChunk(false);
 
         this.blocks.forEach((BuildingBlock block) -> {
-            if (block.getBlockState().getMaterial().isLiquid()) {
+            if (block.getBlockState().getMaterial().isLiquid() ||
+                (block.getBlockState().hasProperty(BlockStateProperties.WATERLOGGED) &&
+                block.getBlockState().getValue(BlockStateProperties.WATERLOGGED)))
+            {
                 BlockState air = Blocks.AIR.defaultBlockState();
                 serverLevel.setBlockAndUpdate(block.getBlockPos(), air);
             }

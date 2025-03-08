@@ -13,12 +13,10 @@ Features
 
 Bugfixes
 --------
-[❌] Fixed Pillagers not attacking
-[❌] Healing fountains now remove their water blocks when deleted
+[✔] Fixed Pillagers not attacking
+[✔] Healing fountains now remove their water blocks when deleted
+[✔] Beacon win timers are now saved between server restarts
 
-Quality of Life
----------------
-[❌] Save
 
 
 Balancing
