@@ -10,7 +10,7 @@ public abstract class HeroAbility extends Ability {
     // requires a HeroUnit to be passed
 
     public final HeroUnit hero;
-    public int rank = 0;
+    public int rank = 0; // 0 == not learnt
 
     public HeroAbility(HeroUnit hero, UnitAction action, Level level, int cooldownMax, float range, float radius, boolean canTargetEntities) {
         super(action, level, cooldownMax, range, radius, canTargetEntities);

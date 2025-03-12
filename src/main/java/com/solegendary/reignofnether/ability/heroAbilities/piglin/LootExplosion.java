@@ -4,5 +4,16 @@ package com.solegendary.reignofnether.ability.heroAbilities.piglin;
 //All equipment has limited durability
 //Greed is Good raises the amount of equipment thrown
 
-public class LootExplosion {
+import com.solegendary.reignofnether.ability.HeroAbility;
+import com.solegendary.reignofnether.unit.UnitAction;
+import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
+import net.minecraft.world.level.Level;
+
+public class LootExplosion extends HeroAbility {
+
+    public LootExplosion(HeroUnit hero, UnitAction action, Level level, int cooldownMax, float range, float radius, boolean canTargetEntities) {
+        super(hero, action, level, cooldownMax, range, radius, canTargetEntities);
+    }
+
+
 }
