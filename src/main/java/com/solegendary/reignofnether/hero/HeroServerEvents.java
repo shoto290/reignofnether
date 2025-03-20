@@ -16,21 +16,26 @@ public class HeroServerEvents {
         Level level = evt.getEntity().getLevel();
         if (evt.getEntity() instanceof Unit deadUnit) {
             for (LivingEntity unit : UnitServerEvents.getAllUnits()) {
-                if (unit instanceof HeroUnit heroUnit) {
-
+                boolean inRange = unit.distanceToSqr((LivingEntity) deadUnit) < HeroExperienceOrb.RANGE * HeroExperienceOrb.RANGE;
+                if (unit instanceof HeroUnit heroUnit && inRange) {
                     String heroOwner = ((Unit) heroUnit).getOwnerName();
                     String deadOwner = deadUnit.getOwnerName();
 
                     if (!AlliancesServerEvents.isAllied(heroOwner, deadOwner) && !heroOwner.equals(deadOwner) &&
                         heroUnit.getHeroLevel() < HeroUnit.MAX_HERO_LEVEL) {
-                        HeroExperienceOrb expOrb = HeroExperienceOrb.newOrb(level,
+                        int expValue = (deadUnit.getCost().population + 1) * 10;
+
+                        while (expValue > 0) {
+                            HeroExperienceOrb expOrb = HeroExperienceOrb.newOrb(level,
                                 heroUnit,
                                 evt.getEntity().getX(),
                                 evt.getEntity().getY(),
                                 evt.getEntity().getZ(),
-                                deadUnit.getCost().population
-                        );
-                        evt.getEntity().level.addFreshEntity(expOrb);
+                                expValue >= 2 ? 2 : 1
+                            );
+                            expValue -= expValue >= 2 ? 2 : 1;
+                            evt.getEntity().level.addFreshEntity(expOrb);
+                        }
                     }
                 }
             }

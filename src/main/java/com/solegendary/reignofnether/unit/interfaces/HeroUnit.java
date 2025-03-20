@@ -26,6 +26,9 @@ public interface HeroUnit {
         if (levelDiff > 0) {
             setSkillPoints(getSkillPoints() + levelDiff);
         }
+        System.out.println("added exp: " + amount);
+
+        // TODO: send clientbound packet to set exp and skillpoints
     }
 
     // we always track total exp and then reduce down for the UI
