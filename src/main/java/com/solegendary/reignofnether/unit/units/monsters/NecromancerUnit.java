@@ -1,9 +1,6 @@
 package com.solegendary.reignofnether.unit.units.monsters;
 
 import com.solegendary.reignofnether.ability.Ability;
-import com.solegendary.reignofnether.ability.abilities.CastSummonVexes;
-import com.solegendary.reignofnether.ability.abilities.SetFangsCircle;
-import com.solegendary.reignofnether.ability.abilities.SetFangsLine;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.BloodMoon;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.InsomniaCurse;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
@@ -26,7 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -35,7 +31,6 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.BowItem;
@@ -81,8 +76,8 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
     private ReturnResourcesGoal returnResourcesGoal;
     public MountGoal mountGoal;
 
-    public UntargetedChanneledSpellGoal castRaiseDeadGoal;
-    public UntargetedChanneledSpellGoal getCastRaiseDeadGoal() {
+    public GenericUntargetedSpellGoal castRaiseDeadGoal;
+    public GenericUntargetedSpellGoal getCastRaiseDeadGoal() {
         return castRaiseDeadGoal;
     }
 
@@ -129,8 +124,8 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
 
     // endregion
 
-    private int skillPoints = 1;
-    private int experience = 0;
+    private int skillPoints = 10;
+    private int experience = 3000;
     private boolean rankUpMenuOpen = false;
     @Override public int getSkillPoints() { return skillPoints; }
     @Override public void setSkillPoints(int points) { skillPoints = points; }
@@ -289,7 +284,7 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         this.garrisonGoal = new GarrisonGoal(this);
         this.attackGoal = new UnitRangedAttackGoal<>(this, ATTACK_WINDUP_TICKS);
         this.returnResourcesGoal = new ReturnResourcesGoal(this);
-        this.castRaiseDeadGoal = new UntargetedChanneledSpellGoal(
+        this.castRaiseDeadGoal = new GenericUntargetedSpellGoal(
                 this,
                 RAISE_DEAD_CHANNEL_TICKS,
                 this::raiseDead,

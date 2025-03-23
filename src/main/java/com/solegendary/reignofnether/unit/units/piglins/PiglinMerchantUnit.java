@@ -79,6 +79,11 @@ public class PiglinMerchantUnit extends Piglin implements Unit, AttackerUnit, He
     public ReturnResourcesGoal getReturnResourcesGoal() {return returnResourcesGoal;}
     public int getMaxResources() {return maxResources;}
 
+    public GenericTargetedSpellGoal castFancyFeastGoal;
+    public GenericTargetedSpellGoal castFancyFeastGoal() {
+        return castFancyFeastGoal;
+    }
+
     private MoveToTargetBlockGoal moveGoal;
     private SelectedTargetGoal<? extends LivingEntity> targetGoal;
     private ReturnResourcesGoal returnResourcesGoal;
@@ -129,8 +134,8 @@ public class PiglinMerchantUnit extends Piglin implements Unit, AttackerUnit, He
 
     // endregion
 
-    private int skillPoints = 0;
-    private int experience = 0;
+    private int skillPoints = 10;
+    private int experience = 10000;
     private boolean rankUpMenuOpen = false;
     @Override public int getSkillPoints() { return skillPoints; }
     @Override public void setSkillPoints(int points) { skillPoints = points; }
@@ -188,13 +193,24 @@ public class PiglinMerchantUnit extends Piglin implements Unit, AttackerUnit, He
                 animateScale = 1.0f;
                 startAnimation(PiglinMerchantAnimations.ATTACK);
             }
+            case CHARGE_SPELL -> {
+                activeAnimDef = PiglinMerchantAnimations.SPELL_CHARGE;
+                activeAnimState = spellChargeAnimState;
+                animateScale = 1.0f;
+                startAnimation(activeAnimDef);
+            }
+            case CAST_SPELL -> {
+                activeAnimDef = PiglinMerchantAnimations.SPELL_ACT;
+                activeAnimState = spellActivateAnimState;
+                animateScale = 1.0f;
+                startAnimation(activeAnimDef);
+            }
         }
     }
 
     public PiglinMerchantUnit(EntityType<? extends Piglin> entityType, Level level) {
         super(entityType, level);
 
-        /*
         ThrowTNT ab1 = new ThrowTNT(this);
         FancyFeast ab2 = new FancyFeast(this);
         GreedIsGoodPassive ab3 = new GreedIsGoodPassive(this);
@@ -204,7 +220,6 @@ public class PiglinMerchantUnit extends Piglin implements Unit, AttackerUnit, He
         this.abilities.add(ab3);
         this.abilities.add(ab4);
         updateAbilityButtons();
-         */
     }
 
     public void updateAbilityButtons() {

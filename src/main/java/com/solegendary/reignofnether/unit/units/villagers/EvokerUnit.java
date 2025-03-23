@@ -132,8 +132,8 @@ public class EvokerUnit extends Evoker implements Unit, AttackerUnit, RangedAtta
     public GenericTargetedSpellGoal getCastFangsGoal() {
         return castFangsGoal;
     }
-    private UntargetedChanneledSpellGoal castSummonVexesGoal;
-    public UntargetedChanneledSpellGoal getCastSummonVexesGoal() {
+    private GenericUntargetedSpellGoal castSummonVexesGoal;
+    public GenericUntargetedSpellGoal getCastSummonVexesGoal() {
         return castSummonVexesGoal;
     }
 
@@ -227,7 +227,7 @@ public class EvokerUnit extends Evoker implements Unit, AttackerUnit, RangedAtta
             FANGS_CHANNEL_SECONDS * ResourceCost.TICKS_PER_SECOND, FANGS_RANGE_LINE,
             this::createEvokerFangs, null, null
         );
-        this.castSummonVexesGoal = new UntargetedChanneledSpellGoal(
+        this.castSummonVexesGoal = new GenericUntargetedSpellGoal(
             this,
             4 * ResourceCost.TICKS_PER_SECOND,
             this::summonVexes,

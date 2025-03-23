@@ -31,8 +31,8 @@ public class SoulSiphonPassive extends HeroAbility {
 
     public boolean active = false;
     public int souls = 0;
-    public int soulsPerCast = 0;
-    public int soulsMax = 0;
+    public int soulsPerCast = 4;
+    public int soulsMax = 20;
 
     public SoulSiphonPassive(HeroUnit hero) {
         super(hero, 3, UnitAction.TOGGLE_SOUL_SIPHON_PASSIVE, 0, 0, 0, false);
@@ -97,6 +97,9 @@ public class SoulSiphonPassive extends HeroAbility {
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.soul_siphon.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.soul_siphon.tooltip2")),
+                fcs(I18n.get("abilities.reignofnether.soul_siphon.tooltip3", soulsPerCast, soulsMax)),
+                fcs(""),
+                fcs(I18n.get("abilities.reignofnether.can_be_toggled")),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.soul_siphon.rank1"), rank == 0),
                 fcs(I18n.get("abilities.reignofnether.soul_siphon.rank2"), rank == 1),

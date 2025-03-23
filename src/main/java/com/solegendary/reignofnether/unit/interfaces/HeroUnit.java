@@ -51,6 +51,8 @@ public interface HeroUnit {
 
     // @ 4000 exp, show 500/900 (level 8)
     default int getExpOnCurrentLevel() {
+        if (getHeroLevel() >= MAX_HERO_LEVEL)
+            return 0;
         int expToNextLevel = 200;
         int expCount = 0;
         int exp = getExperience();
@@ -65,6 +67,8 @@ public interface HeroUnit {
     }
 
     default int getExpToNextlevel() {
+        if (getHeroLevel() >= MAX_HERO_LEVEL)
+            return 0;
         return (getHeroLevel() + 1) * 100;
     }
 }

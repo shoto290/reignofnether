@@ -7,7 +7,7 @@ import com.solegendary.reignofnether.unit.packets.UnitAnimationClientboundPacket
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class UntargetedChanneledSpellGoal extends Goal {
+public class GenericUntargetedSpellGoal extends Goal {
 
     private final LivingEntity mob;
     private Ability ability; // used for syncing cooldown with clientside
@@ -21,12 +21,12 @@ public class UntargetedChanneledSpellGoal extends Goal {
     private final UnitAnimationAction stopAnimation;
     private final UnitAnimationAction castAnimation;
 
-    public UntargetedChanneledSpellGoal(LivingEntity mob,
-                                        int channelTime,
-                                        Runnable onCast,
-                                        UnitAnimationAction startAnimation,
-                                        UnitAnimationAction stopAnimation,
-                                        UnitAnimationAction castAnimation) {
+    public GenericUntargetedSpellGoal(LivingEntity mob,
+                                      int channelTime,
+                                      Runnable onCast,
+                                      UnitAnimationAction startAnimation,
+                                      UnitAnimationAction stopAnimation,
+                                      UnitAnimationAction castAnimation) {
         this.mob = mob;
         this.channelTicksMax = channelTime;
         this.onCast = onCast;
@@ -35,11 +35,11 @@ public class UntargetedChanneledSpellGoal extends Goal {
         this.castAnimation = castAnimation;
     }
 
-    public UntargetedChanneledSpellGoal(LivingEntity mob,
-                                        int channelTime,
-                                        Runnable onCast,
-                                        UnitAnimationAction startAnimation,
-                                        UnitAnimationAction stopAnimation) {
+    public GenericUntargetedSpellGoal(LivingEntity mob,
+                                      int channelTime,
+                                      Runnable onCast,
+                                      UnitAnimationAction startAnimation,
+                                      UnitAnimationAction stopAnimation) {
         this(mob, channelTime, onCast, startAnimation, stopAnimation, null);
     }
 

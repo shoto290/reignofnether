@@ -9,6 +9,7 @@ package com.solegendary.reignofnether.ability.heroAbilities.piglin;
 import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.hud.AbilityButton;
+import com.solegendary.reignofnether.hud.Button;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
@@ -33,20 +34,20 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcs;
 public class GreedIsGoodPassive extends HeroAbility {
 
     public boolean active = false;
-    public int maxResourcesPerCast = 0;
+    public int maxResourcesPerCast = 100;
 
     public GreedIsGoodPassive(HeroUnit hero) {
-        super(hero, 1, UnitAction.TOGGLE_GREED_IS_GOOD_PASSIVE, 0, 0, 0, false);
+        super(hero, 3, UnitAction.TOGGLE_GREED_IS_GOOD_PASSIVE, 0, 0, 0, false);
     }
 
     public boolean rankUp() {
         if (super.rankUp()) {
             if (rank == 1) {
-                maxResourcesPerCast = 200;
+                maxResourcesPerCast = 100;
             } else if (rank == 2) {
-                maxResourcesPerCast = 300;
+                maxResourcesPerCast = 200;
             } else if (rank == 3) {
-                maxResourcesPerCast = 400;
+                maxResourcesPerCast = 300;
             }
             return true;
         }
@@ -56,7 +57,7 @@ public class GreedIsGoodPassive extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Greed is Good",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+                new ResourceLocation("minecraft", "textures/block/gold_block.png"),
                 hotkey,
                 () -> active,
                 () -> rank == 0,
@@ -68,19 +69,35 @@ public class GreedIsGoodPassive extends HeroAbility {
         );
     }
 
+    @Override
+    public Button getRankUpButton() {
+        return super.getRankUpButtonProtected(
+                "Greed is Good",
+                new ResourceLocation("minecraft", "textures/block/gold_block.png")
+        );
+    }
+
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
-                fcs(I18n.get("abilities.reignofnether.greed_is_good"), true),
-                fcs(""),
+                fcs(I18n.get("abilities.reignofnether.greed_is_good") + " " + rankString(), true),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.greed_is_good.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.greed_is_good.tooltip2", maxResourcesPerCast)),
+                fcs(""),
                 fcs(I18n.get("abilities.reignofnether.greed_is_good.tooltip3"))
         );
     }
 
     public List<FormattedCharSequence> getRankUpTooltipLines() {
         return List.of(
+                fcs(I18n.get("abilities.reignofnether.greed_is_good"), true),
+                fcs(I18n.get("abilities.reignofnether.level_req", getLevelRequirement()), getLevelReqStyle()),
+                fcs(""),
+                fcs(I18n.get("abilities.reignofnether.greed_is_good.tooltip1")),
+                fcs(I18n.get("abilities.reignofnether.greed_is_good.tooltip2", maxResourcesPerCast)),
+                fcs(""),
+                fcs(I18n.get("abilities.reignofnether.can_be_toggled")),
+                fcs(""),
                 fcs(I18n.get("abilities.reignofnether.greed_is_good.rank1"), rank == 0),
                 fcs(I18n.get("abilities.reignofnether.greed_is_good.rank2"), rank == 1),
                 fcs(I18n.get("abilities.reignofnether.greed_is_good.rank3"), rank == 2)

@@ -30,7 +30,7 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class BloodMoon extends HeroAbility {
 
-    private static final int CD_MAX_SECONDS = 240 * ResourceCost.TICKS_PER_SECOND;
+    private static final int CD_MAX_SECONDS = 360 * ResourceCost.TICKS_PER_SECOND;
     private static final int DURATION_SECONDS = 60;
     private static final int BONUS_SECONDS_PER_SOUL = 3;
 

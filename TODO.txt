@@ -19,6 +19,8 @@ HEROES (in order of priority)
     - equipment
 
 
+April fools mob ;)
+
 Bugfixes
 --------
 [❌] Prevent superflat worlds generating regular worlds after a certain range
