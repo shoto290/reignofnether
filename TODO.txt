@@ -31,6 +31,7 @@ Bugfixes
 [❌] tutorial camera centering is off
 [❌] Mounted piglins don't heal from nether terrain
 
+[🟡] Load freezing (fixed by goodbird, pull 1.20.1 branch)
 
 Quality of Life
 ---------------
