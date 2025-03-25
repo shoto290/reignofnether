@@ -171,7 +171,8 @@ public class PortraitRendererUnit<T extends LivingEntity, M extends EntityModel<
             entity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
         }
         drawEntityOnScreen(guiGraphics.pose(), entity, drawX, drawY, sizeFinal);
-
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0,0,2000);
         name = WordUtils.capitalize(name);
 
         if (entity instanceof VindicatorUnit pUnit && pUnit.getEnchant() == Enchantments.SHARPNESS) {
@@ -222,7 +223,6 @@ public class PortraitRendererUnit<T extends LivingEntity, M extends EntityModel<
         // entity
         Minecraft MC = Minecraft.getInstance();
         Window window = MC.getWindow();
-        guiGraphics.pose().pushPose();
         MultiBufferSource.BufferSource multibuffersource$buffersource =
             MultiBufferSource.immediate(Tesselator.getInstance()
             .getBuilder());
@@ -364,7 +364,7 @@ public class PortraitRendererUnit<T extends LivingEntity, M extends EntityModel<
         poseStackModel.scale(1.0F, 1.0F, -1.0F);
         RenderSystem.applyModelViewMatrix();
         poseStack.pushPose();
-        poseStack.translate(0.0D, 0.0D, 1000.0D);
+        poseStack.translate(0.0D, 0.0D, 10.0D);
         poseStack.scale((float) size, (float) size, (float) size);
         Quaternionf quaternion = Axis.ZP.rotationDegrees(180.0F);
         Quaternionf quaternion2 = Axis.XP.rotationDegrees(g * 20.0F);
