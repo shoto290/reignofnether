@@ -143,8 +143,8 @@ public class SpiderUnit extends Spider implements Unit, AttackerUnit, Convertabl
 
     private AbstractMeleeAttackUnitGoal attackGoal;
     private MeleeAttackBuildingGoal attackBuildingGoal;
-    private WebGoal webGoal;
-    public WebGoal getWebGoal() { return webGoal; }
+    private GenericTargetedSpellGoal webGoal;
+    public GenericTargetedSpellGoal getWebGoal() { return webGoal; }
     @Nullable
     public SpinWebs getWebAbility() {
         for (Ability ability : this.getAbilities())
@@ -222,7 +222,7 @@ public class SpiderUnit extends Spider implements Unit, AttackerUnit, Convertabl
         this.targetGoal = new SelectedTargetGoal<>(this, true, true);
         this.attackGoal = new MeleeAttackUnitGoal(this, false);
         this.attackBuildingGoal = new MeleeAttackBuildingGoal(this);
-        this.webGoal = new WebGoal(this, 0, SpinWebs.RANGE, this::onEntityCastWeb, this::onGroundCastWeb);
+        this.webGoal = new GenericTargetedSpellGoal(this, 0, SpinWebs.RANGE, this::onEntityCastWeb, this::onGroundCastWeb, null);
     }
 
     @Override

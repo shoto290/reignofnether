@@ -17,8 +17,6 @@ Features
 Bugfixes
 --------
 
-[❌] Workers on a building that is still auto-building the foundation layer actually slows down building
-
 [❌] Central portals sometimes do not ignite (and this somehow makes grunts spawn underground)
 
 [❌] Dying in survival puts you in a bugged survival mode
@@ -38,11 +36,13 @@ Quality of Life Features
 [❌] restore ores on /rts-reset
     - Have to track each ore block when it is mined or converted into nether terrain
 
-
+[❌] buff/debuff icons in vertical list to right of unit stats
+    - potion effects
+    - auras
+    - hero passives
+    - enchantments
 
 Balancing
 ---------
 
 [❌] Soulfires created by blazes need to be made temporary
-
-[❌] let allied survival players use transport portals
