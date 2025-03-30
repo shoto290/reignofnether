@@ -188,8 +188,6 @@ public class CursorClientEvents {
                 cursorWorldPos.z
         );
         cursorWorldPos = MiscUtil.screenPosToWorldPos(MC, evt.getMouseX(), evt.getMouseY());
-        //cursorWorldPos.y -= 1.3f;
-        //cursorWorldPos.z -= 2.0f;
 
         // calc near and far cursorWorldPos to get a cursor line vector
         Vector3d lookVector = MiscUtil.getPlayerLookVector(MC);
@@ -201,7 +199,7 @@ public class CursorClientEvents {
 
             Vec3 hitPos = getRefinedCursorWorldPos(cursorWorldPosNear, cursorWorldPosFar);
             cursorWorldPos = new Vector3d(hitPos.x, hitPos.y, hitPos.z);
-            preselectedBlockPos = new BlockPos((int) hitPos.x, (int) hitPos.y, (int) hitPos.z);
+            preselectedBlockPos = new BlockPos((int) Math.floor(hitPos.x), (int) Math.floor(hitPos.y), (int) Math.floor(hitPos.z));
 
             boolean usingPosAbove = false;
 
@@ -240,14 +238,7 @@ public class CursorClientEvents {
             // inflate by set amount to improve click accuracy
             AABB entityaabb = entity.getBoundingBox().inflate(0.1);
 
-            Vector3d cursorWorldPosAdj = new Vector3d(
-                    cursorWorldPos.x,
-                    cursorWorldPos.y,// + 1.3f,
-                    cursorWorldPos.z// + 2.0f
-            );
-            Vector3d cursorWorldPosNearAdj = MyMath.addVector3d(cursorWorldPosAdj, lookVector, -200);
-
-            if (MyMath.rayIntersectsAABBCustom(cursorWorldPosNearAdj, MiscUtil.getPlayerLookVector(MC), entityaabb)) {
+            if (MyMath.rayIntersectsAABBCustom(cursorWorldPosNear, MiscUtil.getPlayerLookVector(MC), entityaabb)) {
                 UnitClientEvents.addPreselectedUnit(entity);
                 if (UnitClientEvents.getPreselectedUnits().size() > 0)
                     break; // only allow one moused-over unit at a time
