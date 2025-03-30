@@ -8,6 +8,7 @@ import com.solegendary.reignofnether.unit.Checkpoint;
 import com.solegendary.reignofnether.unit.goals.*;
 import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.piglins.GhastUnit;
 import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -145,7 +146,10 @@ public class KillerRabbitUnit extends Rabbit implements Unit, AttackerUnit {
 
     @Override
     protected float getJumpPower() {
-        return super.getJumpPower() * 2;
+        if (getTarget() instanceof GhastUnit && distanceTo(getTarget()) < 12)
+            return super.getJumpPower() * 4;
+        else
+            return super.getJumpPower() * 2;
     }
 
     @Override
@@ -155,6 +159,23 @@ public class KillerRabbitUnit extends Rabbit implements Unit, AttackerUnit {
 
     @Override // immune to fall damage
     protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) { }
+
+    @Override
+    public void push(Entity pEntity) {
+        super.push(pEntity);
+        LivingEntity target = this.getTargetGoal().getTarget();
+        if (target == pEntity) {
+            this.attackGoal.checkAndPerformAttackIgnoreDist(target);
+        }
+    }
+
+    @Override
+    public void setSpeedModifier(double pSpeedModifier) {
+        if (pSpeedModifier >= 0.1f) {
+            pSpeedModifier = 2.0f;
+        }
+        super.setSpeedModifier(pSpeedModifier);
+    }
 
     @Override
     public boolean doHurtTarget(Entity pEntity) {

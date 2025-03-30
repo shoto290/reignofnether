@@ -295,17 +295,17 @@ public class ResourcesServerEvents {
     @SubscribeEvent
     public static void onRegisterCommand(RegisterCommandsEvent evt) {
 
-        evt.getDispatcher().register(Commands.literal("send-food")
+        evt.getDispatcher().register(Commands.literal("sendfood")
             .then(Commands.argument("player", EntityArgument.player())
             .then(Commands.argument("amount", IntegerArgumentType.integer(0, Integer.MAX_VALUE))
             .executes((command) -> trySendingResources(command, ResourceName.FOOD)))));
 
-        evt.getDispatcher().register(Commands.literal("send-wood")
+        evt.getDispatcher().register(Commands.literal("sendwood")
             .then(Commands.argument("player", EntityArgument.player())
             .then(Commands.argument("amount", IntegerArgumentType.integer(0, Integer.MAX_VALUE))
             .executes((command) -> trySendingResources(command, ResourceName.WOOD)))));
 
-        evt.getDispatcher().register(Commands.literal("send-ore")
+        evt.getDispatcher().register(Commands.literal("sendore")
             .then(Commands.argument("player", EntityArgument.player())
             .then(Commands.argument("amount", IntegerArgumentType.integer(0, Integer.MAX_VALUE))
             .executes((command) -> trySendingResources(command, ResourceName.ORE)))));

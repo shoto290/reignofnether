@@ -18,9 +18,11 @@ HEROES (in order of priority)
     - mana?
     - equipment
 
+[✔] Updated the base Minecraft version to 1.20.1
+    - Moving forward,
 
-[❌] April fools mob ;)
-    - Add plus jump power when targeting a ghast
+[✔] Added a new cheatcode: thebeastofcaerbannog
+    - Not even Ghasts are safe from it :smiling_devil:
 
 Bugfixes
 --------
@@ -30,21 +32,23 @@ Bugfixes
 [❌] gui scale not working?
 
 [❌] Recreate tutorial world in 1.20.1
-[🟡] tutorial camera centering is off
+[🟡] Fixed camera centering on the tutorial world
 [🟡] Mounted piglins don't heal from nether terrain
-
-[❌] cursor off in server but not on singleplayer?
-
+[❌] Anchors not saving properly?
 
 Quality of Life
 ---------------
-[🟡] Add commands to send resources
-[❌] Ravagers that are mounted no longer aggro automatically onto buildings
-    - This prevents them hurting themselves from the splash damage
-[🟡] Button to toggle spider climbing
-[🟡] Slimes and magma cubes no longer clip into log blocks, but are just slowed down
-[✔] Turn cheats on by default for sandbox mode
+[🟡] Added commands to send resources to allies:
+    /sendfood <playername> <amount>
+    /sendwood <playername> <amount>
+    /sendore <playername> <amount>
 
+[🟡] Ravagers that are mounted no longer automatically aggro onto buildings
+    - This prevents them hurting themselves from their own splash damage
+[🟡] Spiders now have a button to toggle whether they climb on walls or not
+[🟡] Slimes and magma cubes can now no-clip through log and leaf blocks
+[✔] Turn cheats on by default for sandbox mode
+[🟡] Healing Fountains now heal 1% of hp per second instead of a flat rate, up to a maximum of 1hp/s
 
 
 Balancing
