@@ -468,6 +468,8 @@
     "commands.reignofnether.lock": "%s - Prevent all players from joining the RTS match",
     "commands.reignofnether.ally": "%s - Send an ally request to another player",
     "commands.reignofnether.disband": "%s - Disband an alliance with another player",
+    "commands.reignofnether.send_resources": "%s - Send resources to an allied RTS player",
+    "commands.reignofnether.camera": "%s - Toggle RTS camera",
     "commands.reignofnether.gamerule.do_log_falling": "Tree logs fall when cut",
     "commands.reignofnether.gamerule.neutral_aggro": "Auto-attack neutral units/buildings",
     "commands.reignofnether.gamerule.max_population": "Highest possible population limit",
@@ -646,6 +648,7 @@
     "server.resources.reignofnether.sent_ore": "You gave %d ore to %d!",
     "server.resources.reignofnether.received_ore": "You received %d ore from %d!",
     "server.resources.reignofnether.not_allies": "You can only send resources to allies",
+    "server.resources.reignofnether.not_rts_player": "That player isn't an RTS player",
     "server.resources.reignofnether.sending_to_self": "You can't send resources to yourself",
 
     "research.reignofnether.upgrade_completed": "Upgrade completed: %s",

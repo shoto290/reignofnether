@@ -330,8 +330,11 @@ public class ResourcesServerEvents {
         if (sendingPlayerName.equals(receivingPlayerName)) {
             PlayerServerEvents.sendMessageToPlayer(sendingPlayerName, "server.resources.reignofnether.sending_to_self");
             return 0;
-        } else if (!AlliancesServerEvents.isAllied(sendingPlayerName, receivingPlayerName)) {
+        } else if (!PlayerServerEvents.isRTSPlayer(receivingPlayerName)) {
             PlayerServerEvents.sendMessageToPlayer(sendingPlayerName, "server.resources.reignofnether.not_allies");
+            return 0;
+        }  else if (!AlliancesServerEvents.isAllied(sendingPlayerName, receivingPlayerName)) {
+            PlayerServerEvents.sendMessageToPlayer(sendingPlayerName, "server.resources.reignofnether.not_rts_player");
             return 0;
         } else if (!canAfford(sendingPlayerName, resourceName, amount)) {
             ResourcesClientboundPacket.warnInsufficientResources(sendingPlayerName,

@@ -34,12 +34,12 @@ Controlling non-RoN mobs
 
 Bugfixes
 --------
-
+[🟡] Can no longer send resources to a non-RTS ally
 
 
 Quality of Life
 ---------------
-
+[🟡] Updated /rts-help list
 
 Balancing
 ---------

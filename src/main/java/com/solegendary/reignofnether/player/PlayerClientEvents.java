@@ -113,6 +113,8 @@ public class PlayerClientEvents {
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.lock", "/rts-lock enable/disable"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.ally", "/ally"));
                 MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.disband", "/disband"));
+                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.send_resources", "/sendfood|wood|ore <playername> <amount>"));
+                MC.player.sendSystemMessage(Component.translatable("commands.reignofnether.camera", "/rts-camera"));
             }
             return 1;
         }));
