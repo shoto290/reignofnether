@@ -595,8 +595,8 @@ public class UnitClientEvents {
                     deselected = selectedUnits.removeIf(id -> id.equals(preselectedUnits.get(0)));
 
                 if (Keybindings.shiftMod.isDown() && !deselected &&
-                    preselectedUnits.get(0) instanceof Unit &&
-                    getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.OWNED) {
+                    ((preselectedUnits.get(0) instanceof Unit && getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.OWNED) ||
+                    (NonUnitClientEvents.canControlNonUnits()))) {
                         addSelectedUnit(preselectedUnits.get(0));
                 }
                 else if (!deselected) { // select a single unit - this should be the only code path that allows you to select a non-owned unit
@@ -641,6 +641,7 @@ public class UnitClientEvents {
                 // right click -> attack unfriendly unit
                 else if (preselectedUnits.size() == 1 &&
                     !targetingSelf() &&
+                    (hudSelectedEntity instanceof Unit || NonUnitClientEvents.canAttack(hudSelectedEntity)) &&
                     ((GameruleClient.neutralAggro && getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.NEUTRAL) ||
                     getPlayerToEntityRelationship(preselectedUnits.get(0)) == Relationship.HOSTILE ||
                      ResourceSources.isHuntableAnimal(preselectedUnits.get(0)))) {

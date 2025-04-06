@@ -22,8 +22,10 @@ import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.minimap.MinimapClientEvents;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
 import com.solegendary.reignofnether.player.PlayerClientEvents;
-import com.solegendary.reignofnether.research.ResearchClient;
-import com.solegendary.reignofnether.resources.*;
+import com.solegendary.reignofnether.resources.ResourceName;
+import com.solegendary.reignofnether.resources.ResourceSources;
+import com.solegendary.reignofnether.resources.Resources;
+import com.solegendary.reignofnether.resources.ResourcesClientEvents;
 import com.solegendary.reignofnether.sandbox.SandboxActionButtons;
 import com.solegendary.reignofnether.sandbox.SandboxClientEvents;
 import com.solegendary.reignofnether.sandbox.SandboxMenuType;
@@ -48,11 +50,11 @@ import com.solegendary.reignofnether.unit.units.villagers.VillagerUnit;
 import com.solegendary.reignofnether.util.MiscUtil;
 import com.solegendary.reignofnether.util.MyRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -172,13 +174,16 @@ public class HudClientEvents {
     }
 
     // not to be used for resource paths
-    public static String getModifiedEntityName(Entity entity) {
+    public static String getModifiedEntityName(LivingEntity entity) {
         String name = getSimpleEntityName(entity);
+
+        if (entity.isBaby())
+            name = I18n.get("units.neutral.reignofnether.baby") + " " + name;
 
         if (!(entity instanceof Unit))
             return name.toLowerCase();
 
-        ItemStack itemStack = ((LivingEntity) entity).getItemBySlot(EquipmentSlot.HEAD);
+        ItemStack itemStack = entity.getItemBySlot(EquipmentSlot.HEAD);
 
         if (itemStack.getItem() instanceof BannerItem) {
             name += " " + I18n.get("units.villagers.reignofnether.captain");
@@ -676,7 +681,7 @@ public class HudClientEvents {
 
                 Button button = new Button(unitName,
                     iconSize,
-                    new ResourceLocation(ReignOfNether.MOD_ID, buttonImagePath),
+                    unit instanceof Unit ? new ResourceLocation(ReignOfNether.MOD_ID, buttonImagePath) : null,
                     unit,
                     () -> hudSelectedEntity == null || getModifiedEntityName(hudSelectedEntity).equals(
                         getModifiedEntityName(unit)),
@@ -694,7 +699,7 @@ public class HudClientEvents {
                     null,
                     List.of(fcs(capitaliseAndSpace(getModifiedEntityName(unit))))
                 );
-                if (unit.isVehicle()) {
+                if (unit.isVehicle() && unit instanceof Unit) {
                     String passengerName = getSimpleEntityName(unit.getFirstPassenger());
                     button.bgIconResource = new ResourceLocation(ReignOfNether.MOD_ID,
                         "textures/mobheads/" + passengerName + ".png"
@@ -763,6 +768,18 @@ public class HudClientEvents {
                 } else {
                     unitButton.render(evt.getGuiGraphics(), blitX, blitY, mouseX, mouseY);
                     renderedButtons.add(unitButton);
+                    if (unitButton.iconResource == null) {
+                        String str = unitButton.name.substring(0,1).toUpperCase();
+                        if (unitButton.name.length() > 1) {
+                            str += unitButton.name.substring(1, 2);
+                        }
+                        evt.getGuiGraphics().drawCenteredString(MC.font,
+                                fcs(str, true),
+                                blitX + (unitButton.iconSize / 2) + 4,
+                                blitY + (unitButton.iconSize / 2),
+                                0xFFFFFF
+                        );
+                    }
                     unitButton.renderHealthBar(evt.getGuiGraphics().pose());
                     blitX += iconFrameSize;
                     if (buttonsRendered == buttonsPerRow - 1) {

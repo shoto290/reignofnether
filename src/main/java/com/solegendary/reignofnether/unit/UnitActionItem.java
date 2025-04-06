@@ -16,6 +16,7 @@ import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;
 import com.solegendary.reignofnether.unit.interfaces.ConvertableUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
 import com.solegendary.reignofnether.unit.interfaces.WorkerUnit;
+import com.solegendary.reignofnether.unit.units.villagers.IronGolemUnit;
 import com.solegendary.reignofnether.util.MiscUtil;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -394,15 +395,18 @@ public class UnitActionItem {
 
                 mob.getNavigation().stop();
                 mob.setTarget(null);
+                if (!level.isClientSide()) {
+                    synchronized (NonUnitServerEvents.nonUnitMoveTargets) {
+                        NonUnitServerEvents.nonUnitMoveTargets.removeIf(p -> p.getFirst() == mob);
+                    }
+                }
 
                 if (List.of(UnitAction.MOVE, UnitAction.FOLLOW, UnitAction.ATTACK_MOVE).contains(action)) {
-                    mob.getNavigation().stop();
                     BlockPos bp = preselectedBlockPos;
                     Path path = mob.getNavigation().createPath(bp.getX(), bp.getY(), bp.getZ(), 0);
                     mob.getNavigation().moveTo(path, 1);
                     if (!level.isClientSide()) {
                         synchronized (NonUnitServerEvents.nonUnitMoveTargets) {
-                            NonUnitServerEvents.nonUnitMoveTargets.removeIf(p -> p.getFirst() == mob);
                             NonUnitServerEvents.nonUnitMoveTargets.add(new Pair<>(mob, preselectedBlockPos));
                         }
                     }
@@ -414,10 +418,10 @@ public class UnitActionItem {
                 if (!level.isClientSide()) {
                     if (action != UnitAction.ATTACK_MOVE) {
                         NonUnitServerEvents.attackSuppressedNonUnits.add(mob);
-                    } else {
-                        NonUnitClientEvents.isMoveCheckpointGreen = false;
                     }
                     NonUnitServerEvents.moveSuppressedNonUnits.add(mob);
+                } else {
+                    NonUnitClientEvents.isMoveCheckpointGreen = action != UnitAction.ATTACK_MOVE;
                 }
             }
         }

@@ -22,10 +22,11 @@ HEROES (in order of priority)
 Controlling non-RoN mobs
 ------------------------
 
-[🟡] Attack move (just make it a move action but don't cancel NearestAttackableTargetGoal)
-    - Still only attacks whatever is naturally aggroed with these goals...
-
-[❌] Render GUI for selecting multiple non-units
+[✔] All vanilla and modded mobs now have basic movement and attack controls
+    - Enabled in Sandbox or by using the cheatcode 'wouldyoukindly'
+    - Attack-move only works against mobs that the controlled mob is naturally aggressive to
+    - Disclaimer: sometimes the inherent AI of mobs interferes with what you commanded
+        - For example, iron golems constantly try to go back to the nearest village
 
 Bugfixes
 --------

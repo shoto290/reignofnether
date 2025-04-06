@@ -191,7 +191,7 @@ public class Button {
             String hotkeyStr = hotkey.buttonLabel;
             hotkeyStr = hotkeyStr.substring(0,Math.min(3, hotkeyStr.length()));
             guiGraphics.pose().translate(0,0,1);
-            guiGraphics.drawCenteredString( MC.font,
+            guiGraphics.drawCenteredString(MC.font,
                     hotkeyStr,
                     x + iconSize + 8 - (hotkeyStr.length() * 4),
                     y + iconSize - 1,
