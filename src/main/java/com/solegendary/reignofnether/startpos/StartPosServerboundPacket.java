@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.startpos;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.registrars.PacketHandler;
 import com.solegendary.reignofnether.survival.SurvivalClientEvents;
 import com.solegendary.reignofnether.survival.SurvivalServerEvents;
@@ -7,6 +8,7 @@ import com.solegendary.reignofnether.survival.WaveDifficulty;
 import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -52,6 +54,19 @@ public class StartPosServerboundPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
+
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("StartPosServerboundPacket: Sender was null");
+                success.set(false);
+                return;
+            }
+            else if (!player.getName().getString().equals(this.playerName)) {
+                ReignOfNether.LOGGER.warn("StartPosServerboundPacket: Tried to process packet from " + player.getName() + " for: " + this.playerName);
+                success.set(false);
+                return;
+            }
+
             switch (action) {
                 case RESERVE -> {
                     for (StartPos startPos : StartPosServerEvents.startPoses) {

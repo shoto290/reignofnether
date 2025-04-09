@@ -13,6 +13,8 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.monsters.NecromancerUnit;
+import com.solegendary.reignofnether.unit.units.villagers.RoyalGuardUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -27,11 +29,12 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class MaceSlam extends HeroAbility {
 
+    public static final float RANGE = 4;
     private static float damage = 15;
     private static float stunDuration = 2 * ResourceCost.TICKS_PER_SECOND;
 
     public MaceSlam(HeroUnit hero) {
-        super(hero, 3, UnitAction.MACE_SLAM, 20 * ResourceCost.TICKS_PER_SECOND, 4, 0, true);
+        super(hero, 3, UnitAction.MACE_SLAM, 20 * ResourceCost.TICKS_PER_SECOND, RANGE, 0, true);
     }
 
     @Override
@@ -99,12 +102,16 @@ public class MaceSlam extends HeroAbility {
         );
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
-
+        ((RoyalGuardUnit) unitUsing).getCastMaceSlamGoal().setAbility(this);
+        ((RoyalGuardUnit) unitUsing).getCastMaceSlamGoal().setTarget(targetEntity);
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-
+        ((RoyalGuardUnit) unitUsing).getCastMaceSlamGoal().setAbility(this);
+        ((RoyalGuardUnit) unitUsing).getCastMaceSlamGoal().setTarget(targetBp);
     }
 }
 

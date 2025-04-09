@@ -1,9 +1,11 @@
 package com.solegendary.reignofnether.guiscreen;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
 import com.solegendary.reignofnether.registrars.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -44,6 +46,18 @@ public class TopdownGuiServerboundPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
+
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("TopdownGuiServerboundPacket: Sender was null");
+                success.set(false);
+                return;
+            } else if (player.getId() != playerId) {
+                ReignOfNether.LOGGER.warn("TopdownGuiServerboundPacket: Tried to process packet from " + player.getName() + " for id: " + this.playerId);
+                success.set(false);
+                return;
+            }
+
             if (this.topdownGuiOpen)
                 PlayerServerEvents.openTopdownGui(this.playerId);
             else

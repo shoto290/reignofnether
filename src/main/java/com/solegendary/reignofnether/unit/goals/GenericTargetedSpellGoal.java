@@ -25,15 +25,15 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
     protected final int channelTicks; // max time required to cast a spell
     protected boolean isCasting = false;
     protected BlockPos castTarget = null; // pos that the spell will be cast at
-    protected final int range;
+    protected final float range;
     public Consumer<LivingEntity> onEntityCast;
     public Consumer<BlockPos> onGroundCast;
     public Consumer<Building> onBuildingCast;
     public boolean hasKeyframeAnimations = false;
-    protected int bonusChannelingRange = 0; // extra range added while channeling
+    protected float bonusChannelingRange = 0; // extra range added while channeling
     protected final UnitAnimationAction animationStart;
 
-    public GenericTargetedSpellGoal(Mob mob, int channelTicks, int range,
+    public GenericTargetedSpellGoal(Mob mob, int channelTicks, float range,
                                     UnitAnimationAction animationStart,
                                     @Nullable Consumer<LivingEntity> onEntityCast,
                                     @Nullable Consumer<BlockPos> onGroundCast,
@@ -47,7 +47,7 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
         this.onBuildingCast = onBuildingCast;
     }
 
-    public GenericTargetedSpellGoal(Mob mob, int channelTicks, int range,
+    public GenericTargetedSpellGoal(Mob mob, int channelTicks, float range,
                                     @Nullable Consumer<LivingEntity> onEntityCast,
                                     @Nullable Consumer<BlockPos> onGroundCast,
                                     @Nullable Consumer<Building> onBuildingCast) {
@@ -84,7 +84,7 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
     }
 
     protected boolean isInRange() {
-        int finalRange = range;
+        float finalRange = range;
         if (isCasting())
             finalRange += bonusChannelingRange;
 

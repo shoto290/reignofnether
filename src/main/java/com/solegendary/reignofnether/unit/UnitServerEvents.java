@@ -260,14 +260,13 @@ public class UnitServerEvents {
                                 selectedBuildingPos
                         )
                     );
-                    System.out.println("added item to shiftQueue: " + action.name() + "|" + actionableUnitId + "|" + preselectedBlockPos);
+                    //System.out.println("added item to shiftQueue: " + action.name() + "|" + actionableUnitId + "|" + preselectedBlockPos);
                 }
             }
         } else {
             synchronized(unitActionSlowQueue) {
                 for (int actionableUnitId : unitIds)
-                    if (unitActionSlowQueue.removeIf(uai -> uai.getUnitIds().length > 0 && uai.getUnitIds()[0] == actionableUnitId))
-                        System.out.println("removed item from shiftQueue: " + action.name() + "|" + actionableUnitId + "|" + preselectedBlockPos);
+                    unitActionSlowQueue.removeIf(uai -> uai.getUnitIds().length > 0 && uai.getUnitIds()[0] == actionableUnitId);
             }
             synchronized (unitActionFastQueue) {
                 UnitActionItem uai = new UnitActionItem(ownerName,
@@ -626,13 +625,13 @@ public class UnitServerEvents {
                     if (entity instanceof Unit unit && unit.isIdle()) {
                         uai.action(evt.level);
                         actionedItem = uai;
-                        System.out.println("actioned item from queue: " + uai.getAction().name() + "|" + uai.getUnitIds()[0] + "|" + uai.getPreselectedBlockPos());
+                        //System.out.println("actioned item from queue: " + uai.getAction().name() + "|" + uai.getUnitIds()[0] + "|" + uai.getPreselectedBlockPos());
                         break;
                     }
                 }
             }
-            if (actionedItem != null && unitActionSlowQueue.remove(actionedItem))
-                System.out.println("removed item from queue: " + actionedItem.getAction().name() + "|" + actionedItem.getUnitIds()[0] + "|" + actionedItem.getPreselectedBlockPos());
+            if (actionedItem != null)
+                unitActionSlowQueue.remove(actionedItem);
         }
         synchronized (unitActionFastQueue) {
             for (UnitActionItem actionItem : unitActionFastQueue)

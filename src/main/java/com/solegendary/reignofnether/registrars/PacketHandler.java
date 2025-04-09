@@ -35,9 +35,6 @@ import com.solegendary.reignofnether.ability.AbilityClientboundPacket;
 import com.solegendary.reignofnether.tutorial.TutorialClientboundPacket;
 import com.solegendary.reignofnether.tutorial.TutorialServerboundPacket;
 import com.solegendary.reignofnether.unit.packets.*;
-import com.solegendary.reignofnether.votesystem.networking.VotePacket;
-import com.solegendary.reignofnether.votesystem.networking.VoteSyncPacket;
-import com.solegendary.reignofnether.votesystem.networking.ClientboundOpenVotenScreenPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
@@ -200,24 +197,6 @@ public final class PacketHandler {
                 .encoder(SurvivalClientboundPacket::encode)
                 .decoder(SurvivalClientboundPacket::new)
                 .consumerMainThread(SurvivalClientboundPacket::handle)
-                .add();
-
-        INSTANCE.messageBuilder(VotePacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(VotePacket::encode)
-                .decoder(VotePacket::new)
-                .consumerMainThread(VotePacket::handle)
-                .add();
-
-        INSTANCE.messageBuilder(VoteSyncPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(VoteSyncPacket::encode)
-                .decoder(VoteSyncPacket::new)
-                .consumerMainThread(VoteSyncPacket::handle)
-                .add();
-
-        INSTANCE.messageBuilder(ClientboundOpenVotenScreenPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(ClientboundOpenVotenScreenPacket::encode)
-                .decoder(ClientboundOpenVotenScreenPacket::decode)
-                .consumerMainThread(ClientboundOpenVotenScreenPacket::handle)
                 .add();
 
         INSTANCE.messageBuilder(ClientboundSyncResourceCostPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)

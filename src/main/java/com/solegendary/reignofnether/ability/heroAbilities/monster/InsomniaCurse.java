@@ -11,6 +11,7 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.monsters.NecromancerUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -34,7 +35,7 @@ public class InsomniaCurse extends HeroAbility {
 
     public int charges = 3;
     public int maxCharges = 3;
-    private static final int RANGE = 12;
+    public static final int RANGE = 12;
     private static final float PHANTOM_DAMAGE = 5;
     private static final float PHANTOM_DAMAGE_BONUS_PER_SOUL = 0.5f;
     private static final int PHANTOM_MAX_ATTACKS = 3;
@@ -110,11 +111,15 @@ public class InsomniaCurse extends HeroAbility {
         );
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
-
+        ((NecromancerUnit) unitUsing).getCastPhantomGoal().setAbility(this);
+        ((NecromancerUnit) unitUsing).getCastPhantomGoal().setTarget(targetEntity);
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-
+        ((NecromancerUnit) unitUsing).getCastPhantomGoal().setAbility(this);
+        ((NecromancerUnit) unitUsing).getCastPhantomGoal().setTarget(targetBp);
     }
 }

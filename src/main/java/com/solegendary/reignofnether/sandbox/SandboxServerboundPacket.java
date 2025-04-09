@@ -1,11 +1,13 @@
 package com.solegendary.reignofnether.sandbox;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.registrars.PacketHandler;
 import com.solegendary.reignofnether.research.ResearchClientboundPacket;
 import com.solegendary.reignofnether.research.ResearchServerEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -61,8 +63,18 @@ public class SandboxServerboundPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
-            if (!SandboxServer.isAnyoneASandboxPlayer())
+
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("SandboxServerboundPacket: Sender was null");
+                success.set(false);
                 return;
+            }
+            else if (!SandboxServer.isAnyoneASandboxPlayer()) {
+                ReignOfNether.LOGGER.warn("SandboxServerboundPacket: Tried to process packet from " + player.getName() + " while sandbox is disabled");
+                success.set(false);
+                return;
+            }
 
             switch (sandboxAction) {
                 case SPAWN_UNIT -> SandboxServer.spawnUnit(this.playerName, this.unitName, this.blockPos);

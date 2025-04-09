@@ -157,7 +157,7 @@ public class BuildingServerboundPacket {
                     !player.getName().getString().equals(building.ownerName))) &&
                     !SandboxServer.isAnyoneASandboxPlayer()) {
 
-                ReignOfNether.LOGGER.warn("Tried to process packet from " + player.getName() + " for " + ownerName);
+                ReignOfNether.LOGGER.warn("BuildingServerboundPacket: Tried to process packet from " + player.getName() + " for " + ownerName);
                 success.set(false);
                 return;
             }

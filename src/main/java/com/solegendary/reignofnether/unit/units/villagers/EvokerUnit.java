@@ -373,7 +373,6 @@ public class EvokerUnit extends Evoker implements Unit, AttackerUnit, RangedAtta
         if (hasAnyEnchant())
             return;
 
-        // TODO: replace this with a stick instead
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
     }
 

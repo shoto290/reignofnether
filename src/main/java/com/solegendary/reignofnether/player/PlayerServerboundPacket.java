@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.player;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.building.BuildingUtils;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.gamemode.ClientGameModeHelper;
@@ -18,6 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
@@ -159,12 +161,12 @@ public class PlayerServerboundPacket {
     }
 
     public static void resetRTS() {
-        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.RESET_RTS, 0, 0d, 0d, 0d));
+        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.RESET_RTS, -1, 0d, 0d, 0d));
     }
 
     // resets and also removes all neutral units and buildings
     public static void resetRTSHard() {
-        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.RESET_RTS_HARD, 0, 0d, 0d, 0d));
+        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.RESET_RTS_HARD, -1, 0d, 0d, 0d));
     }
 
     public static void surrender() {
@@ -181,17 +183,17 @@ public class PlayerServerboundPacket {
     }
 
     public static void lockRTS() {
-        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.LOCK_RTS, 0, 0d, 0d, 0d));
+        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.LOCK_RTS, -1, 0d, 0d, 0d));
     }
 
     public static void unlockRTS() {
-        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.UNLOCK_RTS, 0, 0d, 0d, 0d));
+        PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(PlayerAction.UNLOCK_RTS, -1, 0d, 0d, 0d));
     }
 
     public static void enableRTSSyncing() {
         PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(
             PlayerAction.ENABLE_RTS_SYNCING,
-            0,
+            -1,
             0d,
             0d,
             0d
@@ -201,7 +203,7 @@ public class PlayerServerboundPacket {
     public static void disableRTSSyncing() {
         PacketHandler.INSTANCE.sendToServer(new PlayerServerboundPacket(
             PlayerAction.DISABLE_RTS_SYNCING,
-            0,
+            -1,
             0d,
             0d,
             0d
@@ -237,6 +239,18 @@ public class PlayerServerboundPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
+
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("PlayerServerboundPacket: Sender was null");
+                success.set(false);
+                return;
+            } else if (playerId != -1 && player.getId() != playerId) {
+                ReignOfNether.LOGGER.warn("PlayerServerboundPacket: Tried to process packet from " + player.getName() + " for id: " + this.playerId);
+                success.set(false);
+                return;
+            }
+
             switch (action) {
                 case TELEPORT -> PlayerServerEvents.movePlayer(this.playerId, this.x, this.y, this.z);
                 case ENABLE_ORTHOVIEW -> PlayerServerEvents.enableOrthoview(this.playerId);

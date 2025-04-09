@@ -2,12 +2,12 @@ package com.solegendary.reignofnether.unit.units.villagers;
 
 import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.abilities.PromoteIllager;
+import com.solegendary.reignofnether.ability.abilities.SpinWebs;
 import com.solegendary.reignofnether.ability.heroAbilities.villager.Avatar;
 import com.solegendary.reignofnether.ability.heroAbilities.villager.BattleRagePassive;
 import com.solegendary.reignofnether.ability.heroAbilities.villager.MaceSlam;
 import com.solegendary.reignofnether.ability.heroAbilities.villager.TauntingCry;
 import com.solegendary.reignofnether.hud.AbilityButton;
-import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.unit.Checkpoint;
@@ -17,7 +17,6 @@ import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.KeyframeAnimated;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
-import com.solegendary.reignofnether.unit.modelling.animations.PiglinMerchantAnimations;
 import com.solegendary.reignofnether.unit.modelling.animations.RoyalGuardAnimations;
 import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -70,10 +69,10 @@ public class RoyalGuardUnit extends Vindicator implements Unit, AttackerUnit, He
     public ReturnResourcesGoal getReturnResourcesGoal() {return returnResourcesGoal;}
     public int getMaxResources() {return maxResources;}
 
-    public GenericUntargetedSpellGoal castTauntingCryGoal;
-    public GenericUntargetedSpellGoal getCastTauntingCryGoal() {
-        return castTauntingCryGoal;
-    }
+    private GenericUntargetedSpellGoal castTauntingCryGoal;
+    public GenericUntargetedSpellGoal getCastTauntingCryGoal() { return castTauntingCryGoal; }
+    private GenericTargetedSpellGoal castMaceSlamGoal;
+    public GenericTargetedSpellGoal getCastMaceSlamGoal() { return castMaceSlamGoal; }
 
     private MoveToTargetBlockGoal moveGoal;
     private SelectedTargetGoal<? extends LivingEntity> targetGoal;
@@ -182,7 +181,7 @@ public class RoyalGuardUnit extends Vindicator implements Unit, AttackerUnit, He
                 activeAnimDef = RoyalGuardAnimations.ATTACK;
                 activeAnimState = attackAnimState;
                 animateScale = 1.0f;
-                startAnimation(RoyalGuardAnimations.ATTACK);
+                startAnimation(activeAnimDef);
             }
             case CHARGE_SPELL -> {
                 activeAnimDef = RoyalGuardAnimations.SPELL_CHARGE;
@@ -230,6 +229,8 @@ public class RoyalGuardUnit extends Vindicator implements Unit, AttackerUnit, He
         if (level().isClientSide() && animateTicks > 0) {
             animateTicks -= 1;
         }
+        this.castMaceSlamGoal.tick();
+        this.castTauntingCryGoal.tick();
     }
 
     public void initialiseGoals() {
@@ -240,13 +241,29 @@ public class RoyalGuardUnit extends Vindicator implements Unit, AttackerUnit, He
         this.attackGoal = new MeleeWindupAttackUnitGoal(this, false, ATTACK_WINDUP_TICKS);
         this.attackBuildingGoal = new MeleeAttackBuildingGoal(this);
         this.returnResourcesGoal = new ReturnResourcesGoal(this);
+        this.castMaceSlamGoal = new GenericTargetedSpellGoal(
+                this,
+                20,
+                MaceSlam.RANGE,
+                UnitAnimationAction.ATTACK_UNIT,
+                null,
+                this::maceSlam,
+                null
+        );
+        this.castTauntingCryGoal = new GenericUntargetedSpellGoal(
+                this,
+                0,
+                this::tauntingCry,
+                UnitAnimationAction.CHARGE_SPELL,
+                UnitAnimationAction.STOP,
+                UnitAnimationAction.CAST_SPELL
+        );
     }
 
     @Override
     protected void registerGoals() {
         initialiseGoals();
         this.goalSelector.addGoal(2, usePortalGoal);
-
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, attackGoal);
         this.goalSelector.addGoal(2, attackBuildingGoal);
@@ -260,5 +277,18 @@ public class RoyalGuardUnit extends Vindicator implements Unit, AttackerUnit, He
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         return pSpawnData;
+    }
+
+
+    public void maceSlam(BlockPos blockPos) {
+
+    }
+
+    public void tauntingCry() {
+
+    }
+
+    public void avatar() {
+
     }
 }

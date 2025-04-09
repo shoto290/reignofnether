@@ -31,15 +31,12 @@ public class MeleeWindupAttackUnitGoal extends AbstractMeleeAttackUnitGoal {
     protected void checkAndPerformAttack(LivingEntity target, double distSqr) {
         double d = this.getAttackReachSqr(target);
         if (distSqr <= d && this.ticksUntilNextAttack <= 0) {
-            System.out.println("ticking: " + windupTicksLeft);
             if (windupTicksLeft == windupTicksMax &&
                 mob instanceof KeyframeAnimated && !mob.level().isClientSide()) {
-                System.out.println("started animation!");
                 UnitAnimationClientboundPacket.sendBasicPacket(UnitAnimationAction.ATTACK_UNIT, mob);
             }
             windupTicksLeft -= 1;
             if (windupTicksLeft <= 0) {
-                System.out.println("attacking!");
                 this.ticksUntilNextAttack = this.adjustedTickDelay(getAttackInterval());
                 this.mob.swing(InteractionHand.MAIN_HAND);
                 this.mob.doHurtTarget(target);

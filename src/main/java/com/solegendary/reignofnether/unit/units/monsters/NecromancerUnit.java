@@ -5,9 +5,10 @@ import com.solegendary.reignofnether.ability.heroAbilities.monster.BloodMoon;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.InsomniaCurse;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.SoulSiphonPassive;
+import com.solegendary.reignofnether.ability.heroAbilities.villager.MaceSlam;
+import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.fogofwar.FogOfWarClientboundPacket;
 import com.solegendary.reignofnether.hud.AbilityButton;
-import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.registrars.EntityRegistrar;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
@@ -24,7 +25,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -76,9 +80,17 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
     private ReturnResourcesGoal returnResourcesGoal;
     public MountGoal mountGoal;
 
-    public GenericUntargetedSpellGoal castRaiseDeadGoal;
+    private GenericUntargetedSpellGoal castRaiseDeadGoal;
     public GenericUntargetedSpellGoal getCastRaiseDeadGoal() {
         return castRaiseDeadGoal;
+    }
+    private GenericTargetedSpellGoal castPhantomGoal;
+    public GenericTargetedSpellGoal getCastPhantomGoal() {
+        return castPhantomGoal;
+    }
+    private GenericUntargetedSpellGoal castBloodMoonGoal;
+    public GenericUntargetedSpellGoal getCastBloodMoonGoal() {
+        return castBloodMoonGoal;
     }
 
     public BlockPos getAttackMoveTarget() { return attackMoveTarget; }
@@ -245,6 +257,8 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
             animateTicks -= 1;
         }
         this.castRaiseDeadGoal.tick();
+        this.castPhantomGoal.tick();
+        this.castBloodMoonGoal.tick();
     }
 
     @Override
@@ -267,29 +281,29 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
                 UnitAnimationAction.STOP,
                 UnitAnimationAction.CAST_SPELL
         );
-    }
-
-    public void raiseDead() {
-        if (this.level().isClientSide())
-            return;
-
-        for(int i = 0; i < 2; ++i) {
-            BlockPos blockpos = this.blockPosition().offset(-2 + this.random.nextInt(5), 1, -2 + this.random.nextInt(5));
-            ZombieUnit zombieUnit = EntityRegistrar.ZOMBIE_UNIT.get().create(this.level());
-            if (zombieUnit != null) {
-                zombieUnit.moveTo(blockpos, 0.0F, 0.0F);
-                zombieUnit.setOwnerName(this.getOwnerName());
-                this.level().addFreshEntity(zombieUnit);
-                zombieUnit.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.CHAINMAIL_CHESTPLATE));
-            }
-        }
+        this.castPhantomGoal = new GenericTargetedSpellGoal(
+                this,
+                0,
+                InsomniaCurse.RANGE,
+                UnitAnimationAction.CAST_SPELL,
+                this::summonPhantomEntity,
+                null,
+                this::summonPhantomBuilding
+        );
+        this.castBloodMoonGoal = new GenericUntargetedSpellGoal(
+                this,
+                BloodMoon.CHANNEL_TICKS,
+                this::bloodMoon,
+                UnitAnimationAction.CHARGE_SPELL,
+                UnitAnimationAction.STOP,
+                UnitAnimationAction.CAST_SPELL
+        );
     }
 
     @Override
     protected void registerGoals() {
         initialiseGoals();
         this.goalSelector.addGoal(2, usePortalGoal);
-
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, attackGoal);
         this.goalSelector.addGoal(2, returnResourcesGoal);
@@ -327,5 +341,37 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
 
         if (!level().isClientSide() && pTarget instanceof Unit unit)
             FogOfWarClientboundPacket.revealRangedUnit(unit.getOwnerName(), this.getId());
+    }
+
+    public void raiseDead() {
+        if (this.level().isClientSide())
+            return;
+
+        for(int i = 0; i < 2; ++i) {
+            BlockPos blockpos = this.blockPosition().offset(-2 + this.random.nextInt(5), 1, -2 + this.random.nextInt(5));
+            ZombieUnit zombieUnit = EntityRegistrar.ZOMBIE_UNIT.get().create(this.level());
+            if (zombieUnit != null) {
+                zombieUnit.moveTo(blockpos, 0.0F, 0.0F);
+                zombieUnit.setOwnerName(this.getOwnerName());
+                this.level().addFreshEntity(zombieUnit);
+                zombieUnit.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.CHAINMAIL_CHESTPLATE));
+            }
+        }
+    }
+
+    public void summonPhantomEntity(LivingEntity targetEntity) {
+
+    }
+
+    public void summonPhantomBuilding(Building targetBuilding) {
+
+    }
+
+    public void summonPhantom() {
+
+    }
+
+    public void bloodMoon() {
+
     }
 }

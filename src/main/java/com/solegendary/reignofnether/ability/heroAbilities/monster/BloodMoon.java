@@ -14,10 +14,13 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.monsters.NecromancerUnit;
+import com.solegendary.reignofnether.unit.units.villagers.RoyalGuardUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -28,6 +31,7 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class BloodMoon extends HeroAbility {
 
+    public static final int CHANNEL_TICKS = 40;
     private static final int CD_MAX_SECONDS = 360 * ResourceCost.TICKS_PER_SECOND;
     private static final int DURATION_SECONDS = 60;
     private static final int BONUS_SECONDS_PER_SOUL = 3;
@@ -82,7 +86,15 @@ public class BloodMoon extends HeroAbility {
         );
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
+        ((NecromancerUnit) unitUsing).getCastBloodMoonGoal().setAbility(this);
+        ((NecromancerUnit) unitUsing).getCastBloodMoonGoal().startCasting();
+    }
 
+    @Override
+    public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
+        ((NecromancerUnit) unitUsing).getCastBloodMoonGoal().setAbility(this);
+        ((NecromancerUnit) unitUsing).getCastBloodMoonGoal().startCasting();
     }
 }

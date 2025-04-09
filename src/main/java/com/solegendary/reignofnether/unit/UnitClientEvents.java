@@ -694,11 +694,7 @@ public class UnitClientEvents {
     public static void onRenderLevel(RenderLevelStageEvent evt) {
         if (MC.level == null)
             return;
-        /**
-         *  TODO: make these visible to 1st-person players but currently had a visual glitch
-         *  doesnt align to camera very well, sometimes sinks below ground and too thin
-         *  TODO: make this visible behind blocks (but only seems to work if orthoview is creative mode)
-         */
+
         // if orthoview uses creative mode: RenderLevelStageEvent.Stage.AFTER_WEATHER
         // if orthoview uses spectator mode: RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS
 

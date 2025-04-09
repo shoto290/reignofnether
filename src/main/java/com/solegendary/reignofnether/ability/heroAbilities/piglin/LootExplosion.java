@@ -12,10 +12,13 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.monsters.NecromancerUnit;
+import com.solegendary.reignofnether.unit.units.piglins.PiglinMerchantUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -79,7 +82,15 @@ public class LootExplosion extends HeroAbility {
         );
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
+        ((PiglinMerchantUnit) unitUsing).getCastLootExplosionGoal().setAbility(this);
+        ((PiglinMerchantUnit) unitUsing).getCastLootExplosionGoal().startCasting();
+    }
 
+    @Override
+    public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
+        ((PiglinMerchantUnit) unitUsing).getCastLootExplosionGoal().setAbility(this);
+        ((PiglinMerchantUnit) unitUsing).getCastLootExplosionGoal().startCasting();
     }
 }

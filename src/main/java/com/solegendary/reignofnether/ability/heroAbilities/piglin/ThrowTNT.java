@@ -14,6 +14,7 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.piglins.PiglinMerchantUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +29,7 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class ThrowTNT extends HeroAbility {
 
-    private static final int RANGE = 12;
+    public static final int RANGE = 12;
     private static float explosionPower = 2;
     private static int LESS_COOLDOWN_PER_100_RESOURCES = 5 * ResourceCost.TICKS_PER_SECOND;
 
@@ -98,11 +99,15 @@ public class ThrowTNT extends HeroAbility {
         );
     }
 
-    public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
-
+    @Override
+    public void use(Level level, Unit unitUsing, BlockPos targetBp) {
+        ((PiglinMerchantUnit) unitUsing).getCastTNTGoal().setAbility(this);
+        ((PiglinMerchantUnit) unitUsing).getCastTNTGoal().setTarget(targetBp);
     }
 
-    public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-
+    @Override
+    public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
+        ((PiglinMerchantUnit) unitUsing).getCastTNTGoal().setAbility(this);
+        ((PiglinMerchantUnit) unitUsing).getCastTNTGoal().setTarget(targetEntity);
     }
 }

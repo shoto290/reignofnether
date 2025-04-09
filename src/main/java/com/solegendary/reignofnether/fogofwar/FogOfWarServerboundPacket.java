@@ -1,8 +1,10 @@
 package com.solegendary.reignofnether.fogofwar;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.registrars.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -35,6 +37,18 @@ public class FogOfWarServerboundPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
+
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("FogOfWarServerboundPacket: Sender was null");
+                success.set(false);
+                return;
+            } else if (!player.hasPermissions(4)) {
+                ReignOfNether.LOGGER.warn("FogOfWarServerboundPacket: Tried to process packet from " + player.getName() + " with insufficient permissions");
+                success.set(false);
+                return;
+            }
+
             FogOfWarServerEvents.setEnabled(enable);
             success.set(true);
         });

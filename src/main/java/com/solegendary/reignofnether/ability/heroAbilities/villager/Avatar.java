@@ -13,6 +13,7 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.villagers.RoyalGuardUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -84,6 +85,6 @@ public class Avatar extends HeroAbility {
     }
 
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-
+        ((RoyalGuardUnit) unitUsing).avatar();
     }
 }

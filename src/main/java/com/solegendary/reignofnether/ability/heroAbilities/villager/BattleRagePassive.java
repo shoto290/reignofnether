@@ -23,8 +23,8 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcs;
 
 public class BattleRagePassive extends HeroAbility {
 
-    public float maxHpRegen = 1.0f;
-    public float maxBonusDamage = 6;
+    public float maxHpRegen = 1.2f;
+    public float maxBonusDamage = 4;
 
     public BattleRagePassive(HeroUnit hero) {
         super(hero, 3, UnitAction.NONE, 0, 0, 0, false);

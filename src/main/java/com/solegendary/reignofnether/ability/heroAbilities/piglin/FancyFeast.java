@@ -6,7 +6,6 @@ package com.solegendary.reignofnether.ability.heroAbilities.piglin;
 
 // TODO: make piglin units stop to eat vanilla food items if they are damaged
 
-import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.hud.AbilityButton;
@@ -16,10 +15,12 @@ import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.units.piglins.PiglinMerchantUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -28,6 +29,8 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcs;
 import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class FancyFeast extends HeroAbility {
+
+    public static final int RANGE = 10;
 
     private static final int CD_MAX_SECONDS = 30 * ResourceCost.TICKS_PER_SECOND;
     private static final float BASE_ITEMS = 6;
@@ -39,7 +42,7 @@ public class FancyFeast extends HeroAbility {
 
 
     public FancyFeast(HeroUnit hero) {
-        super(hero, 3, UnitAction.FANCY_FEAST, CD_MAX_SECONDS, 10, 0, false);
+        super(hero, 3, UnitAction.FANCY_FEAST, CD_MAX_SECONDS, RANGE, 0, false);
     }
 
     private ResourceLocation getIcon(int plusRank) {
@@ -107,7 +110,15 @@ public class FancyFeast extends HeroAbility {
         );
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
+        ((PiglinMerchantUnit) unitUsing).getCastFancyFeastGoal().setAbility(this);
+        ((PiglinMerchantUnit) unitUsing).getCastFancyFeastGoal().setTarget(targetBp);
+    }
 
+    @Override
+    public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
+        ((PiglinMerchantUnit) unitUsing).getCastFancyFeastGoal().setAbility(this);
+        ((PiglinMerchantUnit) unitUsing).getCastFancyFeastGoal().setTarget(targetEntity.getOnPos());
     }
 }

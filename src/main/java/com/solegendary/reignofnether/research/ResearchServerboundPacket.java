@@ -1,9 +1,11 @@
 package com.solegendary.reignofnether.research;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.gamemode.GameModeClientboundPacket;
 import com.solegendary.reignofnether.registrars.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -55,7 +57,24 @@ public class ResearchServerboundPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
+
+            ServerPlayer player = ctx.get().getSender();
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("ResearchServerboundPacket (cheats): Sender was null");
+                success.set(false);
+                return;
+            } else if (!player.getName().getString().equals(this.playerName)) {
+                ReignOfNether.LOGGER.warn("ResearchServerboundPacket (cheats): Tried to process packet from " + player.getName() + " for id: " + this.playerName);
+                success.set(false);
+                return;
+            }
+
             if (isCheat) {
+                if (!player.hasPermissions(4)) {
+                    ReignOfNether.LOGGER.warn("ResearchServerboundPacket (cheats): Tried to process packet from " + player.getName() + " with insufficient permissions");
+                    success.set(false);
+                    return;
+                }
                 if (add) {
                     ResearchServerEvents.addCheat(this.playerName, this.itemName);
                     ResearchClientboundPacket.addCheat(this.playerName, this.itemName);

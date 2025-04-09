@@ -467,7 +467,7 @@ public class MiscUtil {
                     BlockState bs;
                     do {
                         bottomBp = topBp.offset(0,-y,0);
-                        bs = level.getBlockState(bottomBp); // TODO: infinite loop negative Y
+                        bs = level.getBlockState(bottomBp);
                         y += 1;
                     } while (y < 30 && (bs.getBlock() instanceof LeavesBlock || !bs.isSolid()));
                     if (!level.getBlockState(bottomBp.above()).isSolid())

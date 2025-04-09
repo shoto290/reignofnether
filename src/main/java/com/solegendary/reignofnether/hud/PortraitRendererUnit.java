@@ -442,7 +442,7 @@ public class PortraitRendererUnit<T extends LivingEntity, M extends EntityModel<
                 entityrenderdispatcher.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack, immediate, 15728880);
                 immediate.endBatch();
             } catch (ReportedException e) {
-                System.out.println("Caught reportedException: " + e);
+                //System.out.println("Caught reportedException: " + e);
             }
         });
         entityrenderdispatcher.setRenderShadow(true);

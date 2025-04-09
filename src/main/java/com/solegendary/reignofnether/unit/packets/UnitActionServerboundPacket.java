@@ -78,7 +78,7 @@ public class UnitActionServerboundPacket {
                 success.set(false);
             }
             else if (!player.getName().getString().equals(ownerName) && !SandboxServer.isSandboxPlayer(ownerName)) {
-                ReignOfNether.LOGGER.warn("Tried to process packet from " + player.getName() + " for " + ownerName);
+                ReignOfNether.LOGGER.warn("UnitActionServerboundPacket: Tried to process packet from " + player.getName() + " for " + ownerName);
                 success.set(false);
             }
             else {

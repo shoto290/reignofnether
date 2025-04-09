@@ -14,12 +14,9 @@ import com.solegendary.reignofnether.unit.units.monsters.*;
 import com.solegendary.reignofnether.unit.units.neutral.*;
 import com.solegendary.reignofnether.unit.units.piglins.*;
 import com.solegendary.reignofnether.unit.units.villagers.*;
-import com.solegendary.reignofnether.votesystem.VoteCommand;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.animal.PolarBear;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -160,7 +157,6 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent evt) {
         MenuScreens.register(ContainerRegistrar.TOPDOWNGUI_CONTAINER.get(), TopdownGui::new);
-        MinecraftForge.EVENT_BUS.register(VoteCommand.class);
     }
 
     @SubscribeEvent

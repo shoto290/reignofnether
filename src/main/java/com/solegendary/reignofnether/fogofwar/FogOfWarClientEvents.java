@@ -376,7 +376,7 @@ public class FogOfWarClientEvents {
                 .collect(Collectors.toSet());
 
         if (!chunksInFrustum.contains(cpos)) {
-            System.out.println("explored chunk outside of frustum at: " + cpos);
+            //System.out.println("explored chunk outside of frustum at: " + cpos);
             chunksToRefresh.add(cpos);
         }
 

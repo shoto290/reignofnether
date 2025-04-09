@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.gamerules;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.registrars.GameRuleRegistrar;
 import com.solegendary.reignofnether.registrars.PacketHandler;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
@@ -95,7 +96,13 @@ public class GameruleServerboundPacket {
         final var success = new AtomicBoolean(false);
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
-            if (player == null || !player.hasPermissions(4)) {
+            if (player == null) {
+                ReignOfNether.LOGGER.warn("GameruleServerboundPacket: Sender was null");
+                success.set(false);
+                return;
+            }
+            else if (!player.hasPermissions(4)) {
+                ReignOfNether.LOGGER.warn("GameruleServerboundPacket: Tried to process packet from " + player.getName() + " with insufficient permissions");
                 success.set(false);
                 return;
             }
