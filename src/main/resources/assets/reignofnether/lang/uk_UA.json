@@ -128,7 +128,7 @@
     "abilities.reignofnether.wither_cloud.tooltip1": "Закликає Візер-скелета випустити дим",
     "abilities.reignofnether.wither_cloud.tooltip2": "з смертоностним висушенням який буде розпадатися %d секунд.",
     "abilities.reignofnether.bloodlust": "Кровожерливість",
-    "abilities.reignofnether.bloodlust.tooltip1": "Заплати %d життя щоб на 50%% швидше атакувати ",
+    "abilities.reignofnether.bloodlust.tooltip1": "Заплати %d життя щоб на 60%% швидше атакувати ",
     "abilities.reignofnether.bloodlust.tooltip2": "та 20%% швидше передвигатися на %d секунд.",
     "abilities.reignofnether.call_to_arms_building": "До зброї!",
     "abilities.reignofnether.call_to_arms_building.tooltip1": "Закликає найближчих селян стати ополченцями",
@@ -244,7 +244,7 @@
     "abilities.reignofnether.rank_up_menu": "Підвищити рівень (%d)",
     "abilities.reignofnether.rank": "[Ранг %d]",
     "abilities.reignofnether.unlearnt": "[Не вивчено]",
-    "abilities.reignofnether.autocast": "Правий клік для авто-зачарування",
+    "abilities.reignofnether.autocast": "Правий клік для автоматичного використання",
 
     "ability.reignofnether.enchant.error1": "Ви можете зачаровати тільки своїх юнітів",
     "ability.reignofnether.enchant.error2": "Юніт не в зоні радіусу",

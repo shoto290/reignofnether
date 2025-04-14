@@ -572,9 +572,18 @@ public class UnitClientEvents {
                 );
                 if (getPlayerToEntityRelationship(selectedUnit) == Relationship.OWNED || NonUnitClientEvents.canControlNonUnits()) {
                     clearSelectedUnits();
-                    for (LivingEntity entity : nearbyEntities)
-                        if (getPlayerToEntityRelationship(entity) == Relationship.OWNED || NonUnitClientEvents.canControlNonUnits())
+                    for (LivingEntity entity : nearbyEntities) {
+                        boolean bothVillagers = entity instanceof VillagerUnit &&
+                                                selectedUnit instanceof VillagerUnit;
+                        boolean sameProfession = entity instanceof VillagerUnit vUnit1 &&
+                                                selectedUnit instanceof VillagerUnit vUnit2 &&
+                                                vUnit1.getUnitProfession() == vUnit2.getUnitProfession();
+
+                        if ((getPlayerToEntityRelationship(entity) == Relationship.OWNED || NonUnitClientEvents.canControlNonUnits()) &&
+                                (!bothVillagers || sameProfession)) {
                             addSelectedUnit(entity);
+                        }
+                    }
                     HudClientEvents.setLowestCdHudEntity();
                 }
             }

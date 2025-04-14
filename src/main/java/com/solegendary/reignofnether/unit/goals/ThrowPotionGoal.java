@@ -16,9 +16,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3d;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,7 +75,7 @@ public class ThrowPotionGoal extends MoveToTargetBlockGoal {
         }
 
         // autocast
-        if (this.targetEntity == null && moveTarget == null && !mob.level().isClientSide() && witch.isIdle()) {
+        if (this.targetEntity == null && moveTarget == null && !mob.level().isClientSide() && witch.isIdle() && witch.tickCount % 4 == 0) {
 
             for (Ability potionAbility : witch.getAbilities()) {
                 if (!potionAbility.autocast || !potionAbility.isOffCooldown())
@@ -80,7 +83,7 @@ public class ThrowPotionGoal extends MoveToTargetBlockGoal {
 
                 List<Mob> nearbyMobs = MiscUtil.getEntitiesWithinRange(
                         new Vector3d(witch.position().x, witch.position().y, witch.position().z),
-                        potionAbility.range,
+                        potionAbility.range + 4,
                         Mob.class,
                         witch.level());
 
@@ -120,6 +123,13 @@ public class ThrowPotionGoal extends MoveToTargetBlockGoal {
                         setPotion(throwWaterPotion.potion);
                         setTarget(nearbyOnFireUnits.get(0));
                         break;
+                    } else if (witch.tickCount % 20 == 0) {
+                        BlockPos fireBp = findNearbyFireBlock();
+                        if (fireBp != null) {
+                            setPotion(throwWaterPotion.potion);
+                            setTarget(fireBp);
+                            break;
+                        }
                     }
                 }
                 else if (potionAbility instanceof ThrowLingeringHarmingPotion throwHarmingPotion) {
@@ -141,7 +151,22 @@ public class ThrowPotionGoal extends MoveToTargetBlockGoal {
         }
     }
 
-
+    @Nullable
+    private BlockPos findNearbyFireBlock() {
+        ArrayList<BlockPos> bps = new ArrayList<>();
+        for (int x = -10; x < 10; x++)
+            for (int y = -4; y < 4; y++)
+                for (int z = -10; z < 10; z++) {
+                    BlockPos bp = mob.blockPosition().offset(x, y, z);
+                    if (mob.level().getBlockState(bp).getBlock() == Blocks.FIRE)
+                        bps.add(bp);
+                }
+        List<BlockPos> sortedBps = bps.stream().sorted(Comparator.comparing(bp -> bp.distSqr(this.mob.blockPosition()))).toList();
+        if (!sortedBps.isEmpty())
+            return sortedBps.get(0);
+        else
+            return null;
+    }
 
     @Override
     public void stop() {

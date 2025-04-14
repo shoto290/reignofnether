@@ -128,7 +128,7 @@
   "abilities.reignofnether.wither_cloud.tooltip1": "使凋灵骷髅主动释放出一股环绕其周身的致命凋零效果粒子云，",
   "abilities.reignofnether.wither_cloud.tooltip2": "粒子云在持续 %d 秒后会自行消散。",
   "abilities.reignofnether.bloodlust": "嗜血狂暴",
-  "abilities.reignofnether.bloodlust.tooltip1": "主动牺牲 %d 生命值，使攻击速度加快 50%%，",
+  "abilities.reignofnether.bloodlust.tooltip1": "主动牺牲 %d 生命值，使攻击速度加快 60%%，",
   "abilities.reignofnether.bloodlust.tooltip2": "使移动速度也加快 20%%，持续 %d 秒。",
   "abilities.reignofnether.call_to_arms_building": "召之即战",
   "abilities.reignofnether.call_to_arms_building.tooltip1": "将邻近的所有村民工人转换为民兵以守卫基地。",
@@ -244,7 +244,7 @@
   "abilities.reignofnether.rank_up_menu": "已升级（%d 级）",
   "abilities.reignofnether.rank": "[等级 %d]",
   "abilities.reignofnether.unlearnt": "[尚未习得]",
-  "abilities.reignofnether.autocast": "右击以自动附魔",
+  "abilities.reignofnether.autocast": "鼠标右击以自动释放该技能",
 
   "ability.reignofnether.enchant.error1": "附魔台仅能为所属你自己的单位附魔",
   "ability.reignofnether.enchant.error2": "所选单位未在有效范围内",

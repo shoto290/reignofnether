@@ -826,11 +826,13 @@ public class PlayerServerEvents {
     public static void resetRTS(boolean hardReset) {
         StartPosServerEvents.cancelStartGameCountdown(true);
 
+        boolean isSandbox = SandboxServer.isAnyoneASandboxPlayer();
+
         synchronized (rtsPlayers) {
             rtsPlayers.clear();
 
             for (LivingEntity entity : UnitServerEvents.getAllUnits())
-                if (hardReset || (entity instanceof Unit unit && !Unit.hasAnchor(unit)))
+                if (hardReset || (entity instanceof Unit unit && !Unit.hasAnchor(unit) && !isSandbox))
                     entity.kill();
 
             UnitServerEvents.getAllUnits().removeIf(u -> (hardReset || (u instanceof Unit unit && !Unit.hasAnchor(unit))));
@@ -842,7 +844,7 @@ public class PlayerServerEvents {
             for (Building building : BuildingServerEvents.getBuildings()) {
                 if (building instanceof ProductionBuilding productionBuilding)
                     productionBuilding.productionQueue.clear();
-                if (building.shouldDestroyOnReset || hardReset)
+                if ((building.shouldDestroyOnReset || hardReset) && !isSandbox)
                     building.destroy((ServerLevel) building.getLevel());
             }
             BuildingServerEvents.getBuildings().removeIf(b -> b.shouldDestroyOnReset || hardReset);

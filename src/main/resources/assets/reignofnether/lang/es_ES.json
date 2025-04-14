@@ -128,7 +128,7 @@
     "abilities.reignofnether.wither_cloud.tooltip1": "Hace que el Esqueleto Wither libere una nube",
     "abilities.reignofnether.wither_cloud.tooltip2": "de wither mortífero a su alrededor durante %d segundos.",
     "abilities.reignofnether.bloodlust": "Sed de Sangre",
-    "abilities.reignofnether.bloodlust.tooltip1": "Paga %d de vida para ganar 50%% más de velocidad de ataque",
+    "abilities.reignofnether.bloodlust.tooltip1": "Paga %d de vida para ganar 60%% más de velocidad de ataque",
     "abilities.reignofnether.bloodlust.tooltip2": "y 20%% más de movimiento durante %d segundos.",
     "abilities.reignofnether.call_to_arms_building": "Llamado a las Armas",
     "abilities.reignofnether.call_to_arms_building.tooltip1": "Convoca a todos los aldeanos cercanos para convertirse en",

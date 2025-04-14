@@ -123,7 +123,7 @@
     "abilities.reignofnether.wither_cloud.tooltip1": "Powoduje, że witherowy szkielet uwalnia wokół siebie",
     "abilities.reignofnether.wither_cloud.tooltip2": "chmurę śmiercionośnego obumarcia przez następne %d sekund.",
     "abilities.reignofnether.bloodlust": "Żądza krwi",
-    "abilities.reignofnether.bloodlust.tooltip1": "Zapłać %d życia, aby zyskać 50%% większą prędkość ataku",
+    "abilities.reignofnether.bloodlust.tooltip1": "Zapłać %d życia, aby zyskać 60%% większą prędkość ataku",
     "abilities.reignofnether.bloodlust.tooltip2": "i 20%% większą prędkość przez %d sekund.",
     "abilities.reignofnether.call_to_arms_building": "Wezwanie do broni",
     "abilities.reignofnether.call_to_arms_building.tooltip1": "Wzywa wszystkich pobliskich wieśniaków do przekształcenia",
@@ -145,7 +145,7 @@
     "abilities.reignofnether.consume.error1": "Już osiągnęła maksymalny rozmiar!",
     "abilities.reignofnether.consume.error2": "Celem mogą być tylko posiadane przez ciebie kostki magmy.",
 
-    "abilities.reignofnether.autocast": "Prawy przycisk myszy, aby automatycznie zaklinać",
+    "abilities.reignofnether.autocast": "Prawy przycisk myszy, aby automatycznie rzutować",
 
     "ability.reignofnether.enchant.error1": "Możesz zaklinać tylko swoje jednostki",
     "ability.reignofnether.enchant.error2": "Jednostka jest poza zasięgiem",

@@ -126,7 +126,7 @@
   "abilities.reignofnether.wither_cloud.tooltip1": "使凋零骷髏在接下來 %d 秒內，",
   "abilities.reignofnether.wither_cloud.tooltip2": "在周圍釋放致命的凋零效果雲。",
   "abilities.reignofnether.bloodlust": "嗜血",
-  "abilities.reignofnether.bloodlust.tooltip1": "付出 %d 生命值獲得 50%% 攻擊速度",
+  "abilities.reignofnether.bloodlust.tooltip1": "付出 %d 生命值獲得 60%% 攻擊速度",
   "abilities.reignofnether.bloodlust.tooltip2": "和 20%% 移動速度，持續 %d 秒。",
   "abilities.reignofnether.call_to_arms_building": "呼叫民兵",
   "abilities.reignofnether.call_to_arms_building.tooltip1": "呼叫所有附近的村民轉化為",

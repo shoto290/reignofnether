@@ -32,11 +32,8 @@ Bugfixes
 --------
 [✔] Can no longer send resources to a non-RTS ally
 [✔] Fixed unit and building ability tooltips not updating when language is changed
-
 [✔] Fixed camera moving up constantly when switching to RTS camera
-[❌] Fixed ghast soul fireballs not working
-    - TODO: check getonPos() doesnt affect anything else (it returns the highest solid block now)
-    - because mob griefing is now required for fireballs to cause fires?
+[✔] Fixed ghast soul fireballs not setting fires or creating soulsand when upgraded
 
 
 Quality of Life
@@ -45,8 +42,8 @@ Quality of Life
 [✔] Huntable animals now show their food value next to their portrait
 [✔] Updated /rts-help list
 [✔] Added packet spoofing prevention on various player actions
-[❌] All owned units and buildings in sandbox mode are now converted to neutral instead of being destroyed
-[❌] Double-clicking a villager with a profession now selects all nearby villagers of the same profession only
+[✔] All units and buildings are now converted to neutral instead of being destroyed when exiting sandbox mode
+[✔] Double-clicking a villager now selects all nearby villagers of the same profession only
 
 
 Languages
@@ -67,8 +64,8 @@ Villagers
 Witches
     [✔] Can now autocast any potion, but only one at a time
     [✔] All potion abilities now have a shared cooldown
-    [🟡] Added water potions, unlocked with research costing (250 wood, 250 ore, 140s)
-    [🟡] Added healing potions, unlocked with research costing (350 wood, 350 ore, 180s)
+    [✔] Added water potions, unlocked with research costing (250 wood, 250 ore, 140s)
+    [✔] Added healing potions, unlocked with research costing (350 wood, 350 ore, 180s)
     [✔] Extended lingering potions research cost reduced from (250 food, 250 wood, 250 ore) to (0 food, 250 wood, 250 ore)
 
 
