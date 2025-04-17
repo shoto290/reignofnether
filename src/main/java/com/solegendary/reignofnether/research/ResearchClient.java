@@ -1,7 +1,6 @@
 package com.solegendary.reignofnether.research;
 
 import com.solegendary.reignofnether.hud.HudClientEvents;
-import com.solegendary.reignofnether.unit.UnitClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 

@@ -20,7 +20,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.solegendary.reignofnether.building.BuildingClientEvents.getPlayerToBuildingRelationship;

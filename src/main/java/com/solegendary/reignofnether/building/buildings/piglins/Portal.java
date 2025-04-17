@@ -1,7 +1,6 @@
 package com.solegendary.reignofnether.building.buildings.piglins;
 
 import com.solegendary.reignofnether.ReignOfNether;
-import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.abilities.ConnectPortal;
 import com.solegendary.reignofnether.ability.abilities.DisconnectPortal;
 import com.solegendary.reignofnether.ability.abilities.GotoPortal;
@@ -17,7 +16,6 @@ import com.solegendary.reignofnether.research.researchItems.ResearchPortalForTra
 import com.solegendary.reignofnether.research.researchItems.ResearchResourceCapacity;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
-import com.solegendary.reignofnether.survival.SurvivalServerEvents;
 import com.solegendary.reignofnether.unit.units.piglins.*;
 import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.client.resources.language.I18n;

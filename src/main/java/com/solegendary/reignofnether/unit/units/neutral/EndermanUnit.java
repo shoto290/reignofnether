@@ -1,7 +1,6 @@
 package com.solegendary.reignofnether.unit.units.neutral;
 
 import com.solegendary.reignofnether.hud.AbilityButton;
-import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.ability.Ability;

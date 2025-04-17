@@ -6,8 +6,6 @@ import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.research.researchItems.ResearchGolemSmithing;
-import com.solegendary.reignofnether.research.researchItems.ResearchPillagerCrossbows;
-import com.solegendary.reignofnether.research.researchItems.ResearchVindicatorAxes;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.tutorial.TutorialClientEvents;

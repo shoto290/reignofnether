@@ -8,7 +8,6 @@ import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.research.researchItems.ResearchBruteShields;
 import com.solegendary.reignofnether.research.researchItems.ResearchSpiderWebs;
 import com.solegendary.reignofnether.unit.UnitAction;
-import com.solegendary.reignofnether.unit.UnitActionItem;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
 import com.solegendary.reignofnether.unit.goals.MeleeAttackBuildingGoal;
 import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;

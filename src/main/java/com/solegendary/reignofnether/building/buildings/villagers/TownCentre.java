@@ -1,8 +1,6 @@
 package com.solegendary.reignofnether.building.buildings.villagers;
 
-import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.abilities.BackToWorkBuilding;
-import com.solegendary.reignofnether.ability.abilities.CallLightning;
 import com.solegendary.reignofnether.ability.abilities.CallToArmsBuilding;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.hud.AbilityButton;

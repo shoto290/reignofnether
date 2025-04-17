@@ -1,6 +1,5 @@
 package com.solegendary.reignofnether;
 
-import com.mojang.realmsclient.util.task.ConnectTask;
 import com.solegendary.reignofnether.config.ReignOfNetherCommonConfigs;
 import com.solegendary.reignofnether.mixin.DownloadPackSourceAccessor;
 import com.solegendary.reignofnether.network.S2CReset;

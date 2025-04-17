@@ -1,22 +1,18 @@
 package com.solegendary.reignofnether.util;
 
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.tags.BlockTags;
 import org.apache.commons.lang3.text.WordUtils;
 import org.joml.Vector3d;
 import com.solegendary.reignofnether.alliance.AlliancesClient;
-import com.solegendary.reignofnether.blocks.RTSStartBlock;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.shared.AbstractBridge;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
-import com.solegendary.reignofnether.registrars.BlockRegistrar;
 import com.solegendary.reignofnether.registrars.GameRuleRegistrar;
-import com.solegendary.reignofnether.resources.ResourceSources;
 import com.solegendary.reignofnether.time.NightCircleMode;
 import com.solegendary.reignofnether.time.TimeClientEvents;
 import com.solegendary.reignofnether.unit.Checkpoint;

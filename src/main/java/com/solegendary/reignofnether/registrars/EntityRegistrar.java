@@ -4,7 +4,6 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.hero.HeroExperienceOrb;
 import com.solegendary.reignofnether.unit.modelling.renderers.GhastUnitRenderer;
 import com.solegendary.reignofnether.unit.modelling.renderers.NecromancerRenderer;
-import com.solegendary.reignofnether.unit.modelling.renderers.PiglinMerchantRenderer;
 import com.solegendary.reignofnether.unit.modelling.renderers.RoyalGuardRenderer;
 import com.solegendary.reignofnether.unit.units.monsters.*;
 import com.solegendary.reignofnether.unit.units.neutral.*;

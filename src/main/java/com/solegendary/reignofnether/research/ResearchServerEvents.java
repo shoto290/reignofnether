@@ -2,7 +2,6 @@ package com.solegendary.reignofnether.research;
 
 import com.mojang.datafixers.util.Pair;
 import com.solegendary.reignofnether.ReignOfNether;
-import com.solegendary.reignofnether.unit.UnitServerEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.server.ServerStartedEvent;

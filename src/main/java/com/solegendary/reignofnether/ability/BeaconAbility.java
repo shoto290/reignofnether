@@ -3,7 +3,6 @@ package com.solegendary.reignofnether.ability;
 import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.unit.UnitAction;
-import com.solegendary.reignofnether.unit.packets.BeaconSyncClientboundPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;

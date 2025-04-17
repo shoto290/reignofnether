@@ -15,7 +15,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.animal.Animal;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
 import com.solegendary.reignofnether.ability.abilities.EnchantMaiming;
 import com.solegendary.reignofnether.ability.abilities.EnchantVigor;
 import com.solegendary.reignofnether.building.GarrisonableBuilding;

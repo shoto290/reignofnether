@@ -1,6 +1,5 @@
 package com.solegendary.reignofnether.building.buildings.monsters;
 
-import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.abilities.Sacrifice;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.hud.AbilityButton;

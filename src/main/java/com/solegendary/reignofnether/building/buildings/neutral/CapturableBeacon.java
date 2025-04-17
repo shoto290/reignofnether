@@ -3,7 +3,6 @@ package com.solegendary.reignofnether.building.buildings.neutral;
 import com.solegendary.reignofnether.building.BuildingBlock;
 import com.solegendary.reignofnether.building.BuildingBlockData;
 import com.solegendary.reignofnether.building.BuildingClientEvents;
-import com.solegendary.reignofnether.gamerules.GameruleClient;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.resources.ResourceCost;

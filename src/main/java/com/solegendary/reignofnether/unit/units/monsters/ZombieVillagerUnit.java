@@ -2,7 +2,6 @@ package com.solegendary.reignofnether.unit.units.monsters;
 
 import com.solegendary.reignofnether.building.buildings.monsters.*;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
-import com.solegendary.reignofnether.building.buildings.villagers.*;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.research.ResearchClient;

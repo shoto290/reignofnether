@@ -7,7 +7,6 @@ import com.solegendary.reignofnether.keybinds.Keybindings;
 import com.solegendary.reignofnether.research.ResearchClient;
 import com.solegendary.reignofnether.research.researchItems.*;
 import com.solegendary.reignofnether.resources.ResourceCost;
-import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.ability.abilities.CallLightning;
 import com.solegendary.reignofnether.time.TimeClientEvents;

@@ -2,9 +2,6 @@ package com.solegendary.reignofnether.sandbox;
 
 import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.registrars.PacketHandler;
-import com.solegendary.reignofnether.research.ResearchClientboundPacket;
-import com.solegendary.reignofnether.research.ResearchServerEvents;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

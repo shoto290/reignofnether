@@ -12,7 +12,6 @@ import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.UnitClientEvents;
 import com.solegendary.reignofnether.unit.goals.MountGoal;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
-import com.solegendary.reignofnether.unit.units.monsters.PoisonSpiderUnit;
 import com.solegendary.reignofnether.unit.units.monsters.SkeletonUnit;
 import com.solegendary.reignofnether.unit.units.monsters.SpiderUnit;
 import com.solegendary.reignofnether.unit.units.monsters.StrayUnit;

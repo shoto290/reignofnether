@@ -3,8 +3,6 @@ package com.solegendary.reignofnether.fogofwar;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
@@ -19,7 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static com.solegendary.reignofnether.fogofwar.FogOfWarServerboundPacket.setServerFog;
 import static com.solegendary.reignofnether.player.PlayerServerEvents.sendMessageToAllPlayers;
 
 public class FogOfWarServerEvents {

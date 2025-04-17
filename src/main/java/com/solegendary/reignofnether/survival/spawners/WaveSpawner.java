@@ -1,6 +1,5 @@
 package com.solegendary.reignofnether.survival.spawners;
 
-import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.BuildingServerEvents;
 import com.solegendary.reignofnether.building.BuildingUtils;
@@ -17,7 +16,6 @@ import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 

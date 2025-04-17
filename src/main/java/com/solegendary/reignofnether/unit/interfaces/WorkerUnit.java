@@ -4,7 +4,6 @@ import com.solegendary.reignofnether.unit.UnitAnimationAction;
 import com.solegendary.reignofnether.unit.goals.BuildRepairGoal;
 import com.solegendary.reignofnether.unit.goals.GatherResourcesGoal;
 import com.solegendary.reignofnether.unit.packets.UnitAnimationClientboundPacket;
-import com.solegendary.reignofnether.unit.packets.UnitSyncClientboundPacket;
 import com.solegendary.reignofnether.unit.units.monsters.ZombieVillagerUnit;
 import com.solegendary.reignofnether.unit.units.villagers.VillagerUnit;
 import com.solegendary.reignofnether.unit.units.villagers.VillagerUnitProfession;

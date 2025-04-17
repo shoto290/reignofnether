@@ -2,7 +2,6 @@ package com.solegendary.reignofnether.building;
 
 import com.solegendary.reignofnether.building.buildings.monsters.SculkCatalyst;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;

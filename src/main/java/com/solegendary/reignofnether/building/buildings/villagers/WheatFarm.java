@@ -1,6 +1,5 @@
 package com.solegendary.reignofnether.building.buildings.villagers;
 
-import com.mojang.datafixers.util.Pair;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.shared.AbstractFarm;
 import com.solegendary.reignofnether.hud.AbilityButton;
@@ -21,8 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.StemBlock;
-import net.minecraft.world.level.block.StemGrownBlock;
 
 import java.util.ArrayList;
 import java.util.List;

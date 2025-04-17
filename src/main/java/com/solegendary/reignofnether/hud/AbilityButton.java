@@ -1,9 +1,7 @@
 package com.solegendary.reignofnether.hud;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.ability.Ability;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;

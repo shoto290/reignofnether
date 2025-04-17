@@ -14,7 +14,6 @@ import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
-import com.solegendary.reignofnether.unit.units.monsters.HuskUnit;
 import com.solegendary.reignofnether.unit.units.monsters.ZombieUnit;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Style;

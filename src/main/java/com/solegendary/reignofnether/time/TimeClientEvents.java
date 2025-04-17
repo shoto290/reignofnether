@@ -10,7 +10,6 @@ import com.solegendary.reignofnether.minimap.MinimapClientEvents;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
 import com.solegendary.reignofnether.player.PlayerClientEvents;
 import com.solegendary.reignofnether.survival.SurvivalClientEvents;
-import com.solegendary.reignofnether.survival.SurvivalServerboundPacket;
 import com.solegendary.reignofnether.tutorial.TutorialClientEvents;
 import com.solegendary.reignofnether.tutorial.TutorialStage;
 import com.solegendary.reignofnether.util.MyRenderer;
@@ -31,7 +30,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.solegendary.reignofnether.time.TimeUtils.*;
 
