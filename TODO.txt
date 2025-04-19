@@ -25,6 +25,9 @@ HEROES (in order of priority)
 
 Bugfixes
 --------
+[✔] Fixed the cursor sometimes selecting air blocks next to resources when ordering workers to gather
+
+[🟡] During a match, your resources are always shown at the top left regardless of if you have anything selected
 
 [🟡] Wardens can no longer garrison as they are too large to fit through doorways
 [🟡] Fixed neutral units not gaining bonus attack range when inside a neutral garrison building
@@ -56,10 +59,16 @@ Bugfixes
 
 Quality of Life
 ---------------
-[❌] Villagers can now repair iron golems using 1 ore per 2hp
-    - Mason villagers will repair faster
+[🟡] Line of sight is now shared with allies
+
 
 Balancing
 ---------
 
 [✔] Bonus damage from ravager artillery arrows reduced by 1
+
+[✔] Slimes and magma cubes have more HP at almost every size:
+    - old: (15, 40, 75, 110, 145, 180)
+    - new: (20, 40, 80, 120, 160, 200)
+
+[✔]
