@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.fogofwar;
 
+import com.solegendary.reignofnether.alliance.AlliancesClient;
 import com.solegendary.reignofnether.building.Building;
 import com.solegendary.reignofnether.building.BuildingClientEvents;
 import com.solegendary.reignofnether.building.BuildingUtils;
@@ -26,7 +27,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -270,12 +274,15 @@ public class FogOfWarClientEvents {
 
         // get chunks that have units/buildings that can see
         for (LivingEntity entity : UnitClientEvents.getAllUnits()) {
-            if (UnitClientEvents.getPlayerToEntityRelationship(entity) == Relationship.OWNED ||
-                    (entity instanceof Unit unit && isPlayerRevealed(unit.getOwnerName()))) {
-                if (entity instanceof GhastUnit)
-                    farViewerChunks.add(new ChunkPos(entity.getOnPos()));
-                else
-                    viewerChunks.add(new ChunkPos(entity.getOnPos()));
+            if (entity instanceof Unit unit && MC.player != null) {
+                if (UnitClientEvents.getPlayerToEntityRelationship(entity) == Relationship.OWNED ||
+                        (isPlayerRevealed(unit.getOwnerName())) ||
+                        AlliancesClient.isAllied(MC.player.getName().getString(), unit.getOwnerName())) {
+                    if (entity instanceof GhastUnit)
+                        farViewerChunks.add(new ChunkPos(entity.getOnPos()));
+                    else
+                        viewerChunks.add(new ChunkPos(entity.getOnPos()));
+                }
             }
         }
         for (Building building : BuildingClientEvents.getBuildings()) {

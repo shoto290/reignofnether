@@ -13,9 +13,11 @@ import com.solegendary.reignofnether.research.researchItems.ResearchBruteShields
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.unit.Checkpoint;
+import com.solegendary.reignofnether.unit.UnitAnimationAction;
 import com.solegendary.reignofnether.unit.goals.*;
 import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import com.solegendary.reignofnether.unit.packets.UnitAnimationClientboundPacket;
 import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -154,6 +156,23 @@ public class BruteUnit extends PiglinBrute implements Unit, AttackerUnit {
         this.abilities.add(new ToggleShield(this));
         this.abilities.add(new Bloodlust(this));
         updateAbilityButtons();
+    }
+
+    public void toggleShield() {
+        if (this.getItemBySlot(EquipmentSlot.OFFHAND).getItem() != Items.SHIELD)
+            return;
+
+        isHoldingUpShield = !isHoldingUpShield;
+        if (!level().isClientSide()) {
+            if (isHoldingUpShield)
+                UnitAnimationClientboundPacket.sendBasicPacket(UnitAnimationAction.NON_KEYFRAME_START, this);
+            else
+                UnitAnimationClientboundPacket.sendBasicPacket(UnitAnimationAction.NON_KEYFRAME_STOP, this);
+
+            BlockPos bp = getMoveGoal().getMoveTarget();
+            getMoveGoal().stopMoving();
+            getMoveGoal().setMoveTarget(bp);
+        }
     }
 
     @Override

@@ -334,7 +334,8 @@ public class BuildingUtils {
             for (int x = building.minCorner.getX() - 1; x < building.maxCorner.getX() + 2; x++)
                 for (int y = building.minCorner.getY(); y < building.maxCorner.getY() + 2; y++)
                     for (int z = building.minCorner.getZ() - 1; z < building.maxCorner.getZ() + 2; z++)
-                        building.getLevel().setBlockAndUpdate(new BlockPos(x,y,z), Blocks.AIR.defaultBlockState());
+                        if (!isPosInsideAnyBuilding(building.level.isClientSide(), new BlockPos(x,y,z)))
+                            building.getLevel().setBlockAndUpdate(new BlockPos(x,y,z), Blocks.AIR.defaultBlockState());
         }
     }
 }

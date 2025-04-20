@@ -1017,16 +1017,23 @@ public class HudClientEvents {
             selPlayerName = BuildingClientEvents.getSelectedBuildings().get(0).ownerName;
         }
 
-        if (selPlayerName != null) {
-            resources = ResourcesClientEvents.getResources(selPlayerName);
-        }
         boolean alliedWithSelPlayer = MC.player != null && AlliancesClient.isAllied(MC.player.getName().getString(), selPlayerName);
         boolean isSelPlayer = MC.player != null && MC.player.getName().getString().equals(selPlayerName);
+
+        // during a match if nothing is selected, then show your own resources by default
+        if (MC.player != null && !isSelPlayer && PlayerClientEvents.isRTSPlayer) {
+            selPlayerName = MC.player.getName().getString();
+            isSelPlayer = true;
+        }
+
+        if (selPlayerName != null && (isSelPlayer || alliedWithSelPlayer || !PlayerClientEvents.isRTSPlayer || SandboxClientEvents.isSandboxPlayer())) {
+            resources = ResourcesClientEvents.getResources(selPlayerName);
+        }
 
         blitX = 0;
         blitY = 0;
 
-        if ((!PlayerClientEvents.isRTSPlayer || alliedWithSelPlayer) && !isSelPlayer) {
+        if ((!PlayerClientEvents.isRTSPlayer || alliedWithSelPlayer || SandboxClientEvents.isSandboxPlayer()) && !isSelPlayer) {
             if (resources != null) {
                 evt.getGuiGraphics().drawString(
                     MC.font,

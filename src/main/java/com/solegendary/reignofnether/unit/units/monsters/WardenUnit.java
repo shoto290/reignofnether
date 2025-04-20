@@ -57,8 +57,7 @@ public class WardenUnit extends Warden implements Unit, AttackerUnit {
     private final ArrayList<Checkpoint> checkpoints = new ArrayList<>();
     public ArrayList<Checkpoint> getCheckpoints() { return checkpoints; };
 
-    GarrisonGoal garrisonGoal;
-    public GarrisonGoal getGarrisonGoal() { return garrisonGoal; }
+    public GarrisonGoal getGarrisonGoal() { return null; }
     public boolean canGarrison() { return getGarrisonGoal() != null; }
 
     UsePortalGoal usePortalGoal;
@@ -198,7 +197,6 @@ public class WardenUnit extends Warden implements Unit, AttackerUnit {
         this.usePortalGoal = new UsePortalGoal(this);
         this.moveGoal = new MoveToTargetBlockGoal(this, false, 0);
         this.targetGoal = new SelectedTargetGoal<>(this, true, true);
-        this.garrisonGoal = new GarrisonGoal(this);
         this.attackGoal = new MeleeAttackUnitGoal(this, false);
         this.attackBuildingGoal = new MeleeAttackBuildingGoal(this);
         this.returnResourcesGoal = new ReturnResourcesGoal(this);
@@ -215,7 +213,6 @@ public class WardenUnit extends Warden implements Unit, AttackerUnit {
         this.goalSelector.addGoal(2, sonicBoomGoal);
         this.goalSelector.addGoal(2, attackGoal);
         this.goalSelector.addGoal(2, attackBuildingGoal);
-        this.goalSelector.addGoal(2, garrisonGoal);
         this.targetSelector.addGoal(2, targetGoal);
         this.goalSelector.addGoal(3, moveGoal);
         this.goalSelector.addGoal(4, new RandomLookAroundUnitGoal(this));

@@ -780,7 +780,7 @@ public class BuildingClientEvents {
 
                     for (LivingEntity entity : getSelectedUnits()) {
                         if (entity instanceof Unit unit) {
-                            unit.getCheckpoints().removeIf(c -> !BuildingUtils.isPosInsideAnyBuilding(true, c.bp));
+                            unit.getCheckpoints().removeIf(c -> c.bp == null || !BuildingUtils.isPosInsideAnyBuilding(true, c.bp));
                             MiscUtil.addUnitCheckpoint(unit,
                                 CursorClientEvents.getPreselectedBlockPos().above(),
                                 true

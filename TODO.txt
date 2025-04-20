@@ -1,5 +1,5 @@
 
-1.19.2-1.1.5a
+1.19.2-1.1.5b
 
 [✔] Done and tested
 [🟡] Partially done and/or needs testing
@@ -7,8 +7,6 @@
 
 
 
-[❌] leaving sandbox deletes units entirely from list
-[❌]
 
 Features
 --------
@@ -23,85 +21,47 @@ HEROES (in order of priority)
     - equipment
 
 
-Controlling non-RoN mobs
-------------------------
 
-- All vanilla and modded mobs now have basic movement and attack controls
-    - Enabled while in Sandbox or by using the cheatcode 'wouldyoukindly'
-    - Attack-move only works against mobs that the controlled mob is naturally aggressive to
-    - Disclaimer: sometimes the mob AI interferes with your commands
-        - For example, iron golems constantly try to go back to the nearest village
 
 Bugfixes
 --------
-- Can no longer send resources to a non-RTS ally
-- Fixed unit and building ability tooltips not updating when language is changed
-- Fixed camera moving up constantly when switching to RTS camera
-- Fixed ghast soul fireballs not setting fires or creating soulsand when upgraded
-
+- Fixed the cursor sometimes selecting air blocks next to resources when ordering workers to gather
+- During a match, your resources are always shown at the top left regardless of if you have anything selected
+- Wardens can no longer garrison as they are too large to fit through doorways
+- Fixed neutral units not gaining bonus attack range when inside a neutral garrison building
+- Buildings no longer remove blocks from other nearby buildings when using /gamerule slantedBuilding
+- Fixed sometimes being kicked for sending too many packets when moving a large group of units
+- Fixed a food duplication exploit when two workers kill the same animal at the same time
+- Fixed ghast fireballs sometimes not doing damage to buildings
+    - They were actually doing half of their intended damage for quite a few patches now
+- Fixed the first wave survival wave sometimes being the incorrect faction
+- Fixed crash related to saving unit anchors
+- Toggled abilities are now synced if unit states are mixed
+    - Eg. if you select a brute with a raised shield and one a lowered shield, clicking the ability only toggles one of them so they become synced
+- Neutral units no longer aggro against neutral buildings
+- Fixed unit highlights not being visible behind transparent leaves
+- Fixed transparent leaves options not working when zoomed in too close
+- Fixed /gamerule slantedBuilding not working when using the typed command
+- Fixed start being able to choose more than one start block location
+- Fixed capitols being placed a block too high on negative Y level maps
+- Fixed beacon auras sometimes not working
+- Fixed crash related to building iron golems
+- You can no longer view an opponent's resources during a match unless you are a spectator
+- Evokers now stop their casting animation if their abilities are on cooldown
 
 Quality of Life
 ---------------
-- Workers can now gather modded log blocks such as those from Biomes O'Plenty
-- Huntable animals now show their food value next to their portrait
-- Updated /rts-help list
-- Added packet spoofing prevention on various player actions
-- All units and buildings are now converted to neutral instead of being destroyed when exiting sandbox mode
-- Double-clicking a villager now selects all nearby villagers of the same profession only
-
-
-Languages
----------
-- Added Spanish (España) (es_es)
-- Misc language fixes and additions for:
-    - Ukrainian (uk_ua)
-    - Chinese (Simplified) (zh_cn)
-    - Chinese (Traditional) (zh_tw)
+- Line of sight is now shared with allies
+- You can now send resources to non-allies again
+- /gamerule neutralAggro now also controls whether neutral and modded units are aggressive against player units
 
 Balancing
 ---------
-
-- The Killer Rabbit now has increased knockback resistance and attack jump height
-
-
-Villagers
----------
-Witches
-    - Can now autocast any potion, but only one at a time
-    - All potion abilities now have a shared cooldown
-    - Added water potions, unlocked with research costing (250 wood, 250 ore, 140s)
-    - Added healing potions, unlocked with research costing (350 wood, 350 ore, 180s)
-    - Extended lingering potions research cost reduced from (250 food, 250 wood, 250 ore) to (0 food, 250 wood, 250 ore)
-
-
-
-Piglins
--------
-- Bloodlust
-    - Health cost raised from 10 to 12
-    - Attack speed boost raised from 50% to 60%
-    - Affected units now regenerate their lost health over 30 seconds
-
-- Soul Fireballs
-    - Cost reduced from (350 wood, 350 ore) to (300 wood, 300 ore)
-    - Research time reduced by 10s
-    - Soulsand duration raised from 8s to 10s
-
-- Blazes now do 0 damage on hit (only setting enemies on fire)
-
-- Wither Skeletons
-    - Health raised from 90 to 100
-    - Max wither stacks raised from 5 to 6
-
-
-Monsters
---------
-
-- Sculk Amplifiers
-    - Sonic boom damage is now reduced by 33% (from 75 to 50 damage) when split
-    - Can no longer be used on unfinished catalysts
-
-- Slimes
-    - Cost reduced from (40 food, 40 wood, 40 ore) to (35 food, 35 wood, 35 ore)
-
-- Spin web duration raised from 5s to 6s
+- Bonus damage from ravager artillery arrows reduced by 1
+- Slimes and magma cubes have more HP at all sizes above 1:
+    - old: (15, 40, 75, 110, 145, 180)
+    - new: (15, 45, 80, 120, 160, 200)
+- Evoker Vexes
+    - Can now be autocast
+    - Channel time reduced from 4 to 3 seconds
+    - Cooldown reduced from 70 to 60s

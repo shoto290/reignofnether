@@ -155,6 +155,7 @@ public class PlayerClientEvents {
         }
         ResearchClient.removeAllResearch();
         ResearchClient.removeAllCheats();
+        HudClientEvents.controlGroups.clear();
     }
 
     public static void victory(String playerName) {

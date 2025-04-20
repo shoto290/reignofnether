@@ -204,7 +204,6 @@ public class CursorClientEvents {
             boolean usingPosAbove = false;
 
             // if we clipped a non-solid block (eg. tall grass) search adjacent blocks for a next-best match
-            /*
             if (!MiscUtil.isSolidBlocking(MC.level, preselectedBlockPos)) {
                 preselectedBlockPos = getRefinedBlockPos(preselectedBlockPos, cursorWorldPosNear);
                 // disallow selecting a block just below a fluid block
@@ -213,7 +212,7 @@ public class CursorClientEvents {
                     usingPosAbove = true;
                 }
             }
-             */
+
             if (!usingPosAbove &&
                     !BuildingUtils.isPosInsideAnyBuilding(true, preselectedBlockPos) &&
                     BuildingUtils.isPosInsideAnyBuilding(true, preselectedBlockPos.above()) &&

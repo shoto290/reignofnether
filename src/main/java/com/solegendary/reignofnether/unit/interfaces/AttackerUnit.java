@@ -214,7 +214,7 @@ public interface AttackerUnit {
             setUnitAttackTarget(entity);
             return;
         }
-        if (canAttackBuildings() && !(this instanceof RavagerUnit && ((LivingEntity) this).isVehicle())) {
+        if (canAttackBuildings() && !(this instanceof RavagerUnit && ((LivingEntity) this).isVehicle()) && !(((Unit) this).getOwnerName()).isEmpty()) {
             Building closestBuilding = MiscUtil.findClosestAttackableBuilding((Mob) this, aggroRange, level);
             if (closestBuilding != null) {
                 ((Unit) this).getMoveGoal().stopMoving();

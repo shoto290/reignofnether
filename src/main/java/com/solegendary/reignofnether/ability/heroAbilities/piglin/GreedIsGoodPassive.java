@@ -17,24 +17,22 @@ import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-import static com.solegendary.reignofnether.unit.UnitClientEvents.sendUnitCommand;
 import static com.solegendary.reignofnether.util.MiscUtil.fcs;
 
 public class GreedIsGoodPassive extends HeroAbility {
 
-    public boolean active = false;
     public int maxResourcesPerCast = 100;
 
     public GreedIsGoodPassive(HeroUnit hero) {
-        super(hero, 3, UnitAction.TOGGLE_GREED_IS_GOOD_PASSIVE, 0, 0, 0, false);
+        super(hero, 3, UnitAction.NONE, 0, 0, 0, false);
+        this.autocastEnableAction = UnitAction.ENABLE_GREED_IS_GOOD_PASSIVE;
+        this.autocastDisableAction = UnitAction.DISABLE_GREED_IS_GOOD_PASSIVE;
     }
 
     public boolean rankUp() {
@@ -56,10 +54,10 @@ public class GreedIsGoodPassive extends HeroAbility {
         return new AbilityButton("Greed is Good",
                 new ResourceLocation("minecraft", "textures/block/gold_block.png"),
                 hotkey,
-                () -> active,
+                this::getAutocast,
                 () -> rank == 0,
                 () -> true,
-                () -> sendUnitCommand(UnitAction.TOGGLE_GREED_IS_GOOD_PASSIVE),
+                this::toggleAutocast,
                 null,
                 getTooltipLines(),
                 this
@@ -104,7 +102,7 @@ public class GreedIsGoodPassive extends HeroAbility {
     public int checkAndSpendResources(ResourceName resName) {
         int totalSpent = 0;
         String ownerName = ((Unit) hero).getOwnerName();
-        if (active && !((LivingEntity) hero).level().isClientSide()) {
+        if (getAutocast() && !((LivingEntity) hero).level().isClientSide()) {
             for (Resources resources : ResourcesServerEvents.resourcesList) {
                 if (resources.ownerName.equals(ownerName)) {
                     for (int i = 0; i < rank; i++) {
@@ -125,9 +123,5 @@ public class GreedIsGoodPassive extends HeroAbility {
             }
         }
         return totalSpent;
-    }
-
-    public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-        active = !active;
     }
 }

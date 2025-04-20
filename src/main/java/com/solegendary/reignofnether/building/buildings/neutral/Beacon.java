@@ -1,6 +1,5 @@
 package com.solegendary.reignofnether.building.buildings.neutral;
 
-import org.joml.Vector3d;
 import com.solegendary.reignofnether.ability.abilities.*;
 import com.solegendary.reignofnether.alliance.AlliancesServerEvents;
 import com.solegendary.reignofnether.building.*;
@@ -47,6 +46,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.joml.Vector3d;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -105,8 +105,8 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
         this.abilities.add(new BeaconWealth(this));
         this.abilities.add(new BeaconHaste(this));
         this.abilities.add(new BeaconRegeneration(this));
-        this.abilities.add(new BeaconStrength(this));
         this.abilities.add(new BeaconResistance(this));
+        this.abilities.add(new BeaconStrength(this));
 
         updateButtons();
 
@@ -234,7 +234,7 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
             updateBorderBps();
 
         if (isBeaconActive() && tickAgeAfterBuilt > 0 && tickAgeAfterBuilt % 20 == 0 &&
-                !this.level.isClientSide() && this.level.isDay()) {
+                !this.level.isClientSide()) {
 
             List<LivingEntity> nearbyEntities = MiscUtil.getEntitiesWithinRange(
                     new Vector3d(this.centrePos.getX(), this.centrePos.getY(), this.centrePos.getZ()),
@@ -250,12 +250,14 @@ public class Beacon extends ProductionBuilding implements RangeIndicator {
 
                 if ((isOwnedOrFriendlyUnit || isFriendlyPlayer) &&
                         (isFriendlyPlayer || auraEffect != MobEffects.LUCK) &&
-                        (!(le instanceof WorkerUnit) || auraEffect != MobEffects.DIG_SPEED) &&
                         getBeaconBlockEntity() != null) {
-                    if (auraEffect != MobEffects.REGENERATION)
-                        le.addEffect(new MobEffectInstance(auraEffect, 25, 0));
-                    else if (tickAgeAfterBuilt % 80 == 0) // only 1hp/4s
+                    if (auraEffect != MobEffects.REGENERATION) {
+                        if (le instanceof WorkerUnit || auraEffect != MobEffects.DIG_SPEED) {
+                            le.addEffect(new MobEffectInstance(auraEffect, 25, 0));
+                        }
+                    } else if (tickAgeAfterBuilt % 80 == 0) { // only 1hp/4s
                         le.addEffect(new MobEffectInstance(auraEffect, 60, 0));
+                    }
                 }
             }
 

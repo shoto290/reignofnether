@@ -111,7 +111,12 @@ public class StartPosServerEvents {
                     for (ServerPlayer serverPlayer : PlayerServerEvents.players) {
                         for (StartPos startPos : startPoses) {
                             if (startPos.playerName.equals(serverPlayer.getName().getString()) && startPos.faction != Faction.NONE) {
-                                PlayerServerEvents.startRTS(serverPlayer.getId(), Vec3.atCenterOf(startPos.pos), startPos.faction, true);
+                                PlayerServerEvents.startRTS(
+                                        serverPlayer.getId(),
+                                        new Vec3(startPos.pos.getX(), startPos.pos.getY(), startPos.pos.getZ()),
+                                        startPos.faction,
+                                        true
+                                );
                                 break;
                             }
                         }

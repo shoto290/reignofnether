@@ -57,7 +57,7 @@ public interface GarrisonableBuilding {
             else
                 isAllied = AlliancesServerEvents.isAllied(unit.getOwnerName(), building.ownerName);
 
-            if ((unit.getOwnerName().equals(building.ownerName) || isAllied) &&
+            if ((unit.getOwnerName().equals(building.ownerName) || isAllied || (unit.getOwnerName().isEmpty() && building.ownerName.isEmpty())) &&
                     building instanceof GarrisonableBuilding garr && building.isBuilt &&
                     building.isPosInsideBuilding(((LivingEntity) unit).getOnPos()) &&
                     ((LivingEntity) unit).getOnPos().getY() > building.originPos.getY() + 2) {

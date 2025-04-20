@@ -16,26 +16,24 @@ import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-import static com.solegendary.reignofnether.unit.UnitClientEvents.sendUnitCommand;
 import static com.solegendary.reignofnether.util.MiscUtil.fcs;
 
 public class SoulSiphonPassive extends HeroAbility {
 
-    public boolean active = false;
     public int souls = 0;
     public int soulsPerCast = 4;
     public int soulsMax = 20;
 
     public SoulSiphonPassive(HeroUnit hero) {
-        super(hero, 3, UnitAction.TOGGLE_SOUL_SIPHON_PASSIVE, 0, 0, 0, false);
+        super(hero, 3, UnitAction.NONE, 0, 0, 0, false);
+        this.autocastEnableAction = UnitAction.ENABLE_SOUL_SIPHON_PASSIVE;
+        this.autocastDisableAction = UnitAction.DISBLE_SOUL_SIPHON_PASSIVE;
     }
 
     public boolean rankUp() {
@@ -60,10 +58,10 @@ public class SoulSiphonPassive extends HeroAbility {
         return new AbilityButton("Soul Siphon",
             new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
             hotkey,
-            () -> active,
+            this::getAutocast,
             () -> rank == 0,
             () -> true,
-            () -> sendUnitCommand(UnitAction.TOGGLE_SOUL_SIPHON_PASSIVE),
+            this::toggleAutocast,
             null,
             getTooltipLines(),
             this
@@ -109,7 +107,7 @@ public class SoulSiphonPassive extends HeroAbility {
 
     // returns amount of souls consumed
     public int consumeSouls() {
-        if (active && souls > 0) {
+        if (getAutocast() && souls > 0) {
             int soulsConsumed = Math.min(soulsPerCast, souls);
             souls -= soulsConsumed;
             return soulsConsumed;
@@ -118,7 +116,7 @@ public class SoulSiphonPassive extends HeroAbility {
     }
 
     public void checkAndGainSouls(LivingEntity entityKilled) {
-        if (active && souls > 0) {
+        if (getAutocast() && souls > 0) {
             if (entityKilled instanceof Unit unit)
                 souls += unit.getCost().population;
             else
@@ -126,9 +124,5 @@ public class SoulSiphonPassive extends HeroAbility {
         }
         if (souls > soulsMax)
             souls = soulsMax;
-    }
-
-    public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-        active = !active;
     }
 }
