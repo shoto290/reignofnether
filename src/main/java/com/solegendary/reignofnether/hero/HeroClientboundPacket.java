@@ -84,6 +84,8 @@ public class HeroClientboundPacket {
                             case SET_ABILITY_RANK -> {
                                 List<HeroAbility> abls = hero.getHeroAbilities();
                                 if (abls.size() > abilityIndex) abls.get(abilityIndex).rank = value;
+                                for (HeroAbility abl : abls)
+                                    abl.updateStatsForRank();
                                 ((Unit) hero).updateAbilityButtons();
                             }
                         }

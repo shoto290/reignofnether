@@ -29,7 +29,8 @@ public class PhantomSummon extends Phantom {
 
     final static public float maxHealth = 60.0f;
     public int attacksLeft = PHANTOM_MAX_ATTACKS; // at 0, dies after a few seconds
-    public int ticksToDie = 60; // starts counting downa after attacksLeft <= 0
+    public int ticksToDie = 60; // starts counting down after attacksLeft <= 0
+    public int tickCountUntilDeath = 1200; // hard cap on lifespan
     public int attackCooldown = 0;
     public final int ATTACK_COOLDOWN_MAX = 200;
 
@@ -65,7 +66,7 @@ public class PhantomSummon extends Phantom {
 
         if (attacksLeft <= 0 || getTarget() == null || getTarget().isDeadOrDying() || getTarget().isRemoved())
             ticksToDie -= 1;
-        if (ticksToDie <= 0)
+        if (ticksToDie <= 0 || tickCount > tickCountUntilDeath)
             kill();
 
         if (attackCooldown > 0)

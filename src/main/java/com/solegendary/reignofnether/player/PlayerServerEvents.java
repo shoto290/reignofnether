@@ -105,6 +105,7 @@ public class PlayerServerEvents {
     // slipslopslap - monster units are unaffected by sunlight
     // wouldyoukindly - allow control of non-unit mobs in RTS mode
     // thebeastofcaerbannog - spawns the Killer Rabbit
+    // elitetaurenchieftain - levels all owned heroes to 10
     public static final List<String> singleWordCheats = List.of(
         "warpten",
         "operationcwal",
@@ -269,7 +270,8 @@ public class PlayerServerEvents {
         // if a player is looking directly at a frozenchunk on login, they may load in the real blocks before
         // they are frozen so move them away then BuildingClientEvents.placeBuilding moves them to their base later
         // don't do this if they don't own any buildings
-        if (isRTSPlayer(playerName) && rtsSyncingEnabled) {
+        /*
+        if (isRTSPlayer(playerName) && rtsSyncingEnabled && FogOfWarServerEvents.isEnabled()) {
             for (Building building : BuildingServerEvents.getBuildings()) {
                 if (building.ownerName.equals(playerName)) {
                     movePlayer(serverPlayer.getId(), 0, ORTHOVIEW_PLAYER_BASE_Y, 0);
@@ -277,6 +279,7 @@ public class PlayerServerEvents {
                 }
             }
         }
+         */
         if (rtsSyncingEnabled) {
             MinecraftServer server = evt.getEntity().level().getServer();
             if (server == null || !server.isDedicatedServer()) {
@@ -532,6 +535,18 @@ public class PlayerServerEvents {
                 sendMessageToAllPlayers("server.reignofnether.used_cheat",false, playerName, words[0]);
             }
 
+            if (words.length == 1 && words[0].equalsIgnoreCase("elitetaurenchieftain")) {
+                for (LivingEntity entity : UnitServerEvents.getAllUnits()) {
+                    if (entity instanceof HeroUnit heroUnit && ((Unit) heroUnit).getOwnerName().equals(playerName)) {
+                        heroUnit.addExperience(10000);
+                        heroUnit.setSkillPoints(10);
+                        HeroClientboundPacket.setExperience(entity.getId(), heroUnit.getExperience());
+                        HeroClientboundPacket.setSkillPoints(entity.getId(), 10);
+                    }
+                }
+                sendMessageToAllPlayers("server.reignofnether.used_cheat",false, playerName, words[0]);
+            }
+
             if (words.length == 2) {
                 try {
                     if (words[0].equalsIgnoreCase("greedisgood")) {
@@ -692,16 +707,22 @@ public class PlayerServerEvents {
         sendMessageToAllPlayers(msg, false);
     }
 
-    public static void sendMessageToAllPlayers(String msg, boolean bold, Object... formatArgs) {
+    public static void sendMessageToAllPlayers(String msg, int color, boolean bold, Object... formatArgs) {
         for (ServerPlayer player : players) {
             player.sendSystemMessage(Component.literal(""));
             if (bold) {
-                player.sendSystemMessage(Component.translatable(msg, formatArgs).withStyle(Style.EMPTY.withBold(true)));
+                player.sendSystemMessage(Component.translatable(msg, formatArgs)
+                        .withStyle(Style.EMPTY.withBold(true).withColor(color)));
             } else {
-                player.sendSystemMessage(Component.translatable(msg, formatArgs));
+                player.sendSystemMessage(Component.translatable(msg, formatArgs)
+                        .withStyle(Style.EMPTY.withBold(false).withColor(color)));
             }
             player.sendSystemMessage(Component.literal(""));
         }
+    }
+
+    public static void sendMessageToAllPlayers(String msg, boolean bold,  Object... formatArgs) {
+        sendMessageToAllPlayers(msg, 0xFFFFFF, bold, formatArgs);
     }
 
     public static void sendMessageToAllPlayersNoNewlines(String msg) {

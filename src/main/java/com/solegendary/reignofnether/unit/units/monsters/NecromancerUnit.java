@@ -1,6 +1,7 @@
 package com.solegendary.reignofnether.unit.units.monsters;
 
 import com.solegendary.reignofnether.ability.Ability;
+import com.solegendary.reignofnether.ability.AbilityClientboundPacket;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.BloodMoon;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.InsomniaCurse;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
@@ -12,7 +13,9 @@ import com.solegendary.reignofnether.registrars.EntityRegistrar;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.resources.ResourceCosts;
 import com.solegendary.reignofnether.time.NightUtils;
+import com.solegendary.reignofnether.time.TimeServerEvents;
 import com.solegendary.reignofnether.unit.Checkpoint;
+import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.UnitAnimationAction;
 import com.solegendary.reignofnether.unit.goals.*;
 import com.solegendary.reignofnether.unit.interfaces.*;
@@ -28,6 +31,7 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -39,6 +43,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -244,6 +249,8 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
     public void resetBehaviours() {
         animateScaleReducing = true;
         this.castRaiseDeadGoal.stop();
+        this.castPhantomGoal.stop();
+        this.castBloodMoonGoal.stop();
     }
 
     @Override
@@ -251,6 +258,7 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
+                .add(Attributes.ATTACK_DAMAGE, NecromancerUnit.attackDamage)
                 .add(Attributes.MOVEMENT_SPEED, NecromancerUnit.movementSpeed)
                 .add(Attributes.MAX_HEALTH, NecromancerUnit.maxHealth)
                 .add(Attributes.FOLLOW_RANGE, Unit.getFollowRange())
@@ -269,6 +277,20 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         this.castRaiseDeadGoal.tick();
         this.castPhantomGoal.tick();
         this.castBloodMoonGoal.tick();
+    }
+
+    public RaiseDead getRaiseDead() {
+        for (Ability ability : abilities)
+            if (ability instanceof RaiseDead)
+                return (RaiseDead) ability;
+        return null;
+    }
+
+    public SoulSiphonPassive getSoulSiphon() {
+        for (Ability ability : abilities)
+            if (ability instanceof SoulSiphonPassive)
+                return (SoulSiphonPassive) ability;
+        return null;
     }
 
     @Override
@@ -303,7 +325,7 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         this.castBloodMoonGoal = new GenericUntargetedSpellGoal(
                 this,
                 BloodMoon.CHANNEL_TICKS,
-                this::bloodMoon,
+                this::doBloodMoon,
                 UnitAnimationAction.CHARGE_SPELL,
                 UnitAnimationAction.STOP,
                 UnitAnimationAction.CAST_SPELL
@@ -353,9 +375,25 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
             FogOfWarClientboundPacket.revealRangedUnit(unit.getOwnerName(), this.getId());
     }
 
+    // returns rank of soul siphon if any souls were consumed
+    public int consumeSoulsAndGetSoulRank() {
+        SoulSiphonPassive soulSiphon = getSoulSiphon();
+        if (soulSiphon != null) {
+            if (soulSiphon.consumeSouls()) {
+                if (!level().isClientSide())
+                    AbilityClientboundPacket.doAbility(getId(), UnitAction.SOUL_SIPHON_UPDATE, soulSiphon.souls);
+                return soulSiphon.rank;
+            }
+        }
+        return 0;
+    }
+
     public void raiseDead() {
         if (this.level().isClientSide())
             return;
+
+        int soulRank = consumeSoulsAndGetSoulRank();
+        int raiseDeadRank = getRaiseDead().rank;
 
         for(int i = 0; i < 2; ++i) {
             BlockPos blockpos = this.blockPosition().offset(-2 + this.random.nextInt(5), 1, -2 + this.random.nextInt(5));
@@ -364,7 +402,29 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
                 zombieUnit.moveTo(blockpos, 0.0F, 0.0F);
                 zombieUnit.setOwnerName(this.getOwnerName());
                 this.level().addFreshEntity(zombieUnit);
-                zombieUnit.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.CHAINMAIL_CHESTPLATE));
+
+                ItemStack chestPlate = new ItemStack(Items.LEATHER_CHESTPLATE);
+                ItemStack leggings = new ItemStack(Items.LEATHER_LEGGINGS);
+                ItemStack boots = new ItemStack(Items.LEATHER_BOOTS);
+                if (raiseDeadRank == 2) {
+                    chestPlate = new ItemStack(Items.CHAINMAIL_CHESTPLATE);
+                    leggings = new ItemStack(Items.CHAINMAIL_LEGGINGS);
+                    boots = new ItemStack(Items.CHAINMAIL_BOOTS);
+                } else if (raiseDeadRank >= 3) {
+                    chestPlate = new ItemStack(Items.IRON_CHESTPLATE);
+                    leggings = new ItemStack(Items.IRON_LEGGINGS);
+                    boots = new ItemStack(Items.IRON_BOOTS);
+                }
+                if (soulRank >= 1)
+                    chestPlate.enchant(Enchantments.THORNS, 3);
+                if (soulRank >= 2)
+                    leggings.enchant(Enchantments.THORNS, 3);
+                if (soulRank >= 3)
+                    boots.enchant(Enchantments.THORNS, 3);
+
+                zombieUnit.setItemSlot(EquipmentSlot.CHEST, chestPlate);
+                zombieUnit.setItemSlot(EquipmentSlot.LEGS, leggings);
+                zombieUnit.setItemSlot(EquipmentSlot.FEET, boots);
             }
         }
     }
@@ -393,13 +453,26 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         PhantomSummon phantom = EntityRegistrar.PHANTOM_SUMMON.get().create(this.level());
         if (phantom != null) {
             phantom.moveTo(blockpos.offset(0,5,0), 0.0F, 0.0F);
+            int soulRank = consumeSoulsAndGetSoulRank();
+            phantom.setPhantomSize(soulRank == 0 ? 0 : soulRank + 1);
+            AttributeInstance ai = phantom.getAttribute(Attributes.ATTACK_DAMAGE);
+            if (ai != null) {
+                ai.setBaseValue(InsomniaCurse.PHANTOM_DAMAGE + (soulRank * InsomniaCurse.PHANTOM_DAMAGE_BONUS_PER_SOUL_RANK));
+            }
             this.level().addFreshEntity(phantom);
             return phantom;
         }
         return null;
     }
 
-    public void bloodMoon() {
+    public void doBloodMoon() {
+        if (level().isClientSide())
+            return;
 
+        int soulRank = consumeSoulsAndGetSoulRank();
+        int bonusDuration = BloodMoon.BONUS_DURATION_PER_SOUL_RANK * soulRank;
+
+        TimeServerEvents.startBloodMoon(BloodMoon.DURATION + bonusDuration, this);
+        AbilityClientboundPacket.doAbility(this.getId(), UnitAction.BLOOD_MOON, BloodMoon.DURATION + bonusDuration);
     }
 }

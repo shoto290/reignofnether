@@ -40,16 +40,20 @@ public class ThrowTNT extends HeroAbility {
     @Override
     public boolean rankUp() {
         if (super.rankUp()) {
-            if (rank == 1) {
-                explosionPower = 2;
-            } else if (rank == 2) {
-                explosionPower = 3;
-            } else if (rank == 3) {
-                explosionPower = 4;
-            }
+            updateStatsForRank();
             return true;
         }
         return false;
+    }
+
+    public void updateStatsForRank() {
+        if (rank == 1) {
+            explosionPower = 2;
+        } else if (rank == 2) {
+            explosionPower = 3;
+        } else if (rank == 3) {
+            explosionPower = 4;
+        }
     }
 
     @Override

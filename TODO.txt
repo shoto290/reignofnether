@@ -1,5 +1,5 @@
 
-1.19.2-1.1.5c
+1.19.2-1.1.6
 
 [✔] Done and tested
 [🟡] Partially done and/or needs testing
@@ -22,23 +22,8 @@ HEROES (in order of priority)
 
 
 Necromancer
-    - Curse of Insomnia
-        [❌] Charge cooldowns
-        [🟡] Summon phantom
-        [❌] Interact with souls
-        [🟡] Attack buildings
-
-    - Soul Siphon
-        [❌] Animation similar to exp orbs but purple smoke?
-            - Or maybe just make exp orbs purple
-        [❌] Tooltip
-
-    - Blood moon
-        [❌] Transform day to night with global warning
-        [❌] Summon zombies and skeletons using wave survival code inside and around enemy bases
-            - Neutral, but never aggressive against your own units
-        [❌] Red tint on skybox and in RTS cam
-
+    [❌] Purple particles on soul usage and soul gain
+    [❌] Magical projectile model and sound
 
 Piglin Merchant
     - TNT Toss
@@ -79,29 +64,22 @@ Royal Guard
 
 Bugfixes
 --------
+[❌] Armour on units doesn't do anything against other mob projectiles?
+    - Check on latest forge version?
 
-[✔] Fixed Vexes attacking friendly units
-[✔] Militia aren't showing ability
-[✔] Militia don't show swords to other players when attacking
-    - Apply same logic for vindicator attacks
-[✔] Fixed unit highlights not showing up behind blocks
-[✔] Fixed sometimes not syncing units and buildings in singleplayer when logging in
-    - onPlayerJoin.PlayerServerEvents sometimes doesn't have all units/buildings populated before trying to sync
-[✔] Fixed rubberbanding from moving too fast at high camera sensitivity
-    - To do this, the vanilla gamerule disableElytraMovementCheck is now set to true whenever a world starts up
+Quality of Life
+---------------
+[❌] Shift-clicking the "Select all Military units" button now only selects the units on screen
+
+Languages
+---------
+
+
 
 Quality of Life
 ---------------
 
 
-Languages
----------
-[✔] Updated Russian (ru_ru)
-
-Balancing
----------
-
-[✔] Slime cost increased back to (40 food, 40 wood, 40 ore)
 
 Balancing
 ---------

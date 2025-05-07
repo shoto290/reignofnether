@@ -31,13 +31,15 @@ public interface HeroUnit {
     default void setStatsForLevel() {
         AttributeInstance aiMaxHealth = ((LivingEntity) this).getAttribute(Attributes.MAX_HEALTH);
         if (aiMaxHealth != null)
-            aiMaxHealth.setBaseValue(getBaseHealth() + (getHeroLevel() * getHealthBonusPerLevel()));
+            aiMaxHealth.setBaseValue(getBaseHealth() + ((getHeroLevel() - 1) * getHealthBonusPerLevel()));
         AttributeInstance aiAttackDamage = ((LivingEntity) this).getAttribute(Attributes.ATTACK_DAMAGE);
         if (aiAttackDamage != null)
-            aiAttackDamage.setBaseValue(getBaseAttack() + (getHeroLevel() * getAttackBonusPerLevel()));
+            aiAttackDamage.setBaseValue(getBaseAttack() + ((getHeroLevel() - 1) * getAttackBonusPerLevel()));
     }
 
     default void addExperience(int amount) {
+        if (((LivingEntity) this).level().isClientSide())
+            return;
         int levelBefore = getHeroLevel();
         if (levelBefore >= MAX_HERO_LEVEL)
             return;
@@ -51,6 +53,7 @@ public interface HeroUnit {
             HeroClientboundPacket.setSkillPoints(((LivingEntity) this).getId(), getSkillPoints());
             SoundClientboundPacket.playSoundAtPos(SoundAction.LEVEL_UP, ((LivingEntity) this).getOnPos());
             setStatsForLevel();
+            ((LivingEntity) this).heal(levelDiff * getHealthBonusPerLevel());
         }
     }
 

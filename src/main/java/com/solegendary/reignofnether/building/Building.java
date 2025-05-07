@@ -1112,7 +1112,7 @@ public abstract class Building {
         } else if (!level.isClientSide()) {
             ArmorStand stand = EntityType.ARMOR_STAND.create(level);
             if (stand != null) {
-                stand.setInvisible(true);
+                //stand.setInvisible(true);
                 stand.setNoGravity(true);
                 stand.noPhysics = true;
                 stand.moveTo(this.centrePos.getCenter());

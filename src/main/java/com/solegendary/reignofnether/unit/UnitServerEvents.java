@@ -2,7 +2,9 @@ package com.solegendary.reignofnether.unit;
 
 import com.mojang.datafixers.util.Pair;
 import com.solegendary.reignofnether.ReignOfNether;
+import com.solegendary.reignofnether.ability.AbilityClientboundPacket;
 import com.solegendary.reignofnether.ability.HeroAbility;
+import com.solegendary.reignofnether.ability.heroAbilities.monster.SoulSiphonPassive;
 import com.solegendary.reignofnether.alliance.AlliancesServerEvents;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.monsters.SculkCatalyst;
@@ -20,6 +22,7 @@ import com.solegendary.reignofnether.unit.packets.UnitIdleWorkerClientBoundPacke
 import com.solegendary.reignofnether.unit.packets.UnitSyncClientboundPacket;
 import com.solegendary.reignofnether.unit.packets.UnitSyncWorkerClientBoundPacket;
 import com.solegendary.reignofnether.unit.units.monsters.CreeperUnit;
+import com.solegendary.reignofnether.unit.units.monsters.NecromancerUnit;
 import com.solegendary.reignofnether.unit.units.monsters.SlimeUnit;
 import com.solegendary.reignofnether.unit.units.piglins.*;
 import com.solegendary.reignofnether.unit.units.villagers.*;
@@ -409,6 +412,8 @@ public class UnitServerEvents {
                             abls.get(3).rank = shu.ability4Rank;
                             HeroClientboundPacket.setAbilityRank(entity.getId(), shu.ability4Rank, 3);
                         }
+                        for (HeroAbility abl : abls)
+                            abl.updateStatsForRank();
                         ReignOfNether.LOGGER.info("loaded hero unit in serverevents: " + shu.uuid + "|" + shu.experience + "|" + shu.skillPoints);
                         return true;
                     }
@@ -476,7 +481,6 @@ public class UnitServerEvents {
 
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent evt) {
-
         // Convert nearby blocks arond a death into something that is sculk convertible
         // supposed to add to sculk_spreadable.json tag under the data/minecraft/tags/blocks but doesn't work for
         // some reason
@@ -584,6 +588,23 @@ public class UnitServerEvents {
                 if (resources.getTotalValue() > 0) {
                     ResourcesClientboundPacket.showFloatingText(resources, evt.getEntity().getOnPos());
                     ResourcesServerEvents.addSubtractResources(resources);
+                }
+            }
+        }
+
+        if (!(evt.getEntity() instanceof NecromancerUnit) && !evt.getEntity().level().isClientSide()) {
+            Vec3 pos = evt.getEntity().position();
+            List<NecromancerUnit> necromancers = MiscUtil.getEntitiesWithinRange(
+                    new Vector3d(pos.x, pos.y, pos.z),
+                    SoulSiphonPassive.RANGE,
+                    NecromancerUnit.class,
+                    evt.getEntity().level()).stream().toList();
+
+            for (NecromancerUnit necromancerUnit : necromancers) {
+                SoulSiphonPassive soulSiphon = necromancerUnit.getSoulSiphon();
+                if (soulSiphon != null) {
+                    soulSiphon.checkAndGainSouls(evt.getEntity(), necromancers.size());
+                    AbilityClientboundPacket.doAbility(necromancerUnit.getId(), UnitAction.SOUL_SIPHON_UPDATE, soulSiphon.souls);
                 }
             }
         }

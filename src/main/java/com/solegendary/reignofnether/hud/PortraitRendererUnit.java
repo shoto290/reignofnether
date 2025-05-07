@@ -11,6 +11,7 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.resources.ResourceSource;
 import com.solegendary.reignofnether.resources.ResourceSources;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
+import com.solegendary.reignofnether.unit.units.monsters.ZombieUnit;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.entity.animal.Animal;
@@ -193,6 +194,15 @@ public class PortraitRendererUnit<T extends LivingEntity, M extends EntityModel<
         }
         if (entity instanceof EvokerUnit pUnit && pUnit.getEnchant() == EnchantVigor.actualEnchantment) {
             name += " (V)";
+        }
+        if (entity instanceof EvokerUnit pUnit && pUnit.getEnchant() == EnchantVigor.actualEnchantment) {
+            name += " (V)";
+        }
+        if (entity instanceof ZombieUnit pUnit && pUnit.getThornsLevel() > 0) {
+            name += " (Thorns ";
+            for (int i = 0; i < pUnit.getThornsLevel(); i++)
+                name += "I";
+            name += ")";
         }
 
         if (rs != Relationship.OWNED && entity instanceof Unit unit && unit.getOwnerName().length() > 0) {

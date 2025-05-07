@@ -27,9 +27,11 @@ public abstract class ArmorStandMixin extends LivingEntity {
             cancellable = true
     )
     private void hurt(DamageSource pSource, float pAmount, CallbackInfoReturnable<Boolean> cir) {
-        Building building = BuildingUtils.findBuilding(level().isClientSide(), blockPosition());
-        if (building != null && (pSource.is(DamageTypes.MOB_ATTACK) || pSource.is(DamageTypes.MOB_ATTACK_NO_AGGRO))) {
-            building.destroyRandomBlocks((int) (pAmount / 2));
+        if (pSource.is(DamageTypes.MOB_ATTACK) || pSource.is(DamageTypes.MOB_ATTACK_NO_AGGRO)) {
+            Building building = BuildingUtils.findBuilding(level().isClientSide(), blockPosition());
+            if (building != null) {
+                building.destroyRandomBlocks((int) (pAmount / 2));
+            }
             cir.cancel();
             cir.setReturnValue(true);
         }
