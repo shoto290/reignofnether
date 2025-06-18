@@ -4,8 +4,6 @@ package com.solegendary.reignofnether.ability.heroAbilities.piglin;
 //Higher levels raise the quality of food thrown
 //Greed is Good raises the amount of food thrown
 
-// TODO: make piglin units stop to eat vanilla food items if they are damaged
-
 import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.cursor.CursorClientEvents;
 import com.solegendary.reignofnether.hud.AbilityButton;
@@ -21,6 +19,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -33,16 +33,15 @@ public class FancyFeast extends HeroAbility {
     public static final int RANGE = 10;
 
     private static final int CD_MAX_SECONDS = 30 * ResourceCost.TICKS_PER_SECOND;
-    private static final float BASE_ITEMS = 6;
-    private static final float BONUS_ITEMS_PER_RESOURCES = 2;
+    public static final int BASE_ITEMS = 6;
+    public static final int BONUS_ITEMS_PER_RESOURCES = 2;
 
     private static final float HEALTH_PER_BREAD = 10;
     private static final float HEALTH_PER_CHICKEN = 15;
     private static final float HEALTH_PER_BEEF = 20;
 
-
     public FancyFeast(HeroUnit hero) {
-        super(hero, 3, UnitAction.FANCY_FEAST, CD_MAX_SECONDS, RANGE, 0, false);
+        super(hero, 3, 70, UnitAction.FANCY_FEAST, CD_MAX_SECONDS, RANGE, 0, false);
     }
 
     private ResourceLocation getIcon(int plusRank) {
@@ -52,6 +51,15 @@ public class FancyFeast extends HeroAbility {
             return new ResourceLocation("minecraft", "textures/item/cooked_chicken.png");
         else
             return new ResourceLocation("minecraft", "textures/item/bread.png");
+    }
+
+    public Item getFoodItem() {
+        if (rank == 3)
+            return Items.COOKED_BEEF;
+        else if (rank == 2)
+            return Items.COOKED_CHICKEN;
+        else
+            return Items.BREAD;
     }
 
     private float getHealAmount() {
@@ -89,7 +97,7 @@ public class FancyFeast extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.fancy_feast") + " " + rankString(), true),
-                fcsIcons(I18n.get("abilities.reignofnether.fancy_feast.stats", getHealAmount(), CD_MAX_SECONDS / 20)),
+                fcsIcons(I18n.get("abilities.reignofnether.fancy_feast.stats", getHealAmount(), CD_MAX_SECONDS / 20, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.fancy_feast.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.fancy_feast.tooltip2", BASE_ITEMS, BONUS_ITEMS_PER_RESOURCES))

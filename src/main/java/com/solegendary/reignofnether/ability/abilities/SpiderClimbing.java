@@ -62,8 +62,8 @@ public class SpiderClimbing extends Ability {
     @Override
     public void setAutocast(boolean value) {
         super.setAutocast(value);
-        if ((getAutocast() && !spiderUnit.isWallClimbing()) ||
-            (!getAutocast() && spiderUnit.isWallClimbing()))
+        if ((isAutocasting() && !spiderUnit.isWallClimbing()) ||
+            (!isAutocasting() && spiderUnit.isWallClimbing()))
             spiderUnit.toggleWallClimbing();
         if (level.isClientSide())
             spiderUnit.updateAbilityButtons();

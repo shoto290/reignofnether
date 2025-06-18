@@ -1,5 +1,5 @@
 
-1.19.2-1.1.7a
+1.19.2-1.1.7c
 
 [✔] Done and tested
 [🟡] Partially done and/or needs testing
@@ -21,65 +21,73 @@ HEROES (in order of priority)
 Necromancer
     [❌] Purple particles on soul usage and soul gain
     [❌] Magical projectile model and sound
+    [❌] Allow consumption of souls for healing/mana
 
 Piglin Merchant
-    - TNT Toss
-        [❌] Throws TNT item entity
-            - Parent to hero
-            - When contacting the ground, place primed TNT at the blockPosition()
-            - New TNTBlock required to scale explosion power?
+    [❌] Building attack animation not sycned
 
     - Fancy Feast
-        [❌] Throw food entities
-        [❌] All piglin units need an EatFoodItemGoal
-            - If damaged, will stop to pick up food and show an eating animation to heal
+        [🟡] Test all piglin units work
+        [❌] Prioritise giving items to more hurt units
 
     - Loot Explosion
-        [❌] Untargeted, create randomised loot
+        [❌] Untargeted, create loot based on current army composition
         [❌] All piglin units should be able to pick up and equip weapons and armor
-        [❌] Include resistance potions for non-infantry
+        [❌] Use the armor stat and change it override vanilla mechanics, instead be % based
+        [❌] Hoglins convert into armored hoglins
+        [❌] Include absorb potions for blazes and magma cubes
             - Pick up instead of splashed?
+        [❌] All upgrades should be temporary only and revert after some time
 
 
 Royal Guard
     - Mace Slam
-        [🟡] AOE damage and knockback in a circle in front of the guard
+        [❌] Add hammer throw alternate
         [❌] Raise ground blocks with block displays?
-        [🟡] Add 'stun' effect to all units
-            - While active, repeats stop commands and ignores all other commands
+        [🟡] Enforce stun on non-units too
 
     - Taunting Cry
-        [🟡] Add 'taunt' effect to all units
-            - While active, repeats attack commands on the taunting unit and ignores all other commands
-            - Show angry villager particle effects
-
-    - Battle Rage
-        [❌] Change damage bonus to damage resist
+        [❌] Show angry villager particle effects
 
     - Avatar of War
-        [❌] Enlarge size smoothly
-        [❌] When active, cause a tiny explosion and splash damage on regular attacks
+        [❌] Fix portrait scale/yoffset
 
 
+Features
+--------
+[🟡] Enabled the Royal Guard hero in sandbox
+    - See #sneak-peeks for details of their abilities
+
+[🟡] All Hero units now have and use mana for their spells
+    - This works pretty much like mana in any other game
+
+[🟡] Hurt units automatically pick up and eat food items to heal at a rate of 5hp per hunger point
+    - Eg. cooked beef is worth 4 hunger points for players, and heals units for 20 hp
+    - This does not impede movement or attacks
 
 Bugfixes
 --------
-[❌] Armour on units doesn't do anything against other mob projectiles?
-    - Check on latest forge version?
+[🟡] RTS Start Blocks that are removed via command are no longer tracked
+[🟡] Fixed Ravager Artillery arrows not damaging buildings
+[🟡] Fixed the Drowned production button not working correctly
 
-[❌] ServerStoppingEvent doesn't run on dedicated servers
+[❌] Don't allow regular attack during ability animations'
+    - set windup ticks to 0 repeatedly during channelling
 
-
-
-[❌] vanilla mob spawners keep spawning regular mobs with no limit ?
-    -  can't recreate? maybe only naturally spawning ones?
-[🟡] Nether conversion no longer turns Healing Fountain water into lava
-[🟡] Fixed neutral unit aggro to buildings when neutralAggro is enabled (again)
+[❌] Transition smoothly back into walk animation if moving to cancel a hero ability
 
 
 Quality of Life
 ---------------
 
+[🟡] Items that are edible or worth resources are now much more visible in RTS camera
+[🟡] Placed units can now have their relationship modified in sandbox mode
+[🟡] RTS Units are no longer permanently stuck in powder snow
+    - Instead, they fall a max of 1 block into it, then it converts into regular snow so they can escape
 
 Balancing
 ---------
+
+[❌] check evoker vexes again
+    - should be able to 2v1 a ghast at least
+    - should attack on their own?

@@ -10,10 +10,12 @@ import com.solegendary.reignofnether.sounds.SoundClientboundPacket;
 import com.solegendary.reignofnether.unit.HeroUnitSave;
 import com.solegendary.reignofnether.unit.UnitClientEvents;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -26,6 +28,12 @@ public interface HeroUnit extends Unit {
     int REVIVE_SECONDS_BASE = 30;
     int REVIVE_SECONDS_PER_LEVEL = 5;
     int POP_COST = 5;
+
+    public static void tick(HeroUnit heroUnit) {
+        if (((LivingEntity) heroUnit).tickCount % 20 == 0) {
+            heroUnit.setMana(heroUnit.getMana() + heroUnit.getManaRegenPerSecond());
+        }
+    }
 
     public static ResourceCost getReviveCost(int heroLevel) {
         return ResourceCost.Unit(
@@ -74,6 +82,14 @@ public interface HeroUnit extends Unit {
     float getBaseHealth();
     float getBaseAttack();
 
+    float getBaseMaxMana();
+    float getMana();
+    void setMana(float amount);
+    float getMaxMana();
+    void setMaxMana(float amount);
+    float getManaRegenPerSecond();
+    float getManaBonusPerLevel();
+
     int getSkillPoints();
     void setSkillPoints(int points);
     boolean isRankUpMenuOpen();
@@ -94,6 +110,7 @@ public interface HeroUnit extends Unit {
         AttributeInstance aiAttackDamage = ((LivingEntity) this).getAttribute(Attributes.ATTACK_DAMAGE);
         if (aiAttackDamage != null)
             aiAttackDamage.setBaseValue(getBaseAttack() + ((getHeroLevel() - 1) * getAttackBonusPerLevel()));
+        this.setMaxMana(getBaseMaxMana() + ((getHeroLevel() - 1) * getManaBonusPerLevel()));
         if (heal)
             ((LivingEntity) this).setHealth(((LivingEntity) this).getMaxHealth());
     }
@@ -163,4 +180,59 @@ public interface HeroUnit extends Unit {
                 .map(a -> (HeroAbility) a)
                 .toList();
     }
+
+    // call from addAdditionalSaveData
+    public default void addHeroUnitSaveData(@NotNull CompoundTag pCompound) {
+        pCompound.putInt("experience", getExperience());
+        pCompound.putInt("skillPoints", getSkillPoints());
+        pCompound.putInt("charges", getChargesForSaveData());
+        pCompound.putFloat("mana", getMana());
+        pCompound.putFloat("maxMana", getMaxMana());
+
+        List<HeroAbility> abls = getHeroAbilities();
+        pCompound.putInt("ability1Rank", abls.size() > 0 ? abls.get(0).rank : 0);
+        pCompound.putInt("ability2Rank", abls.size() > 1 ? abls.get(1).rank : 0);
+        pCompound.putInt("ability3Rank", abls.size() > 2 ? abls.get(2).rank : 0);
+        pCompound.putInt("ability4Rank", abls.size() > 3 ? abls.get(3).rank : 0);
+    }
+
+    // call from readAdditionalSaveData
+    public default void readHeroUnitSaveData(@NotNull CompoundTag pCompound) {
+        LivingEntity le = (LivingEntity) this;
+        setExperience(pCompound.getInt("experience"));
+        setSkillPoints(pCompound.getInt("skillPoints"));
+        setChargesFromSaveData(pCompound.getInt("charges"));
+        setMana(pCompound.getFloat("mana"));
+        setMaxMana(pCompound.getFloat("maxMana"));
+
+        List<HeroAbility> abls = getHeroAbilities();
+        if (abls.size() > 0) {
+            abls.get(0).rank = pCompound.getInt("ability1Rank");
+            //HeroClientboundPacket.setAbilityRank(entity.getId(), shu.ability1Rank, 0);
+        }
+        if (abls.size() > 1) {
+            abls.get(1).rank = pCompound.getInt("ability2Rank");
+            //HeroClientboundPacket.setAbilityRank(entity.getId(), shu.ability2Rank, 1);
+        }
+        if (abls.size() > 2) {
+            abls.get(2).rank = pCompound.getInt("ability3Rank");
+            //HeroClientboundPacket.setAbilityRank(entity.getId(), shu.ability3Rank, 2);
+        }
+        if (abls.size() > 3) {
+            abls.get(3).rank = pCompound.getInt("ability4Rank");
+            //HeroClientboundPacket.setAbilityRank(entity.getId(), shu.ability4Rank, 3);
+        }
+        for (HeroAbility abl : abls)
+            abl.updateStatsForRank();
+    }
+
+    public default void activateAbilityClientside(int abilityIndex) { }
+
+    public default void deactivateAbilityClientside(int abilityIndex) { }
 }
+
+
+
+
+
+

@@ -66,8 +66,8 @@ public class ToggleShield extends Ability {
     @Override
     public void setAutocast(boolean value) {
         super.setAutocast(value);
-        if ((getAutocast() && !bruteUnit.isHoldingUpShield) ||
-            (!getAutocast() && bruteUnit.isHoldingUpShield))
+        if ((isAutocasting() && !bruteUnit.isHoldingUpShield) ||
+            (!isAutocasting() && bruteUnit.isHoldingUpShield))
             bruteUnit.toggleShield();
         if (level.isClientSide())
             bruteUnit.updateAbilityButtons();

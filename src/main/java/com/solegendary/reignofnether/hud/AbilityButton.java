@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.hud;
 
+import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.ability.Ability;
 import net.minecraft.client.gui.GuiGraphics;
@@ -32,6 +33,8 @@ public class AbilityButton extends Button {
         this.onLeftClick = () -> {
             if (this.ability != null && (this.ability.getCooldown() > 0 && !this.ability.canBypassCooldown()))
                 HudClientEvents.showTemporaryMessage(I18n.get("hud.buttons.reignofnether.on_cooldown"));
+            if (this.ability instanceof HeroAbility heroAbility && heroAbility.manaCost > 0 && heroAbility.hero.getMana() < heroAbility.manaCost)
+                HudClientEvents.showTemporaryMessage(I18n.get("hud.buttons.reignofnether.not_enough_mana"));
             else if (originalOnLeftClick != null)
                 originalOnLeftClick.run();
         };

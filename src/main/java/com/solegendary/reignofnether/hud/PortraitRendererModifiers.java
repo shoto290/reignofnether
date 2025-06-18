@@ -95,13 +95,13 @@ public class PortraitRendererModifiers {
             yOffset = -118;
             scale = -37;
         } else if (entity instanceof NecromancerUnit) {
-            yOffset = -3;
+            yOffset = -11;
             scale = -9;
         } else if (entity instanceof PiglinMerchantUnit) {
-            yOffset = -33;
+            yOffset = -35;
             scale = -27;
         } else if (entity instanceof RoyalGuardUnit) {
-            yOffset = -32;
+            yOffset = -34;
             scale = -16;
         }
 

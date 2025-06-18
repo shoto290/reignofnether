@@ -48,6 +48,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -381,7 +382,7 @@ public class UnitClientEvents {
         for(LivingEntity entity : allUnits) {
             if (entity.getId() == entityId && MC.level != null) {
                 if (entity instanceof Unit unit) {
-                    unit.getItems().clear();
+                    unit.getItems().removeIf(i -> !i.getItem().isEdible());
                     unit.getItems().add(new ItemStack(Items.SUGAR, res.food));
                     unit.getItems().add(new ItemStack(Items.STICK, res.wood));
                     unit.getItems().add(new ItemStack(Items.STONE, res.ore));
@@ -574,9 +575,12 @@ public class UnitClientEvents {
                         boolean sameProfession = entity instanceof VillagerUnit vUnit1 &&
                                                 selectedUnit instanceof VillagerUnit vUnit2 &&
                                                 vUnit1.getUnitProfession() == vUnit2.getUnitProfession();
+                        boolean garrisoned1 = selectedUnit instanceof Unit unit1 && GarrisonableBuilding.getGarrison(unit1) != null;
+                        boolean garrisoned2 = entity instanceof Unit unit2 && GarrisonableBuilding.getGarrison(unit2) != null;
+                        boolean garrionStatusMatches = (garrisoned1 && garrisoned2) || (!garrisoned1 && !garrisoned2);
 
                         if ((getPlayerToEntityRelationship(entity) == Relationship.OWNED || NonUnitClientEvents.canControlNonUnits()) &&
-                                (!bothVillagers || sameProfession)) {
+                                (!bothVillagers || sameProfession) && garrionStatusMatches) {
                             addSelectedUnit(entity);
                         }
                     }
@@ -752,6 +756,11 @@ public class UnitClientEvents {
                         case HOSTILE -> MyRenderer.drawLineBoxOutlineOnly(evt.getPoseStack(), entityAABB, 1.0f, 0.2f, 0.2f, alpha, excludeMaxY);
                         case NEUTRAL -> MyRenderer.drawLineBoxOutlineOnly(evt.getPoseStack(), entityAABB, 1.0f, 1.0f, 0.1f, alpha, excludeMaxY);
                     }
+                }
+            }
+            for (LivingEntity entity : getAllUnits()) {
+                if (entity instanceof Unit unit && unit.isEatingFood()) {
+                    MyRenderer.renderItemInFrontOfEntityFace(evt.getPoseStack(), entity, evt.getPartialTick(), new ItemStack(unit.getFoodBeingEaten()));
                 }
             }
         }
@@ -1087,6 +1096,14 @@ public class UnitClientEvents {
         return units;
     }
 
+    public static void syncUnitEatingFood(int unitId, int itemId) {
+        for (LivingEntity entity : getAllUnits()) {
+            if (unitId == entity.getId() && entity instanceof Unit unit) {
+                unit.getItems().add(new ItemStack(BuiltInRegistries.ITEM.byId(itemId)));
+                break;
+            }
+        }
+    }
 
     /*
     @SubscribeEvent

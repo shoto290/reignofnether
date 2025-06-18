@@ -492,9 +492,8 @@ public class BuildingServerEvents {
             if (evt.getSpawner() != null && evt.getSpawner().getSpawnerBlockEntity() != null) {
                 BlockEntity be = evt.getSpawner().getSpawnerBlockEntity();
                 BlockPos bp = evt.getSpawner().getSpawnerBlockEntity().getBlockPos();
-                if (BuildingUtils.findBuilding(false, bp) instanceof DungeonPlacement || BuildingUtils.findBuilding(false,
-                    bp
-                ) instanceof FlameSanctuaryPlacement) {
+                if (BuildingUtils.findBuilding(false, bp) instanceof DungeonPlacement ||
+                    BuildingUtils.findBuilding(false, bp) instanceof FlameSanctuaryPlacement) {
                     evt.getEntity().discard();
                 }
             }

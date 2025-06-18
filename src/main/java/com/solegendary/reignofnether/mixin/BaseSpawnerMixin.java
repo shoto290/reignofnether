@@ -69,9 +69,9 @@ public class BaseSpawnerMixin {
 
     @Unique
     private boolean reignofnether$isValidNeutralUnitSpawner(Level level, BlockPos pPos) {
-        return !(BuildingUtils.isPosInsideAnyBuilding(level.isClientSide(), pPos) &&
+        return !BuildingUtils.isPosInsideAnyBuilding(level.isClientSide(), pPos) &&
                 nextSpawnData != null &&
-                nextSpawnData.getEntityToSpawn().getAsString().contains("reignofnether"));
+                nextSpawnData.getEntityToSpawn().getAsString().contains("reignofnether");
     }
 
     @Unique

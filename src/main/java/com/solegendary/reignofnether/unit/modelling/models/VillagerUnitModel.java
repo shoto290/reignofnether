@@ -102,10 +102,10 @@ public class VillagerUnitModel<T extends AbstractIllager> extends HierarchicalMo
     }
 
     private ArmPose getArmPose(Entity entity) {
-        if (entity instanceof WorkerUnit workerUnit && workerUnit.getGatherResourceGoal().isGathering()) {
+        if (entity instanceof WorkerUnit workerUnit && workerUnit.getGatherResourceGoal() != null && workerUnit.getGatherResourceGoal().isGathering()) {
             return ArmPose.GATHERING;
         }
-        if (entity instanceof WorkerUnit workerUnit && workerUnit.getBuildRepairGoal().isBuilding()) {
+        if (entity instanceof WorkerUnit workerUnit && workerUnit.getBuildRepairGoal() != null && workerUnit.getBuildRepairGoal().isBuilding()) {
             return ArmPose.BUILDING;
         }
         else if (entity instanceof EvokerUnit evokerUnit) {

@@ -33,7 +33,7 @@ public class RaiseDead extends HeroAbility {
     private static final int CD_MAX_SECONDS = 60 * ResourceCost.TICKS_PER_SECOND;
 
     public RaiseDead(HeroUnit hero) {
-        super(hero, 3, UnitAction.RAISE_DEAD, CD_MAX_SECONDS, 0, 0, false);
+        super(hero, 3, 50, UnitAction.RAISE_DEAD, CD_MAX_SECONDS, 0, 0, false);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class RaiseDead extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.raise_dead") + " " + rankString(), true),
-                fcsIcons(I18n.get("abilities.reignofnether.raise_dead.stats", CD_MAX_SECONDS / 20)),
+                fcsIcons(I18n.get("abilities.reignofnether.raise_dead.stats", CD_MAX_SECONDS / 20, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.raise_dead.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.raise_dead.tooltip2"))

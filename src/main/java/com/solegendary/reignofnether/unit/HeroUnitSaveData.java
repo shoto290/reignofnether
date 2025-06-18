@@ -43,7 +43,6 @@ public class HeroUnitSaveData extends SavedData {
                 String uuid = htag.getString("uuid");
                 String name = htag.getString("name");
                 String ownerName = htag.getString("ownerName");
-                boolean isDead = htag.getBoolean("isDead");
                 int experience = htag.getInt("experience");
                 int skillPoints = htag.getInt("skillPoints");
                 int charges = htag.getInt("charges");
@@ -52,7 +51,7 @@ public class HeroUnitSaveData extends SavedData {
                 int ability3Rank = htag.getInt("ability3Rank");
                 int ability4Rank = htag.getInt("ability4Rank");
 
-                data.heroUnits.add(new HeroUnitSave(uuid, name, ownerName, isDead, experience, skillPoints, charges, ability1Rank, ability2Rank, ability3Rank, ability4Rank));
+                data.heroUnits.add(new HeroUnitSave(uuid, name, ownerName, experience, skillPoints, charges, ability1Rank, ability2Rank, ability3Rank, ability4Rank));
                 ReignOfNether.LOGGER.info("HeroUnitSaveData.load: " + uuid + "|" + experience + "|" + skillPoints + "|" + charges + "|" + ability1Rank + "|" + ability2Rank + "|" + ability3Rank + "|" + ability4Rank);
             }
         }
@@ -69,7 +68,6 @@ public class HeroUnitSaveData extends SavedData {
             cTag.putString("uuid", h.uuid);
             cTag.putString("name", h.name);
             cTag.putString("ownerName", h.ownerName);
-            cTag.putBoolean("isDead", h.isDead);
             cTag.putInt("experience", h.experience);
             cTag.putInt("skillPoints", h.skillPoints);
             cTag.putInt("charges", h.charges);

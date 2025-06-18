@@ -120,12 +120,14 @@ public interface AttackerUnit {
         Mob unitMob = (Mob) attackerUnit;
         Unit unit = (Unit) attackerUnit;
 
-        if (!unitMob.level().isClientSide) {
+        if (!unitMob.level().isClientSide && !unit.isEatingFood()) {
             if (attackerUnit.getAttackGoal() instanceof AbstractMeleeAttackUnitGoal meleeAttackUnitGoal) {
                 meleeAttackUnitGoal.tickAttackCooldown();
                 // doesn't tick on its own for some reason?
                 if (((Mob) attackerUnit).isVehicle())
                     meleeAttackUnitGoal.tick();
+                if (meleeAttackUnitGoal instanceof MeleeWindupAttackUnitGoal goal)
+                    goal.checkAndPerformAttackWithWindup();
             }
             else if (attackerUnit.getAttackGoal() instanceof UnitRangedAttackGoal rangedAttackGoal)
                 rangedAttackGoal.tickAttackCooldown();

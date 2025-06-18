@@ -52,7 +52,7 @@ public class CastSummonVexes extends Ability {
             hotkey,
             () -> {
                 if (this.evokerUnit.getCastSummonVexesGoal() != null)
-                    return this.evokerUnit.getCastSummonVexesGoal().isCasting() || getAutocast();
+                    return this.evokerUnit.getCastSummonVexesGoal().isCasting() || isAutocasting();
                 return false;
             },
             () -> !ResearchClient.hasResearch(ProductionItems.RESEARCH_EVOKER_VEXES),

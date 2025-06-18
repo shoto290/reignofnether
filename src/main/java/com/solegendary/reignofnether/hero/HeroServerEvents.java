@@ -5,6 +5,7 @@ import com.solegendary.reignofnether.unit.HeroUnitSave;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
 import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -60,7 +61,6 @@ public class HeroServerEvents {
                     ((Entity) heroUnit).getStringUUID(),
                     heroName,
                     heroUnit.getOwnerName(),
-                    true,
                     heroUnit.getExperience(),
                     heroUnit.getSkillPoints(),
                     0,
@@ -71,6 +71,7 @@ public class HeroServerEvents {
             );
             fallenHeroes.add(fallenHero);
             FallenHeroClientboundPacket.addFallenHero(fallenHero);
+            UnitServerEvents.saveFallenHeroUnits((ServerLevel) evt.getEntity().level());
         }
     }
 

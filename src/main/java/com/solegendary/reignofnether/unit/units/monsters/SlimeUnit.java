@@ -52,6 +52,9 @@ import java.util.List;
 
 public class SlimeUnit extends Slime implements Unit, AttackerUnit {
     // region
+    private int eatingTicksLeft = 0;
+    public void setEatingTicksLeft(int amount) { eatingTicksLeft = amount; }
+    public int getEatingTicksLeft() { return eatingTicksLeft; }
     private BlockPos anchorPos = new BlockPos(0,0,0);
     public void setAnchor(BlockPos bp) { anchorPos = bp; }
     public BlockPos getAnchor() { return anchorPos; }
@@ -232,7 +235,7 @@ public class SlimeUnit extends Slime implements Unit, AttackerUnit {
     public boolean autocastingConsume() {
         for (Ability ability : abilities)
             if (ability instanceof ConsumeSlime consume)
-                return consume.getAutocast();
+                return consume.isAutocasting();
         return false;
     }
 
@@ -363,6 +366,18 @@ public class SlimeUnit extends Slime implements Unit, AttackerUnit {
                 setUnitAttackTarget(closestTarget);
             }
         }
+    }
+
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        this.addUnitSaveData(pCompound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.readUnitSaveData(pCompound);
     }
 
     @Override

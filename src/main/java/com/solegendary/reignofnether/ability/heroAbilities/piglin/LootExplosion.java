@@ -33,7 +33,7 @@ public class LootExplosion extends HeroAbility {
     private static final int NUM_ITEMS_PER_100_RESOURCES = 3;
 
     public LootExplosion(HeroUnit hero) {
-        super(hero, 1, UnitAction.LOOT_EXPLOSION, CD_MAX_SECONDS, 0, 0, false);
+        super(hero, 1, 120, UnitAction.LOOT_EXPLOSION, CD_MAX_SECONDS, 0, 0, false);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class LootExplosion extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.loot_explosion") + " " + rankString(), true),
-                fcsIcons(I18n.get("abilities.reignofnether.loot_explosion.stats", CD_MAX_SECONDS / 20)),
+                fcsIcons(I18n.get("abilities.reignofnether.loot_explosion.stats", CD_MAX_SECONDS / 20, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.loot_explosion.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.loot_explosion.tooltip2")),

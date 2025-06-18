@@ -1,6 +1,7 @@
 package com.solegendary.reignofnether.registrars;
 
 import com.solegendary.reignofnether.ReignOfNether;
+import com.solegendary.reignofnether.items.ThrowableTnt;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -167,6 +168,9 @@ public class ItemRegistrar {
     public static final RegistryObject<ForgeSpawnEggItem> LLAMA_UNIT_SPAWN_EGG =
             ITEMS.register("llama_unit_spawn_egg", () -> new ForgeSpawnEggItem(EntityRegistrar.LLAMA_UNIT,
                     0xa6896c, 0x6e442e, new Item.Properties()));
+
+    public static final RegistryObject<Item> THROWABLE_TNT =
+            ITEMS.register("throwable_tnt", () -> new ThrowableTnt(new Item.Properties()));
 
     public static void init() {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

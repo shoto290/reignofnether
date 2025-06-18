@@ -14,9 +14,11 @@ import com.solegendary.reignofnether.research.ResearchServerEvents;
 import com.solegendary.reignofnether.resources.*;
 import com.solegendary.reignofnether.time.NightUtils;
 import com.solegendary.reignofnether.unit.Checkpoint;
+import com.solegendary.reignofnether.unit.Relationship;
 import com.solegendary.reignofnether.unit.UnitAction;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
 import com.solegendary.reignofnether.unit.goals.*;
+import com.solegendary.reignofnether.unit.packets.UnitAnimationClientboundPacket;
 import com.solegendary.reignofnether.unit.packets.UnitSyncClientboundPacket;
 import com.solegendary.reignofnether.unit.units.piglins.BruteUnit;
 import com.solegendary.reignofnether.unit.units.piglins.GhastUnit;
@@ -24,19 +26,27 @@ import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -58,6 +68,8 @@ public interface Unit {
     // used for increasing pathfinding calculation range, default is 16 for most mobs
     static int FOLLOW_RANGE_IMPROVED = 64;
     static int FOLLOW_RANGE = 16;
+
+    static float HEAL_PER_NUTRITION = 2.5f;
 
     // position that neutral units run back to when past leash range
     public void setAnchor(BlockPos bp);
@@ -81,6 +93,22 @@ public interface Unit {
     public List<Ability> getAbilities();
     public List<ItemStack> getItems();
     public int getMaxResources();
+
+    public default boolean isEatingFood() { return getEatingTicksLeft() > 0; };
+    public default boolean isHoldingFood() {
+        for (ItemStack itemStack : getItems())
+            if (itemStack.getItem().isEdible())
+                return true;
+        return false;
+    };
+    public default Item getFoodBeingEaten() {
+        for (ItemStack itemStack : getItems())
+            if (itemStack.getItem().isEdible())
+                return itemStack.getItem();
+        return Items.AIR;
+    }
+    public void setEatingTicksLeft(int amount);
+    public int getEatingTicksLeft();
 
     List<Keybinding> ABILITY_KEYBINDS = List.of(
             Keybindings.keyQ,
@@ -152,35 +180,8 @@ public interface Unit {
                     cp.startFading();
             }
         } else {
-            int totalRes = Resources.getTotalResourcesFromItems(unit.getItems()).getTotalValue();
-            if (unitMob.canPickUpLoot()) {
-                for (ItemEntity itementity : unitMob.level().getEntitiesOfClass(ItemEntity.class, unitMob.getBoundingBox().inflate(1, 0, 1))) {
-                    if (!itementity.isRemoved() && !itementity.getItem().isEmpty() && !itementity.hasPickUpDelay() && unitMob.isAlive()) {
-
-                        if (!Unit.atMaxResources(unit)) {
-                            ItemStack itemstack = itementity.getItem();
-                            ResourceSource resBlock = ResourceSources.getFromItem(itemstack.getItem());
-                            if (resBlock != null) {
-                                while (!Unit.atMaxResources(unit) && itemstack.getCount() > 0) {
-                                    unitMob.onItemPickup(itementity);
-                                    unitMob.take(itementity, 1);
-                                    unit.getItems().add(new ItemStack(itemstack.getItem(), 1));
-                                    itemstack.setCount(itemstack.getCount() - 1);
-                                }
-                                if (itemstack.getCount() <= 0)
-                                    itementity.discard();
-
-                                UnitSyncClientboundPacket.sendSyncResourcesPacket(unit);
-                            }
-                            if (Unit.atThresholdResources(unit) && unit instanceof WorkerUnit workerUnit) {
-                                GatherResourcesGoal goal = workerUnit.getGatherResourceGoal();
-                                if (goal != null && goal.getTargetResourceName() != ResourceName.NONE)
-                                    goal.saveAndReturnResources();
-                            }
-                        }
-                    }
-                }
-            }
+            checkAndPickupResources(unit);
+            checkAndPickupEdibleFood(unit);
 
             // sync target variables between goals and Mob
             if (unit.getTargetGoal().getTarget() == null || !unit.getTargetGoal().getTarget().isAlive() ||
@@ -201,7 +202,6 @@ public interface Unit {
             if (hasImmunityResearch && unit.getFaction() == Faction.PIGLINS)
                 unitMob.setRemainingFireTicks(0);
         }
-
 
         // slow regen for monster and piglin units
         LivingEntity le = (LivingEntity) unit;
@@ -251,6 +251,120 @@ public interface Unit {
                 addParticlesAroundSelf(unit, ParticleTypes.ANGRY_VILLAGER);
             }
         }
+
+        if (unit.isEatingFood()) {
+            unit.setEatingTicksLeft(unit.getEatingTicksLeft() - 1);
+            if (!unit.isEatingFood()) {
+                for (ItemStack itemStack : unit.getItems()) {
+                    if (itemStack.getItem().isEdible()) {
+                        unitMob.level().playSound(null, unitMob.getX(), unitMob.getY(), unitMob.getZ(),
+                                SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.5F,
+                                unitMob.getRandom().nextFloat() * 0.1F + 0.9F
+                        );
+                        int nutrition = itemStack.getItem().getFoodProperties(itemStack, (LivingEntity) unit).getNutrition();
+                        unitMob.heal(nutrition * HEAL_PER_NUTRITION);
+                        itemStack.setCount(itemStack.getCount() - 1);
+                        break;
+                    }
+                }
+            } else if (unit.getEatingTicksLeft() % 4 == 0) {
+                unitMob.level().playSound(null, unitMob.getX(), unitMob.getY(), unitMob.getZ(),
+                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5F,
+                        unitMob.getRandom().nextFloat() * 0.1F + 0.9F
+                );
+            }
+        } else {
+            for (ItemStack itemStack : unit.getItems()) {
+                if (itemStack.getItem().isEdible()) {
+                    unit.setEatingTicksLeft(40);
+                    break;
+                }
+            }
+        }
+    }
+
+    private static void checkAndPickupResources(Unit unit) {
+        Mob unitMob = (Mob) unit;
+        if (unitMob.canPickUpLoot()) {
+            for (ItemEntity itementity : unitMob.level().getEntitiesOfClass(ItemEntity.class, unitMob.getBoundingBox().inflate(1, 0, 1))) {
+                if (!itementity.isRemoved() && !itementity.getItem().isEmpty() && !itementity.hasPickUpDelay() && unitMob.isAlive()) {
+                    if (!Unit.atMaxResources(unit)) {
+                        ItemStack itemstack = itementity.getItem();
+                        ResourceSource resBlock = ResourceSources.getFromItem(itemstack.getItem());
+                        if (resBlock != null) {
+                            while (!Unit.atMaxResources(unit) && itemstack.getCount() > 0) {
+                                unitMob.onItemPickup(itementity);
+                                unitMob.take(itementity, 1);
+                                unit.getItems().add(new ItemStack(itemstack.getItem(), 1));
+                                itemstack.setCount(itemstack.getCount() - 1);
+                            }
+                            if (itemstack.getCount() <= 0)
+                                itementity.discard();
+
+                            UnitSyncClientboundPacket.sendSyncResourcesPacket(unit);
+                        }
+                        if (Unit.atThresholdResources(unit) && unit instanceof WorkerUnit workerUnit) {
+                            GatherResourcesGoal goal = workerUnit.getGatherResourceGoal();
+                            if (goal != null && goal.getTargetResourceName() != ResourceName.NONE)
+                                goal.saveAndReturnResources();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void checkAndPickupEdibleFood(Unit unit) {
+        Mob unitMob = (Mob) unit;
+        if (!unit.isHoldingFood() && unitMob.getHealth() < unitMob.getMaxHealth()) {
+            for (ItemEntity itementity : unitMob.level().getEntitiesOfClass(ItemEntity.class, unitMob.getBoundingBox().inflate(1, 0, 1))) {
+
+                Relationship rl = UnitServerEvents.getUnitToEntityRelationship(unit, itementity);
+                if (!itementity.isRemoved() && !itementity.getItem().isEmpty() && !itementity.hasPickUpDelay() && unitMob.isAlive() &&
+                    (rl != Relationship.HOSTILE)) {
+                    ItemStack itemstack = itementity.getItem();
+                    if (itemstack.getItem().isEdible() &&
+                            unitMob.getHealth() < unitMob.getMaxHealth() &&
+                            !unitMob.getItemBySlot(EquipmentSlot.OFFHAND).getItem().isEdible()) {
+                        unitMob.onItemPickup(itementity);
+                        unitMob.take(itementity, 1);
+                        unit.getItems().add(new ItemStack(itemstack.getItem(), 1));
+                        UnitAnimationClientboundPacket.sendEatFoodPacket(unitMob, BuiltInRegistries.ITEM.getId(itemstack.getItem()));
+                        itemstack.setCount(itemstack.getCount() - 1);
+                        if (itemstack.getCount() <= 0)
+                            itementity.discard();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // call from addAdditionalSaveData
+    public default void addUnitSaveData(@NotNull CompoundTag pCompound) {
+        pCompound.putString("ownerName", getOwnerName());
+        if (getAnchor() != null) {
+            pCompound.putInt("anchorPosX", getAnchor().getX());
+            pCompound.putInt("anchorPosY", getAnchor().getY());
+            pCompound.putInt("anchorPosZ", getAnchor().getZ());
+        }
+        if (this instanceof HeroUnit heroUnit)
+            heroUnit.addHeroUnitSaveData(pCompound);
+    }
+
+    // call from readAdditionalSaveData
+    public default void readUnitSaveData(@NotNull CompoundTag pCompound) {
+        setOwnerName(pCompound.getString("ownerName"));
+        BlockPos anchorPos = new BlockPos(
+            pCompound.getInt("anchorPosX"),
+            pCompound.getInt("anchorPosY"),
+            pCompound.getInt("anchorPosZ")
+        );
+        if (!anchorPos.equals(new BlockPos(0,0,0))) {
+            setAnchor(anchorPos);
+        }
+        if (this instanceof HeroUnit heroUnit)
+            heroUnit.readHeroUnitSaveData(pCompound);
     }
 
     public enum SunlightEffect {

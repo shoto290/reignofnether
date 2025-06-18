@@ -4,8 +4,7 @@ public class HeroUnitSave {
 
     public String uuid;
     public String name; // only used for revive data,
-    public String ownerName; // only used for revive data, since UnitSave handles this
-    public boolean isDead; // if true, load to fallenHeroes instead
+    public String ownerName; // only used for revive data
     public int experience;
     public int skillPoints;
     public int charges; // tracks specific hero states like necromancer souls
@@ -14,12 +13,11 @@ public class HeroUnitSave {
     public int ability3Rank;
     public int ability4Rank;
 
-    public HeroUnitSave(String uuid, String name, String ownerName, boolean isDead, int experience, int skillPoints, int charges,
+    public HeroUnitSave(String uuid, String name, String ownerName, int experience, int skillPoints, int charges,
                         int ability1Rank, int ability2Rank, int ability3Rank, int ability4Rank) {
         this.uuid = uuid;
         this.name = name;
         this.ownerName = ownerName;
-        this.isDead = isDead;
         this.experience = experience;
         this.skillPoints = skillPoints;
         this.charges = charges;

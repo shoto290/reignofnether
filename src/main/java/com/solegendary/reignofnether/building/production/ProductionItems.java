@@ -58,10 +58,10 @@ public class ProductionItems {
     public static final ResearchLabLightningRod RESEARCH_LAB_LIGHTNING_ROD = register(new ResourceLocation(ReignOfNether.MOD_ID, "lab_lightning_rod"), new ResearchLabLightningRod());
     public static final ResearchResourceCapacity RESEARCH_RESOURCE_CAPACITY = register(new ResourceLocation(ReignOfNether.MOD_ID, "resource_capacity"), new ResearchResourceCapacity());
     public static final ResearchSpiderJockeys RESEARCH_SPIDER_JOCKEYS = register(new ResourceLocation(ReignOfNether.MOD_ID, "spider_jockeys"), new ResearchSpiderJockeys());
-    public static final ResearchPoisonSpiders RESEARCH_POISON_SPIDERS = register(new ResourceLocation(ReignOfNether.MOD_ID, "poison_spiders"), new ResearchPoisonSpiders());
-    public static final ResearchHusks RESEARCH_HUSKS = register(new ResourceLocation(ReignOfNether.MOD_ID, "husks"), new ResearchHusks());
-    public static final ResearchDrowned RESEARCH_DROWNED = register(new ResourceLocation(ReignOfNether.MOD_ID, "drowned"), new ResearchDrowned());
-    public static final ResearchStrays RESEARCH_STRAYS = register(new ResourceLocation(ReignOfNether.MOD_ID, "strays"), new ResearchStrays());
+    public static final ResearchPoisonSpiders RESEARCH_POISON_SPIDERS = register(new ResourceLocation(ReignOfNether.MOD_ID, "research_poison_spiders"), new ResearchPoisonSpiders());
+    public static final ResearchHusks RESEARCH_HUSKS = register(new ResourceLocation(ReignOfNether.MOD_ID, "research_husks"), new ResearchHusks());
+    public static final ResearchDrowned RESEARCH_DROWNED = register(new ResourceLocation(ReignOfNether.MOD_ID, "research_drowned"), new ResearchDrowned());
+    public static final ResearchStrays RESEARCH_STRAYS = register(new ResourceLocation(ReignOfNether.MOD_ID, "research_strays"), new ResearchStrays());
     public static final ResearchSlimeConversion RESEARCH_SLIME_CONVERSION = register(new ResourceLocation(ReignOfNether.MOD_ID, "slime_conversion"), new ResearchSlimeConversion());
     public static final ResearchLingeringPotions RESEARCH_LINGERING_POTIONS = register(new ResourceLocation(ReignOfNether.MOD_ID, "lingering_potions"), new ResearchLingeringPotions());
     public static final ResearchWaterPotions RESEARCH_WATER_POTIONS = register(new ResourceLocation(ReignOfNether.MOD_ID, "water_potions"), new ResearchWaterPotions());

@@ -8,6 +8,7 @@ import com.solegendary.reignofnether.ability.heroAbilities.monster.RaiseDead;
 import com.solegendary.reignofnether.ability.heroAbilities.monster.SoulSiphonPassive;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.fogofwar.FogOfWarClientboundPacket;
+import com.solegendary.reignofnether.hero.HeroClientboundPacket;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.registrars.EntityRegistrar;
 import com.solegendary.reignofnether.resources.ResourceCost;
@@ -23,6 +24,7 @@ import com.solegendary.reignofnether.unit.modelling.animations.NecromancerAnimat
 import com.solegendary.reignofnether.util.Faction;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -45,6 +47,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -52,6 +55,9 @@ import java.util.List;
 
 public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, RangedAttackerUnit, HeroUnit, KeyframeAnimated {
     // region
+    private int eatingTicksLeft = 0;
+    public void setEatingTicksLeft(int amount) { eatingTicksLeft = amount; }
+    public int getEatingTicksLeft() { return eatingTicksLeft; }
     private BlockPos anchorPos = new BlockPos(0,0,0);
     public void setAnchor(BlockPos bp) { anchorPos = bp; }
     public BlockPos getAnchor() { return anchorPos; }
@@ -152,6 +158,26 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         experience = amount;
         setStatsForLevel();
     }
+    private float baseMaxMana = 150;
+    private float maxMana = baseMaxMana;
+    private float mana = maxMana;
+    private float manaRegenPerSecond = 1;
+    private float manaBonusPerLevel = 10;
+    @Override public float getBaseMaxMana() { return baseMaxMana; }
+    @Override public float getMaxMana() { return maxMana; }
+    @Override public void setMaxMana(float amount) {
+        this.maxMana = amount;
+        if (!level().isClientSide())
+            HeroClientboundPacket.setMaxMana(getId(), amount);
+    }
+    @Override public float getMana() { return mana; }
+    @Override public void setMana(float amount) {
+        this.mana = Math.min(maxMana, amount);
+        if (!level().isClientSide())
+            HeroClientboundPacket.setMana(getId(), this.mana);
+    }
+    @Override public float getManaRegenPerSecond() { return manaRegenPerSecond; }
+    @Override public float getManaBonusPerLevel() { return manaBonusPerLevel; }
 
     final static public float attackDamage = 4.0f;
     final static public float attackBonusPerLevel = 0.4f;
@@ -167,7 +193,7 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
     public int maxResources = 100;
 
     @Override public float getHealthBonusPerLevel() { return maxHealthBonusPerLevel; };
-    @Override public float getAttackBonusPerLevel() { return maxHealth; };
+    @Override public float getAttackBonusPerLevel() { return attackBonusPerLevel; };
     @Override public float getBaseHealth() { return maxHealth; };
     @Override public float getBaseAttack() { return attackDamage; };
 
@@ -270,6 +296,7 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         super.tick();
         Unit.tick(this);
         AttackerUnit.tick(this);
+        HeroUnit.tick(this);
 
         if (level().isClientSide() && animateTicks > 0) {
             animateTicks -= 1;
@@ -277,6 +304,18 @@ public class NecromancerUnit extends Skeleton implements Unit, AttackerUnit, Ran
         this.castRaiseDeadGoal.tick();
         this.castPhantomGoal.tick();
         this.castBloodMoonGoal.tick();
+    }
+
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        this.addUnitSaveData(pCompound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.readUnitSaveData(pCompound);
     }
 
     public RaiseDead getRaiseDead() {

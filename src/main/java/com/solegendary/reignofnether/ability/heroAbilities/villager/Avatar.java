@@ -8,6 +8,7 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.hud.AbilityButton;
 import com.solegendary.reignofnether.hud.Button;
+import com.solegendary.reignofnether.hud.HudClientEvents;
 import com.solegendary.reignofnether.keybinds.Keybinding;
 import com.solegendary.reignofnether.resources.ResourceCost;
 import com.solegendary.reignofnether.unit.UnitAction;
@@ -18,6 +19,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -28,13 +30,14 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class Avatar extends HeroAbility {
 
-    private static final int CD_MAX_SECONDS = 300 * ResourceCost.TICKS_PER_SECOND;
-    private static final int DURATION = 60 * ResourceCost.TICKS_PER_SECOND;
-
-    private static final float BONUS_HEALTH = 150;
+    private static final int CD_MAX_SECONDS = 5 * ResourceCost.TICKS_PER_SECOND;
+    public static final int DURATION = 10 * ResourceCost.TICKS_PER_SECOND;
+    public static final float ATTACK_SPLASH_RADIUS = 2.5f;
+    public static final float ATTACK_SPLASH_MULT = 0.5f;
+    public static final float BONUS_HEALTH = 100;
 
     public Avatar(HeroUnit hero) {
-        super(hero, 1, UnitAction.AVATAR, CD_MAX_SECONDS, 0, 0, false);
+        super(hero, 1, 100, UnitAction.AVATAR, CD_MAX_SECONDS, 0, 0, false);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class Avatar extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.avatar"), true),
-                fcsIcons(I18n.get("abilities.reignofnether.avatar.stats", CD_MAX_SECONDS / 20)),
+                fcsIcons(I18n.get("abilities.reignofnether.avatar.stats", CD_MAX_SECONDS / 20, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.avatar.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.avatar.tooltip2", BONUS_HEALTH)),
@@ -82,7 +85,27 @@ public class Avatar extends HeroAbility {
         );
     }
 
+    @Override
     public void use(Level level, Unit unitUsing, BlockPos targetBp) {
-        ((RoyalGuardUnit) unitUsing).avatar();
+        use(level, unitUsing);
+    }
+
+    @Override
+    public void use(Level level, Unit unitUsing, LivingEntity targetEntity) {
+        use(level, unitUsing);
+    }
+
+    private void use(Level level, Unit unitUsing) {
+        boolean isAvatarActive = ((RoyalGuardUnit) unitUsing).avatarTicksLeft > 0;
+        if (level.isClientSide()) {
+            if (isAvatarActive) {
+                HudClientEvents.showTemporaryMessage(I18n.get("abilities.reignofnether.avatar.already_active"));
+            }
+        }
+        if (!isAvatarActive) {
+            ((RoyalGuardUnit) unitUsing).getCastAvatarGoal().setAbility(this);
+            ((RoyalGuardUnit) unitUsing).getCastAvatarGoal().startCasting();
+            ((RoyalGuardUnit) unitUsing).avatarScalingStarted = true;
+        }
     }
 }

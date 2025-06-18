@@ -53,7 +53,7 @@ public class ThrowWaterPotion extends Ability {
             "Water Potion",
             new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/splash_potion_water.png"),
             hotkey,
-            () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_WATER_POTION || getAutocast(),
+            () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_WATER_POTION || isAutocasting(),
             () -> !ResearchClient.hasResearch(ProductionItems.RESEARCH_WATER_POTIONS),
             () -> true,
             () -> CursorClientEvents.setLeftClickAction(UnitAction.THROW_WATER_POTION),

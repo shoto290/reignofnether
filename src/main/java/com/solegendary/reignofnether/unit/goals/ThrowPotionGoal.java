@@ -77,7 +77,7 @@ public class ThrowPotionGoal extends MoveToTargetBlockGoal {
         if (this.targetEntity == null && moveTarget == null && !mob.level().isClientSide() && witch.isIdle() && witch.tickCount % 4 == 0) {
 
             for (Ability potionAbility : witch.getAbilities()) {
-                if (!potionAbility.getAutocast() || !potionAbility.isOffCooldown())
+                if (!potionAbility.isAutocasting() || !potionAbility.isOffCooldown())
                     continue;
 
                 List<Mob> nearbyMobs = MiscUtil.getEntitiesWithinRange(

@@ -823,8 +823,9 @@ public class HudClientEvents {
         // --------------------------------------------------------
         // Unit action buttons (attack, stop, move, abilities etc.)
         // --------------------------------------------------------
-        if (selUnits.size() > 0 && getPlayerToEntityRelationship(selUnits.get(0)) == Relationship.OWNED
-                && hudSelectedEntity instanceof Unit unit) {
+        if (selUnits.size() > 0 &&
+                (getPlayerToEntityRelationship(selUnits.get(0)) == Relationship.OWNED || NonUnitClientEvents.canControlNonUnits()) &&
+                hudSelectedEntity instanceof Unit unit) {
             blitX = 0;
             blitY = screenHeight - iconFrameSize;
 
@@ -852,6 +853,10 @@ public class HudClientEvents {
                 for (Ability ability : vUnit.getAbilities())
                     if (ability instanceof CallToArmsUnit callToArmsUnit)
                         actionButtons.add(callToArmsUnit.getButton(Keybindings.keyV));
+
+            if (SandboxClientEvents.isSandboxPlayer()) {
+                actionButtons.add(SandboxActionButtons.getSetRelationshipButton());
+            }
 
             for (Button actionButton : actionButtons) {
                 // GATHER button does not have a static icon
@@ -887,7 +892,7 @@ public class HudClientEvents {
             blitY = screenHeight - (iconFrameSize * 2) - 4;
 
             // includes worker building buttons
-            if (TutorialClientEvents.isAtOrPastStage(TutorialStage.BUILD_INTRO)) {
+            if (TutorialClientEvents.isAtOrPastStage(TutorialStage.BUILD_INTRO) && getPlayerToEntityRelationship(selUnits.get(0)) == Relationship.OWNED) {
                 List<AbilityButton> abilityButtons = List.of();
                 for (LivingEntity livingEntity : selUnits) {
                     if (livingEntity == hudSelectedEntity) {
@@ -907,7 +912,7 @@ public class HudClientEvents {
                 for (AbilityButton abilityButton : unitAbilities) {
 
                     if (abilityButton.ability instanceof HeroAbility heroAbility &&
-                            ((HeroUnit)unit).isRankUpMenuOpen()) {
+                            ((HeroUnit)unit).isRankUpMenuOpen() && !HeroAbility.allSkillsLearnt((HeroUnit) unit)) {
                         Button rankUpButton = heroAbility.getRankUpButton();
                         if (!rankUpButton.isHidden.get()) {
                             i += 1;
@@ -993,7 +998,7 @@ public class HudClientEvents {
         // -----------------
         // Non-unit controls
         // -----------------
-        else if (!getSelectedUnits().isEmpty() && NonUnitClientEvents.canControlNonUnits()) {
+        else if (!(hudSelectedEntity instanceof Unit) && !getSelectedUnits().isEmpty() && NonUnitClientEvents.canControlNonUnits()) {
             blitX = 0;
             blitY = screenHeight - iconFrameSize;
             ArrayList<Button> actionButtons = new ArrayList<>();

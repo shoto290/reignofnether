@@ -35,10 +35,10 @@ public class InsomniaCurse extends HeroAbility {
     public static final int RANGE = 12;
     public static final float PHANTOM_DAMAGE = 6;
     public static final float PHANTOM_DAMAGE_BONUS_PER_SOUL_RANK = 2f;
-    public static final int PHANTOM_MAX_ATTACKS = 5;
+    public static final int PHANTOM_MAX_ATTACKS = 6;
 
     public InsomniaCurse(HeroUnit hero) {
-        super(hero, 3, UnitAction.INSOMNIA_CURSE, 20 * ResourceCost.TICKS_PER_SECOND, RANGE, 0, true);
+        super(hero, 3, 20, UnitAction.INSOMNIA_CURSE, 20 * ResourceCost.TICKS_PER_SECOND, RANGE, 0, true);
         maxCharges = 3;
         charges = maxCharges;
     }
@@ -91,7 +91,7 @@ public class InsomniaCurse extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.insomnia_curse") + " " + rankString(), true),
-                fcsIcons(I18n.get("abilities.reignofnether.insomnia_curse.stats", PHANTOM_DAMAGE, cooldownMax / 20, RANGE)),
+                fcsIcons(I18n.get("abilities.reignofnether.insomnia_curse.stats", PHANTOM_DAMAGE, cooldownMax / 20, RANGE, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.insomnia_curse.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.insomnia_curse.tooltip2", PHANTOM_DAMAGE, PHANTOM_DAMAGE_BONUS_PER_SOUL_RANK)),

@@ -40,7 +40,7 @@ public class BloodMoon extends HeroAbility {
     public static final int BONUS_DURATION_PER_SOUL_RANK = 10 * ResourceCost.TICKS_PER_SECOND;
 
     public BloodMoon(HeroUnit hero) {
-        super(hero, 1, UnitAction.BLOOD_MOON, CD_MAX, 0, 0, false);
+        super(hero, 1, 150, UnitAction.BLOOD_MOON, CD_MAX, 0, 0, false);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class BloodMoon extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.blood_moon"), true),
-                fcsIcons(I18n.get("abilities.reignofnether.blood_moon.stats", CD_MAX / 20)),
+                fcsIcons(I18n.get("abilities.reignofnether.blood_moon.stats", CD_MAX / 20, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.blood_moon.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.blood_moon.tooltip2")),

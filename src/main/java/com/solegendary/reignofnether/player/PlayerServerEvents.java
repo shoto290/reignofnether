@@ -76,7 +76,6 @@ public class PlayerServerEvents {
     private static final Map<String, GameType> playerDefaultGameModes = new HashMap<>();
     private static final Map<String, Boolean> playerGuiOpenStatus = new HashMap<>();
 
-    private static final GameType defaultGameMode = GameType.SPECTATOR;
     public static final ArrayList<ServerPlayer> players = new ArrayList<>();
     public static final ArrayList<ServerPlayer> orthoviewPlayers = new ArrayList<>();
     public static final List<RTSPlayer> rtsPlayers = Collections.synchronizedList(new ArrayList<>()); // players that
@@ -680,12 +679,16 @@ public class PlayerServerEvents {
             // Ensure player had GUI open before attempting to close
             if (Boolean.TRUE.equals(playerGuiOpenStatus.get(playerName))) {
                 // Restore the player’s original game mode if saved
-                GameType originalGameMode = playerDefaultGameModes.remove(playerName);
+                GameType originalGameType = playerDefaultGameModes.remove(playerName);
 
-                if (originalGameMode != null) {
-                    serverPlayer.setGameMode(originalGameMode);
+                if (originalGameType != null) {
+                    serverPlayer.setGameMode(originalGameType);
                 } else {
                     ReignOfNether.LOGGER.warn("No original game mode found for player {}", playerName);
+                }
+
+                if (SandboxServer.isSandboxPlayer(playerName)) {
+                    serverPlayer.setGameMode(GameType.CREATIVE);
                 }
 
                 // Mark that the GUI is now closed
@@ -920,7 +923,6 @@ public class PlayerServerEvents {
             saveRTSPlayers();
             saveBuildings(serverLevel);
             BuildingServerEvents.saveNetherZones(serverLevel);
-            UnitServerEvents.saveUnits(serverLevel);
             UnitServerEvents.saveGatherTargets(serverLevel);
             ResourcesServerEvents.saveResources(serverLevel);
             ResearchServerEvents.saveResearch();
@@ -931,6 +933,11 @@ public class PlayerServerEvents {
             SurvivalServerEvents.reset();
         }
         HeroClientEvents.fallenHeroes.clear();
+
+        for (ServerPlayer player : serverLevel.players())
+            player.setGameMode(GameType.SPECTATOR);
+
+        playerDefaultGameModes.replaceAll((key, oldValue) -> GameType.SPECTATOR);
     }
 
     public static void setRTSLock(boolean lock) {

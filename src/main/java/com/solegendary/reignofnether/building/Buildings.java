@@ -17,7 +17,7 @@ public class Buildings {
     public static final DarkWatchtower DARK_WATCHTOWER = register(new ResourceLocation(ReignOfNether.MOD_ID, "dark_watchtower"), new DarkWatchtower());
     public static final Graveyard GRAVEYARD = register(new ResourceLocation(ReignOfNether.MOD_ID, "graveyard"), new Graveyard());
     public static final Dungeon DUNGEON = register(new ResourceLocation(ReignOfNether.MOD_ID, "dungeon"), new Dungeon());
-    public static final SpiderLair SPIDER_LAIR = register(new ResourceLocation(ReignOfNether.MOD_ID, "slider_lair"), new SpiderLair());
+    public static final SpiderLair SPIDER_LAIR = register(new ResourceLocation(ReignOfNether.MOD_ID, "spider_lair"), new SpiderLair());
     public static final SlimePit SLIME_PIT = register(new ResourceLocation(ReignOfNether.MOD_ID, "slime_pit"), new SlimePit());
     public static final Laboratory LABORATORY = register(new ResourceLocation(ReignOfNether.MOD_ID, "laboratory"), new Laboratory());
     public static final Stronghold STRONGHOLD = register(new ResourceLocation(ReignOfNether.MOD_ID, "stronghold"), new Stronghold());

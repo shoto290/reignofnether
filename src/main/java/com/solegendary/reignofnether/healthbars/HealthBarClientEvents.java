@@ -4,10 +4,10 @@ package com.solegendary.reignofnether.healthbars;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import org.joml.Matrix4f;
 import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.orthoview.OrthoviewClientEvents;
+import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
 import com.solegendary.reignofnether.unit.interfaces.Unit;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -80,7 +80,7 @@ public class HealthBarClientEvents {
         if (!shouldShowHealthBar(entity, MC))
             return;
 
-        BarStates.getState(entity);
+        BarStates.getState(entity, BarState.BarStateType.HEALTH);
 
         if (entity.getHealth() >= entity.getMaxHealth())
             return;
@@ -151,12 +151,25 @@ public class HealthBarClientEvents {
 
     public static void renderForEntity(PoseStack matrix, LivingEntity entity, double x, double y,
                                        float width, RenderMode renderMode) {
-        BarState state = BarStates.getState(entity);
+        BarState state = BarStates.getState(entity, BarState.BarStateType.HEALTH);
 
-        float percent = Math.min(1, Math.min(state.health, entity.getMaxHealth()) / entity.getMaxHealth());
-        float percent2 = Math.min(state.previousHealthDisplay, entity.getMaxHealth()) / entity.getMaxHealth();
+        float percent = Math.min(1, Math.min(state.amount, entity.getMaxHealth()) / entity.getMaxHealth());
+        float percent2 = Math.min(state.previousAmountDisplay, entity.getMaxHealth()) / entity.getMaxHealth();
 
         render(matrix, percent, percent2, x, y, width, renderMode);
+    }
+
+    public static void renderManaForEntity(PoseStack matrix, HeroUnit heroUnit, double x, double y,
+                                           float width, RenderMode renderMode) {
+        BarState state = BarStates.getState((LivingEntity) heroUnit, BarState.BarStateType.MANA);
+
+        float percent = Math.min(1, Math.min(state.amount, heroUnit.getMaxMana()) / heroUnit.getMaxMana());
+        float percent2 = Math.min(state.previousAmountDisplay, heroUnit.getMaxMana()) / heroUnit.getMaxMana();
+
+        render(matrix, percent, percent2, x, y, width, renderMode,
+                0.3f, 0.3f, 1f,
+                0.15f, 0.15f, 0.5f
+        );
     }
 
     public static void renderForBuilding(PoseStack matrix, BuildingPlacement building, double x, double y,
@@ -170,8 +183,6 @@ public class HealthBarClientEvents {
 
     private static void render(PoseStack matrix, float percent, float percent2, double x, double y,
                                float width, RenderMode renderMode) {
-        int zOffset = 0;
-
         // base colour on percentage health remaining (green @ 100%, yellow @ 50%, red @ 0%)
         float r = Math.max(0, Math.min(1, 2-percent*2));
         float g = Math.max(0, Math.min(1, percent*2));
@@ -179,7 +190,12 @@ public class HealthBarClientEvents {
         float r2 = r * 0.5f;
         float g2 = g * 0.5f;
         float b2 = b * 0.5f;
+        render(matrix, percent, percent2, x, y, width, renderMode, r, g, b, r2, g2, b2);
+    }
 
+    private static void render(PoseStack matrix, float percent, float percent2, double x, double y,
+                               float width, RenderMode renderMode, float r, float g, float b, float r2, float g2, float b2) {
+        int zOffset = 0;
         Matrix4f m4f = matrix.last().pose();
         drawBar(m4f, x, y, width, 1, 0.35f,0.35f,0.35f, zOffset++, renderMode);
         drawBar(m4f, x, y, width, percent2, r2,g2,b2, zOffset++, renderMode);

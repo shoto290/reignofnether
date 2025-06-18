@@ -134,7 +134,7 @@ public class SandboxClientEvents {
         };
     }
 
-    private static String getRelationshipName() {
+    public static String getRelationshipName(Relationship relationship) {
         return switch (relationship) {
             case OWNED -> I18n.get("hud.relationship.reignofnether.owned");
             case FRIENDLY -> I18n.get("hud.relationship.reignofnether.allied");
@@ -212,7 +212,7 @@ public class SandboxClientEvents {
                     }
                 },
                 List.of(
-                        fcs(I18n.get("sandbox.reignofnether.relationship_button1", getRelationshipName())),
+                        fcs(I18n.get("sandbox.reignofnether.relationship_button1", getRelationshipName(relationship))),
                         fcs(I18n.get("sandbox.reignofnether.relationship_button2"))
                 )
         );

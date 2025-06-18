@@ -2,6 +2,7 @@ package com.solegendary.reignofnether.unit;
 
 import com.mojang.datafixers.util.Pair;
 import com.solegendary.reignofnether.ability.Ability;
+import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.building.BuildingUtils;
 import com.solegendary.reignofnether.building.GarrisonableBuilding;
@@ -88,6 +89,13 @@ public class UnitActionItem {
         this.unitIds = unitIds;
         this.preselectedBlockPos = preselectedBlockPos;
         this.selectedBuildingPos = selectedBuildingPos;
+    }
+
+    private boolean canAffordManaCost(Ability ability) {
+        if (ability instanceof HeroAbility heroAbility) {
+            return heroAbility.manaCost <= heroAbility.hero.getMana();
+        }
+        return true;
     }
 
     // can be done server or clientside - but only serverside will have an effect on the world
@@ -343,7 +351,10 @@ public class UnitActionItem {
                 // any other Ability not explicitly defined here
                 default -> {
                     for (Ability ability : unit.getAbilities()) {
-                        if (ability.action == action && (ability.isOffCooldown() || ability.canBypassCooldown())) {
+                        if (ability.action == action &&
+                            (ability.isOffCooldown() || ability.canBypassCooldown()) &&
+                            canAffordManaCost(ability)
+                        ) {
                             if (ability.canTargetEntities && this.unitId > 0) {
                                 ability.use(level, unit, (LivingEntity) level.getEntity(unitId));
                                 usedAbility = ability;

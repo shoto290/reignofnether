@@ -51,7 +51,7 @@ public class ThrowHealingPotion extends Ability {
         return new AbilityButton("Healing Potion",
             new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/splash_potion_healing.png"),
             hotkey,
-            () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_HEALING_POTION || getAutocast(),
+            () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_HEALING_POTION || isAutocasting(),
             () -> !ResearchClient.hasResearch(ProductionItems.RESEARCH_HEALING_POTIONS),
             () -> true,
             () -> CursorClientEvents.setLeftClickAction(UnitAction.THROW_HEALING_POTION),

@@ -31,7 +31,7 @@ public class Ability {
 
     private boolean autocast = false;
     public void setAutocast(boolean value) { autocast = value; }
-    public boolean getAutocast() { return autocast; }
+    public boolean isAutocasting() { return autocast; }
 
     public Ability(UnitAction action, Level level, int cooldownMax, float range, float radius, boolean canTargetEntities) {
         this.action = action;

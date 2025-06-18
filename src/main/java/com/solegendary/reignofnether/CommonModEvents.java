@@ -3,6 +3,7 @@ package com.solegendary.reignofnether;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.building.BuildingUtils;
 import com.solegendary.reignofnether.building.buildings.placements.PortalPlacement;
+import com.solegendary.reignofnether.entities.renderers.ThrowableTntRenderer;
 import com.solegendary.reignofnether.guiscreen.TopdownGui;
 import com.solegendary.reignofnether.registrars.*;
 import com.solegendary.reignofnether.unit.modelling.models.NecromancerModel;
@@ -105,6 +106,9 @@ public class CommonModEvents {
 
         evt.registerEntityRenderer(EntityRegistrar.PHANTOM_SUMMON.get(), PhantomRenderer::new);
         evt.registerEntityRenderer(EntityRegistrar.KILLER_RABBIT_UNIT.get(), RabbitRenderer::new);
+
+        evt.registerEntityRenderer(EntityRegistrar.ADJUSTABLE_PRIMED_TNT.get(), TntRenderer::new);
+        evt.registerEntityRenderer(EntityRegistrar.THROWABLE_TNT_PROJECTILE.get(), ThrowableTntRenderer::new);
     }
 
     @SubscribeEvent
@@ -218,6 +222,9 @@ public class CommonModEvents {
             event.accept(ItemRegistrar.PANDA_UNIT_SPAWN_EGG);
             event.accept(ItemRegistrar.GRIZZLY_BEAR_UNIT_SPAWN_EGG);
             event.accept(ItemRegistrar.POLAR_BEAR_UNIT_SPAWN_EGG);
+        }
+        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab())==CreativeModeTabs.TOOLS_AND_UTILITIES.location()){
+            event.accept(ItemRegistrar.THROWABLE_TNT);
         }
     }
 }

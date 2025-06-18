@@ -34,7 +34,7 @@ public class MaceSlam extends HeroAbility {
     public int stunDuration = 2 * ResourceCost.TICKS_PER_SECOND;
 
     public MaceSlam(HeroUnit hero) {
-        super(hero, 3, UnitAction.MACE_SLAM, 30 * ResourceCost.TICKS_PER_SECOND, RANGE, 0, true);
+        super(hero, 3, 30, UnitAction.MACE_SLAM, 30 * ResourceCost.TICKS_PER_SECOND, RANGE, 0, true);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class MaceSlam extends HeroAbility {
     public List<FormattedCharSequence> getTooltipLines() {
         return List.of(
                 fcs(I18n.get("abilities.reignofnether.mace_slam") + " " + rankString(), true),
-                fcsIcons(I18n.get("abilities.reignofnether.mace_slam.stats", damage, cooldownMax / 20)),
+                fcsIcons(I18n.get("abilities.reignofnether.mace_slam.stats", damage, cooldownMax / 20, manaCost)),
                 fcs(""),
                 fcs(I18n.get("abilities.reignofnether.mace_slam.tooltip1")),
                 fcs(I18n.get("abilities.reignofnether.mace_slam.tooltip2", stunDuration / 20))

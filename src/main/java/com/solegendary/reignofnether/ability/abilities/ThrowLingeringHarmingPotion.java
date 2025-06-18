@@ -49,7 +49,7 @@ public class ThrowLingeringHarmingPotion extends Ability {
         return new AbilityButton("Lingering Harming Potion",
             new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/lingering_potion_harming.png"),
             hotkey,
-            () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_LINGERING_HARMING_POTION || getAutocast(),
+            () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_LINGERING_HARMING_POTION || isAutocasting(),
             () -> false,
             //!ResearchClient.hasResearch(ResearchLingeringPotions.itemName),
             () -> true,

@@ -49,6 +49,9 @@ import java.util.List;
 
 public class SpiderUnit extends Spider implements Unit, AttackerUnit, ConvertableUnit {
     // region
+    private int eatingTicksLeft = 0;
+    public void setEatingTicksLeft(int amount) { eatingTicksLeft = amount; }
+    public int getEatingTicksLeft() { return eatingTicksLeft; }
     private BlockPos anchorPos = new BlockPos(0,0,0);
     public void setAnchor(BlockPos bp) { anchorPos = bp; }
     public BlockPos getAnchor() { return anchorPos; }
@@ -221,6 +224,18 @@ public class SpiderUnit extends Spider implements Unit, AttackerUnit, Convertabl
     }
 
     @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        this.addUnitSaveData(pCompound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.readUnitSaveData(pCompound);
+    }
+
+    @Override
     public SunlightEffect getSunlightEffect() {
         return SunlightEffect.MOVEMENT_SLOWDOWN;
     }
@@ -264,7 +279,7 @@ public class SpiderUnit extends Spider implements Unit, AttackerUnit, Convertabl
     @Override
     public boolean doHurtTarget(@NotNull Entity pEntity) {
         if (super.doHurtTarget(pEntity)) {
-            if (getWebAbility() != null && getWebAbility().getAutocast())
+            if (getWebAbility() != null && getWebAbility().isAutocasting())
                 getWebAbility().use(this.level(), this, pEntity.getOnPos());
             return true;
         } else {

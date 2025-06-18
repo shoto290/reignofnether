@@ -46,7 +46,7 @@ public class SonicBoom extends Ability {
         SonicBoomGoal goal = this.wardenUnit.getSonicBoomGoal();
         if (goal == null)
             return false;
-        return goal.isCasting() || goal.getMoveTarget() != null || goal.getTargetEntity() != null;
+        return goal.isChannelling() || goal.getMoveTarget() != null || goal.getTargetEntity() != null;
     }
 
     @Override

@@ -2,9 +2,12 @@ package com.solegendary.reignofnether.unit.goals;
 
 import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.AbilityClientboundPacket;
+import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.building.BuildingPlacement;
 import com.solegendary.reignofnether.building.BuildingUtils;
 import com.solegendary.reignofnether.unit.UnitAnimationAction;
+import com.solegendary.reignofnether.unit.interfaces.HeroUnit;
+import com.solegendary.reignofnether.unit.interfaces.Unit;
 import com.solegendary.reignofnether.unit.packets.UnitAnimationClientboundPacket;
 import com.solegendary.reignofnether.util.MyMath;
 import net.minecraft.core.BlockPos;
@@ -18,10 +21,10 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
 
     protected LivingEntity targetEntity = null;
     protected Ability ability; // used for syncing cooldown with clientside
-    protected int ticksCasting = 0; // how long have we spent trying to cast this spell
-    public boolean isCasting() { return isCasting; }
-    protected final int channelTicks; // max time required to cast a spell
-    protected boolean isCasting = false;
+    protected int channelTicks = 0; // how long have we spent trying to cast this spell
+    public boolean isChannelling() { return isChannelling; }
+    protected final int channelTicksMax; // max time required to cast a spell
+    protected boolean isChannelling = false;
     protected BlockPos castTarget = null; // pos that the spell will be cast at
     protected final float range;
     public Consumer<LivingEntity> onEntityCast;
@@ -31,13 +34,13 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
     protected float bonusChannelingRange = 0; // extra range added while channeling
     protected final UnitAnimationAction animationStart;
 
-    public GenericTargetedSpellGoal(Mob mob, int channelTicks, float range,
+    public GenericTargetedSpellGoal(Mob mob, int channelTicksMax, float range,
                                     UnitAnimationAction animationStart,
                                     @Nullable Consumer<LivingEntity> onEntityCast,
                                     @Nullable Consumer<BlockPos> onGroundCast,
                                     @Nullable Consumer<BuildingPlacement> onBuildingCast) {
         super(mob, false, 0);
-        this.channelTicks = channelTicks;
+        this.channelTicksMax = channelTicksMax;
         this.range = range;
         this.animationStart = animationStart;
         if (this.animationStart != null)
@@ -47,12 +50,12 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
         this.onBuildingCast = onBuildingCast;
     }
 
-    public GenericTargetedSpellGoal(Mob mob, int channelTicks, float range,
+    public GenericTargetedSpellGoal(Mob mob, int channelTicksMax, float range,
                                     @Nullable Consumer<LivingEntity> onEntityCast,
                                     @Nullable Consumer<BlockPos> onGroundCast,
                                     @Nullable Consumer<BuildingPlacement> onBuildingCast) {
         super(mob, false, 0);
-        this.channelTicks = channelTicks;
+        this.channelTicksMax = channelTicksMax;
         this.range = range;
         this.animationStart = null;
         this.onEntityCast = onEntityCast;
@@ -64,7 +67,9 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
     // if we set a BlockPos as the target, remove any entity target
     // the user will only start casting once we reach the target
     public void setTarget(LivingEntity entity) {
-        this.targetEntity = entity;
+        if (entity != this.mob) {
+            this.targetEntity = entity;
+        }
     }
     public void setTarget(BlockPos bpTarget) {
         this.setMoveTarget(bpTarget);
@@ -85,7 +90,7 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
 
     protected boolean isInRange() {
         float finalRange = range;
-        if (isCasting())
+        if (isChannelling())
             finalRange += bonusChannelingRange;
 
         if (moveTarget != null && MyMath.distance(
@@ -110,7 +115,7 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
             if (isInRange()) {
                 if (moveTarget != null)
                     castTarget = moveTarget;
-                if (!isCasting)
+                if (!isChannelling)
                     startCasting();
                 this.stopMoving();
             } else {
@@ -118,10 +123,10 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
                 this.setMoveTarget(moveTarget);
             }
 
-            if (isCasting && castTarget != null) {
+            if (isChannelling && castTarget != null) {
                 this.mob.getLookControl().setLookAt(castTarget.getX(), castTarget.getY(), castTarget.getZ());
-                ticksCasting += 1;
-                if (ticksCasting >= channelTicks) {
+                channelTicks += 1;
+                if (channelTicks >= channelTicksMax) {
                     if (onEntityCast != null && targetEntity != null)
                         onEntityCast.accept(targetEntity);
                     else if (onGroundCast != null || onBuildingCast != null) {
@@ -132,16 +137,29 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
                         else if (onGroundCast != null)
                             onGroundCast.accept(castTarget);
                     }
-                    if (this.ability != null && !this.mob.level().isClientSide())
-                        AbilityClientboundPacket.sendSetCooldownPacket(this.mob.getId(), this.ability.action, this.ability.cooldownMax);
+                    if (this.ability != null && !this.mob.level().isClientSide()) {
+                        if (!this.mob.level().isClientSide()) {
+                            AbilityClientboundPacket.sendSetCooldownPacket(this.mob.getId(), this.ability.action, this.ability.cooldownMax);
+                            if (mob instanceof HeroUnit heroUnit && this.ability instanceof HeroAbility heroAbility) {
+                                heroUnit.setMana(heroUnit.getMana() - heroAbility.manaCost);
+                            }
+                        }
+                        else if (mob instanceof Unit unit) {
+                            this.ability.setToMaxCooldown();
+                        }
+                    }
                     this.stopExceptAnimations();
                 }
             }
         }
     }
 
+    public BlockPos getCastTarget() {
+        return castTarget;
+    }
+
     public void startCasting() {
-        this.isCasting = true;
+        this.isChannelling = true;
         this.castTarget = moveTarget;
         if (!this.mob.level().isClientSide()) {
             if (!hasKeyframeAnimations) {
@@ -152,10 +170,10 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
         }
     }
     public void stopCasting() {
-        this.isCasting = false;
-        this.ticksCasting = 0;
+        this.isChannelling = false;
+        this.channelTicks = 0;
         this.castTarget = null;
-        if (!this.mob.level().isClientSide() && ticksCasting < channelTicks) {
+        if (!this.mob.level().isClientSide() && channelTicks < channelTicksMax) {
             if (!hasKeyframeAnimations) {
                 UnitAnimationClientboundPacket.sendBasicPacket(UnitAnimationAction.NON_KEYFRAME_STOP, this.mob);
             } else {
@@ -174,8 +192,8 @@ public class GenericTargetedSpellGoal extends MoveToTargetBlockGoal {
     public void stopExceptAnimations() {
         this.stopMoving();
         this.setTarget((LivingEntity) null);
-        this.isCasting = false;
-        this.ticksCasting = 0;
+        this.isChannelling = false;
+        this.channelTicks = 0;
         this.castTarget = null;
     }
 }

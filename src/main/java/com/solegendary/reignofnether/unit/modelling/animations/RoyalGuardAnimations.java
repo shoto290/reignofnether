@@ -213,7 +213,7 @@ public class RoyalGuardAnimations {
 			))
 			.build();
 
-	public static final AnimationDefinition SPELL_CHARGE = AnimationDefinition.Builder.withLength(1.0F)
+	public static final AnimationDefinition SPELL_CHARGE = AnimationDefinition.Builder.withLength(3.0F)
 			.addAnimation("head", new AnimationChannel(AnimationChannel.Targets.ROTATION,
 					new Keyframe(0.0F, KeyframeAnimations.degreeVec(7.5F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 					new Keyframe(0.5F, KeyframeAnimations.degreeVec(-5.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
