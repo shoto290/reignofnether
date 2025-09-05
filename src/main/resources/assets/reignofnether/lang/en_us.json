@@ -1202,6 +1202,10 @@
     "hud.gamemode.reignofnether.sandbox3": "buildings, including special neutral buildings.",
     "hud.gamemode.reignofnether.sandbox4": "Enables cheats.",
     "hud.gamemode.reignofnether.sandbox_confirm": "Confirm sandbox mode",
+    "hud.gamemode.reignofnether.persistent1": "PERSISTENT",
+    "hud.gamemode.reignofnether.persistent2": "Persistent world RTS mode where progress",
+    "hud.gamemode.reignofnether.persistent3": "and buildings are saved between sessions.",
+    "hud.gamemode.reignofnether.persistent4": "Battle across multiple connected worlds.",
     "hud.gamemode.reignofnether.changemode": "Right-click to change game mode",
     "hud.gamemode.reignofnether.locked": "(locked)",
 

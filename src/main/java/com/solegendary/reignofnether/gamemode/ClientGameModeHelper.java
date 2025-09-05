@@ -35,6 +35,7 @@ public class ClientGameModeHelper {
         switch (gameMode) {
             case CLASSIC -> gameMode = GameMode.SURVIVAL;
             case SURVIVAL -> gameMode = GameMode.SANDBOX;
+            case SANDBOX -> gameMode = GameMode.PERSISTENT;
             default -> gameMode = GameMode.CLASSIC;
         }
     }
@@ -156,6 +157,27 @@ public class ClientGameModeHelper {
                             FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.sandbox2"), Style.EMPTY),
                             FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.sandbox3"), Style.EMPTY),
                             FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.sandbox4"), Style.EMPTY),
+                            FormattedCharSequence.forward("", Style.EMPTY),
+                            FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.changemode"), Style.EMPTY)
+                    )
+            );
+            case PERSISTENT -> new Button(
+                    "Persistent",
+                    Button.itemIconSize,
+                    new ResourceLocation("minecraft", "textures/block/beacon.png"),
+                    (Keybinding) null,
+                    () -> false,
+                    () -> false,
+                    () -> !gameModeLocked && !pvpModesOnly,
+                    null,
+                    ClientGameModeHelper::cycleGameMode,
+                    List.of(
+                            FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.persistent1") +
+                                    getLockedString(), Style.EMPTY.withBold(true)),
+                            FormattedCharSequence.forward("", Style.EMPTY),
+                            FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.persistent2"), Style.EMPTY),
+                            FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.persistent3"), Style.EMPTY),
+                            FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.persistent4"), Style.EMPTY),
                             FormattedCharSequence.forward("", Style.EMPTY),
                             FormattedCharSequence.forward(I18n.get("hud.gamemode.reignofnether.changemode"), Style.EMPTY)
                     )
