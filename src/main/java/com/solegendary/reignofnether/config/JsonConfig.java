@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JsonConfig {
-    public Map<String, JsonResourceCostEntry> units = new HashMap<>();
-    public Map<String, JsonResourceCostEntry> buildings = new HashMap<>();
-    public Map<String, JsonResourceCostEntry> research = new HashMap<>();
-    public Map<String, JsonResourceCostEntry> enchantments = new HashMap<>();
+    public Map<String, UnitEntry> units = new HashMap<>();
+    public Map<String, BuildingEntry> buildings = new HashMap<>();
+    public Map<String, ResearchEntry> research = new HashMap<>();
+    public Map<String, EnchantmentEntry> enchantments = new HashMap<>();
 
     public JsonConfig() {}
 
