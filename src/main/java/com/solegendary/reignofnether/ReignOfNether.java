@@ -2,7 +2,6 @@ package com.solegendary.reignofnether;
 
 import com.solegendary.reignofnether.building.Buildings;
 import com.solegendary.reignofnether.building.production.ProductionItems;
-import com.solegendary.reignofnether.config.ReignOfNetherCommonConfigs;
 import com.solegendary.reignofnether.mixin.DownloadPackSourceAccessor;
 import com.solegendary.reignofnether.network.S2CReset;
 import com.solegendary.reignofnether.registrars.*;
@@ -79,7 +78,6 @@ public class ReignOfNether {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(ReignOfNether::init);
         ModLoadingContext mlctx = ModLoadingContext.get();
-        mlctx.registerConfig(ModConfig.Type.COMMON, ReignOfNetherCommonConfigs.SPEC, "reignofnether-common-" + VERSION_STRING + ".toml");
         mlctx.registerExtensionPoint(
             DisplayTest.class,
             () -> new DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true)

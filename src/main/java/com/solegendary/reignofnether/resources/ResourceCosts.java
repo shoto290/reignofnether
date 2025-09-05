@@ -1,7 +1,6 @@
 package com.solegendary.reignofnether.resources;
 
 import com.solegendary.reignofnether.ReignOfNether;
-import com.solegendary.reignofnether.config.ReignOfNetherCommonConfigs;
 import com.solegendary.reignofnether.util.MyRenderer;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -65,7 +64,7 @@ public class ResourceCosts {
     public static final ResourceCost MAUSOLEUM = new ResourceCost(ID, "MAUSOLEUM");
     public static final ResourceCost HAUNTED_HOUSE = new ResourceCost(ID, "HAUNTED_HOUSE");
     public static final ResourceCost PUMPKIN_FARM = new ResourceCost(ID, "PUMPKIN_FARM");
-    public static final ResourceCost SCULK_CATALYST = new ResourceCost(ID, "SKULK_CATALYST");
+    public static final ResourceCost SCULK_CATALYST = new ResourceCost(ID, "SCULK_CATALYST");
     public static final ResourceCost GRAVEYARD = new ResourceCost(ID, "GRAVEYARD");
     public static final ResourceCost SPIDER_LAIR = new ResourceCost(ID, "SPIDER_LAIR");
     public static final ResourceCost DUNGEON = new ResourceCost(ID, "DUNGEON");
@@ -185,142 +184,7 @@ public class ResourceCosts {
         Do not read values and initialize from config earlier, else will result in IllegalStateException !!!
      */
     public static void deferredLoadResourceCosts() {
-
-        // ******************* UNITS ******************* //
-        // Monsters
-        CREEPER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.CREEPER);
-        ZOMBIE.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.ZOMBIE);
-        ZOMBIE_VILLAGER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.ZOMBIE_VILLAGER);
-        SKELETON.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.SKELETON);
-        STRAY.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.STRAY);
-        HUSK.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.HUSK);
-        DROWNED.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.DROWNED);
-        SPIDER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.SPIDER);
-        POISON_SPIDER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.POISON_SPIDER);
-        SLIME.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.SLIME);
-        WARDEN.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.WARDEN);
-        NECROMANCER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.NECROMANCER);
-        ZOMBIE_PIGLIN.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.ZOMBIE_PIGLIN);
-        ZOGLIN.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.ZOGLIN);
-        // Villagers
-        VILLAGER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.VILLAGER);
-        MILITIA.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.MILITIA);
-        IRON_GOLEM.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.IRON_GOLEM);
-        PILLAGER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.PILLAGER);
-        VINDICATOR.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.VINDICATOR);
-        WITCH.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.WITCH);
-        EVOKER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.EVOKER);
-        RAVAGER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.RAVAGER);
-        ROYAL_GUARD.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.ROYAL_GUARD);
-        // Piglins
-        GRUNT.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.GRUNT);
-        BRUTE.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.BRUTE);
-        HEADHUNTER.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.HEADHUNTER);
-        HOGLIN.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.HOGLIN);
-        BLAZE.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.BLAZE);
-        WITHER_SKELETON.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.WITHER_SKELETON);
-        GHAST.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.GHAST);
-        MAGMA_CUBE.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.MAGMA_CUBE);
-        PIGLIN_MERCHANT.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.PIGLIN_MERCHANT);
-
-        ENDERMAN.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.ENDERMAN);
-        POLAR_BEAR.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.POLAR_BEAR);
-        GRIZZLY_BEAR.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.GRIZZLY_BEAR);
-        PANDA.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.PANDA);
-        WOLF.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.WOLF);
-        LLAMA.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.LLAMA);
-
-        HERO_BASE_REVIVE_COST.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.HERO_BASE_REVIVE_COST);
-        HERO_EXTRA_REVIVE_COST_PER_LEVEL.bakeValues(ReignOfNetherCommonConfigs.UnitCosts.HERO_EXTRA_REVIVE_COST_PER_LEVEL);
-
-        // ******************* BUILDINGS ******************* //
-        BEACON.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BEACON);
-
-        STOCKPILE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.STOCKPILE);
-        OAK_BRIDGE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.OAK_BRIDGE);
-        SPRUCE_BRIDGE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.SPRUCE_BRIDGE);
-        BLACKSTONE_BRIDGE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BLACKSTONE_BRIDGE);
-        // Monsters
-        MAUSOLEUM.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.MAUSOLEUM);
-        HAUNTED_HOUSE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.HAUNTED_HOUSE);
-        PUMPKIN_FARM.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.PUMPKIN_FARM);
-        SCULK_CATALYST.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.SCULK_CATALYST);
-        GRAVEYARD.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.GRAVEYARD);
-        SPIDER_LAIR.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.SPIDER_LAIR);
-        DUNGEON.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.DUNGEON);
-        LABORATORY.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.LABORATORY);
-        DARK_WATCHTOWER.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.DARK_WATCHTOWER);
-        SLIME_PIT.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.SLIME_PIT);
-        STRONGHOLD.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.STRONGHOLD);
-        ALTAR_OF_DARKNESS.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.ALTAR_OF_DARKNESS);
-        // Villagers
-        TOWN_CENTRE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.TOWN_CENTRE);
-        VILLAGER_HOUSE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.VILLAGER_HOUSE);
-        WHEAT_FARM.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.WHEAT_FARM);
-        BARRACKS.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BARRACKS);
-        BLACKSMITH.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BLACKSMITH);
-        ARCANE_TOWER.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.ARCANE_TOWER);
-        LIBRARY.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.LIBRARY);
-        WATCHTOWER.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.WATCHTOWER);
-        CASTLE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.CASTLE);
-        IRON_GOLEM_BUILDING.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.IRON_GOLEM_BUILDING);
-        SHRINE_OF_PROSPERITY.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.SHRINE_OF_PROSPERITY);
-        // Piglins
-        CENTRAL_PORTAL.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.CENTRAL_PORTAL);
-        BASIC_PORTAL.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BASIC_PORTAL);
-        CIVILIAN_PORTAL.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.CIVILIAN_PORTAL);
-        NETHERWART_FARM.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.NETHERWART_FARM);
-        BASTION.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BASTION);
-        HOGLIN_STABLES.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.HOGLIN_STABLES);
-        FLAME_SANCTUARY.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.FLAME_SANCTUARY);
-        WITHER_SHRINE.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.WITHER_SHRINE);
-        BASALT_SPRINGS.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.BASALT_SPRINGS);
-        FORTRESS.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.FORTRESS);
-        INFERNAL_PORTAL.bakeValues(ReignOfNetherCommonConfigs.BuildingCosts.INFERNAL_PORTAL);
-        // ******************* RESEARCH ******************* //
-        RESEARCH_GOLEM_SMITHING.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_GOLEM_SMITHING);
-        RESEARCH_MILITIA_BOWS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_MILITIA_BOWS);
-        RESEARCH_LAB_LIGHTNING_ROD.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_LAB_LIGHTNING_ROD);
-        RESEARCH_RESOURCE_CAPACITY.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_RESOURCE_CAPACITY);
-        RESEARCH_SPIDER_JOCKEYS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_SPIDER_JOCKEYS);
-        RESEARCH_SPIDER_WEBS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_SPIDER_WEBS);
-        RESEARCH_POISON_SPIDERS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_POISON_SPIDERS);
-        RESEARCH_HUSKS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_HUSKS);
-        RESEARCH_DROWNED.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_DROWNED);
-        RESEARCH_STRAYS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_STRAYS);
-        RESEARCH_SLIME_CONVERSION.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_SLIME_CONVERSION);
-        RESEARCH_LINGERING_POTIONS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_LINGERING_POTIONS);
-        RESEARCH_WATER_POTIONS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_WATER_POTIONS);
-        RESEARCH_HEALING_POTIONS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_HEALING_POTIONS);
-        RESEARCH_EVOKER_VEXES.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_EVOKER_VEXES);
-        RESEARCH_CASTLE_FLAG.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_CASTLE_FLAG);
-        RESEARCH_GRAND_LIBRARY.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_GRAND_LIBRARY);
-        RESEARCH_SILVERFISH.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_SILVERFISH);
-        RESEARCH_SCULK_AMPLIFIERS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_SCULK_AMPLIFIERS);
-        RESEARCH_RAVAGER_ARTILLERY.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_RAVAGER_ARTILLERY);
-        RESEARCH_BRUTE_SHIELDS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BRUTE_SHIELDS);
-        RESEARCH_HOGLIN_CAVALRY.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_HOGLIN_CAVALRY);
-        RESEARCH_HEAVY_TRIDENTS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_HEAVY_TRIDENTS);
-        RESEARCH_BLAZE_FIRE_WALL.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BLAZE_FIRE_WALL);
-        RESEARCH_FIRE_RESISTANCE.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_FIRE_RESISTANCE);
-        RESEARCH_WITHER_CLOUDS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_WITHER_CLOUDS);
-        RESEARCH_BLOODLUST.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BLOODLUST);
-        RESEARCH_ADVANCED_PORTALS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_ADVANCED_PORTALS);
-        RESEARCH_CIVILIAN_PORTAL.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_CIVILIAN_PORTAL);
-        RESEARCH_MILITARY_PORTAL.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_MILITARY_PORTAL);
-        RESEARCH_TRANSPORT_PORTAL.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_TRANSPORT_PORTAL);
-        RESEARCH_CUBE_MAGMA.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_CUBE_MAGMA);
-        RESEARCH_SOUL_FIREBALLS.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_SOUL_FIREBALLS);
-        RESEARCH_BEACON_LEVEL1.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BEACON_LEVEL1);
-        RESEARCH_BEACON_LEVEL2.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BEACON_LEVEL2);
-        RESEARCH_BEACON_LEVEL3.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BEACON_LEVEL3);
-        RESEARCH_BEACON_LEVEL4.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BEACON_LEVEL4);
-        RESEARCH_BEACON_LEVEL5.bakeValues(ReignOfNetherCommonConfigs.ResearchCosts.RESEARCH_BEACON_LEVEL5);
-        // ******************* ENCHANTMENTS ******************* //
-        ENCHANT_MAIMING.bakeValues(ReignOfNetherCommonConfigs.EnchantmentCosts.ENCHANT_MAIMING);
-        ENCHANT_QUICK_CHARGE.bakeValues(ReignOfNetherCommonConfigs.EnchantmentCosts.ENCHANT_QUICK_CHARGE);
-        ENCHANT_SHARPNESS.bakeValues(ReignOfNetherCommonConfigs.EnchantmentCosts.ENCHANT_SHARPNESS);
-        ENCHANT_MULTISHOT.bakeValues(ReignOfNetherCommonConfigs.EnchantmentCosts.ENCHANT_MULTISHOT);
-        ENCHANT_VIGOR.bakeValues(ReignOfNetherCommonConfigs.EnchantmentCosts.ENCHANT_VIGOR);
+        // All resource cost loading is now handled by JsonConfigManager in ConfigClientEvents
+        // This method remains empty for backwards compatibility
     }
 }

@@ -1,6 +1,5 @@
 package com.solegendary.reignofnether.resources;
 
-import com.solegendary.reignofnether.config.ResourceCostConfigEntry;
 
 import java.util.HashMap;
 
@@ -45,11 +44,11 @@ public class ResourceCost {
     public static ResourceCost Enchantment(int food, int wood, int ore) { // buildings
         return new ResourceCost(food, wood, ore, 0, 0);
     }
-    public void bakeValues(ResourceCostConfigEntry rcce) {
-        this.food = rcce.getFood();
-        this.wood = rcce.getWood();
-        this.ore = rcce.getOre();
-        this.ticks = rcce.getSeconds() * TICKS_PER_SECOND;
-        this.population = rcce.getPopulation();
+    public void bakeValuesFromJson(com.solegendary.reignofnether.config.JsonResourceCostEntry jsonEntry) {
+        this.food = jsonEntry.food;
+        this.wood = jsonEntry.wood;
+        this.ore = jsonEntry.ore;
+        this.ticks = jsonEntry.seconds * TICKS_PER_SECOND;
+        this.population = jsonEntry.population;
     }
 }

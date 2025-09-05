@@ -122,16 +122,25 @@ public class ConfigClientEvents {
         //If we own this singleplayer world
         if (evt.getEntity().getServer().isSingleplayerOwner(evt.getEntity().getGameProfile())) {
             resetDiffsTooltips();
-            //rebake from clientsideside configs
-            ReignOfNether.LOGGER.info("Attempting to rebake from client..");
-            for(ResourceCostConfigEntry entry : ResourceCostConfigEntry.ENTRIES) {
-                String key = entry.id;
-                if(ResourceCost.ENTRIES.containsKey(key)) {
-                    ResourceCost rescost = ResourceCost.ENTRIES.get(key);
-                    ReignOfNether.LOGGER.info("ID found: " + key + ", replacing resourcecost " + ResourceCost.ENTRIES.get(key));
-                    rescost.bakeValues(entry);
+            
+            // Load JSON config
+            JsonConfig jsonConfig = JsonConfigManager.loadOrCreateConfig();
+            if (jsonConfig != null) {
+                ReignOfNether.LOGGER.info("Attempting to rebake from JSON config..");
+                for (String key : ResourceCost.ENTRIES.keySet()) {
+                    JsonResourceCostEntry jsonEntry = jsonConfig.getEntry(key);
+                    if (jsonEntry != null) {
+                        ResourceCost rescost = ResourceCost.ENTRIES.get(key);
+                        ReignOfNether.LOGGER.info("JSON ID found: " + key + ", replacing resourcecost from JSON");
+                        rescost.bakeValuesFromJson(jsonEntry);
+                    } else {
+                        ReignOfNether.LOGGER.warn("No JSON entry found for: " + key);
+                    }
                 }
+            } else {
+                ReignOfNether.LOGGER.error("Failed to load JSON config!");
             }
+            
             ResourceCosts.deferredLoadResourceCosts();
         }
     }
