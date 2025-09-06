@@ -46,7 +46,28 @@ public class JsonEventConfigManager {
         Map<String, Object> pingParameters = new HashMap<>();
         pingParameters.put("command", "say PING");
         
+        Map<String, Object> wolfPatrolParameters = new HashMap<>();
+        wolfPatrolParameters.put("entityType", "minecraft:wolf");
+        wolfPatrolParameters.put("minCount", 2);
+        wolfPatrolParameters.put("maxCount", 5);
+        wolfPatrolParameters.put("isAggressive", true);
+        
+        Map<String, Object> zombiePatrolParameters = new HashMap<>();
+        zombiePatrolParameters.put("entityType", "minecraft:zombie");
+        zombiePatrolParameters.put("minCount", 3);
+        zombiePatrolParameters.put("maxCount", 7);
+        zombiePatrolParameters.put("isAggressive", true);
+        
+        Map<String, Object> peacefulPatrolParameters = new HashMap<>();
+        peacefulPatrolParameters.put("entityType", "minecraft:cow");
+        peacefulPatrolParameters.put("minCount", 1);
+        peacefulPatrolParameters.put("maxCount", 3);
+        peacefulPatrolParameters.put("isAggressive", false);
+        
         defaultConfig.events.put("ping", new EventEntry("COMMAND", "Debug ping event", pingParameters));
+        defaultConfig.events.put("wolf_patrol", new EventEntry("PATROL", "Spawn aggressive wolf patrol", wolfPatrolParameters));
+        defaultConfig.events.put("zombie_horde", new EventEntry("PATROL", "Spawn zombie horde", zombiePatrolParameters));
+        defaultConfig.events.put("peaceful_animals", new EventEntry("PATROL", "Spawn peaceful animals", peacefulPatrolParameters));
         
         return defaultConfig;
     }
