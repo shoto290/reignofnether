@@ -5,6 +5,7 @@ import com.solegendary.reignofnether.config.JsonEventConfig;
 import com.solegendary.reignofnether.config.JsonEventConfigManager;
 import com.solegendary.reignofnether.unit.UnitServerEvents;
 import com.solegendary.reignofnether.unit.interfaces.AttackerUnit;
+import com.solegendary.reignofnether.unit.interfaces.Unit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +13,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -58,7 +64,6 @@ public class EventServerEvents {
     }
     
     private static void executePatrolEvent(EventEntry eventEntry, ServerPlayer player) {
-        // Parse parameters
         Object entityTypeObj = eventEntry.parameters.get("entityType");
         Object minCountObj = eventEntry.parameters.get("minCount");
         Object maxCountObj = eventEntry.parameters.get("maxCount");
@@ -74,7 +79,6 @@ public class EventServerEvents {
         int maxCount = maxCountObj instanceof Number ? ((Number) maxCountObj).intValue() : 1;
         boolean isAggressive = isAggressiveObj instanceof Boolean ? (Boolean) isAggressiveObj : false;
         
-        // Get entity type from registry
         ResourceLocation entityLocation = new ResourceLocation(entityTypeStr);
         EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(entityLocation);
         
@@ -91,39 +95,40 @@ public class EventServerEvents {
         @SuppressWarnings("unchecked")
         EntityType<? extends Mob> mobEntityType = (EntityType<? extends Mob>) entityType;
         
-        // Get spawn position (for now, use player position as placeholder)
-        // TODO: Implement cursor position retrieval
-        BlockPos spawnPos = player.blockPosition();
+        BlockPos playerPos = player.blockPosition();
+        ServerLevel level = player.serverLevel();
         
-        // Calculate spawn count
+        int groundY = level.getHeight(Heightmap.Types.MOTION_BLOCKING, playerPos.getX(), playerPos.getZ());
+        BlockPos spawnPos = new BlockPos(playerPos.getX(), groundY, playerPos.getZ());
+        
         Random random = new Random();
         int spawnCount = minCount + random.nextInt(Math.max(1, maxCount - minCount + 1));
         
-        // Spawn mobs
-        ServerLevel level = player.serverLevel();
         ArrayList<Entity> spawnedEntities = UnitServerEvents.spawnMobs(mobEntityType, level, spawnPos, spawnCount, "");
         
-        // Set aggression behavior
         for (Entity entity : spawnedEntities) {
             if (entity instanceof Mob mob) {
                 if (isAggressive) {
-                    // For aggressive mobs, make them naturally hostile
-                    // Remove any peaceful goals and add aggressive targeting
-                    mob.setTarget(null); // Clear current target
+                    mob.setTarget(null);
                     
-                    // For RTS units that implement AttackerUnit, they already have their own AI
                     if (entity instanceof AttackerUnit attackerUnit) {
                         // RTS units handle their own aggression through the AttackerUnit interface
                         // They will automatically engage based on their getAggressiveWhenIdle() setting
                     } else {
-                        // For vanilla mobs, we set them to be naturally hostile
-                        // This makes them behave like naturally spawned hostile mobs
+                        // For vanilla mobs, add aggressive AI goals to attack RTS units and players
                         mob.setPersistenceRequired(); // Prevent despawning
+                        
+                        // Add targeting goals to make them actively seek and attack RTS units
+                        // Only add goals if this mob is a PathfinderMob (most vanilla hostile mobs are)
+                        if (mob instanceof PathfinderMob pathfinderMob) {
+                            pathfinderMob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(pathfinderMob, LivingEntity.class, 
+                                true, target -> target instanceof Unit || target instanceof net.minecraft.world.entity.player.Player));
+                            pathfinderMob.targetSelector.addGoal(2, new HurtByTargetGoal(pathfinderMob));
+                        }
                     }
                 } else {
-                    // For passive units, ensure they don't attack unless provoked
-                    mob.setPersistenceRequired(); // Prevent despawning
-                    mob.setTarget(null); // Clear any targets
+                    mob.setPersistenceRequired(); 
+                    mob.setTarget(null); 
                 }
             }
         }
