@@ -4,6 +4,7 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.alliance.AlliancesServerEvents;
 import com.solegendary.reignofnether.alliance.AllyCommand;
+import com.solegendary.reignofnether.events.EventCommand;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
 import com.solegendary.reignofnether.building.buildings.placements.ProductionPlacement;
@@ -908,6 +909,7 @@ public class PlayerServerEvents {
     @SubscribeEvent
     public static void onRegisterCommand(RegisterCommandsEvent evt) {
         AllyCommand.register(evt.getDispatcher());
+        EventCommand.register(evt.getDispatcher());
 
         evt.getDispatcher().register(Commands.literal("rts-lock").then(Commands.literal("enable").executes((command) -> {
             if ((command.getSource() != null &&
