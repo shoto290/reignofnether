@@ -4,6 +4,7 @@ import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.ability.HeroAbility;
 import com.solegendary.reignofnether.alliance.AlliancesServerEvents;
 import com.solegendary.reignofnether.alliance.AllyCommand;
+import com.solegendary.reignofnether.config.JsonEventConfigManager;
 import com.solegendary.reignofnether.events.EventCommand;
 import com.solegendary.reignofnether.building.*;
 import com.solegendary.reignofnether.building.buildings.neutral.Beacon;
@@ -908,6 +909,8 @@ public class PlayerServerEvents {
 
     @SubscribeEvent
     public static void onRegisterCommand(RegisterCommandsEvent evt) {
+        JsonEventConfigManager.loadOrCreateConfig();
+        
         AllyCommand.register(evt.getDispatcher());
         EventCommand.register(evt.getDispatcher());
 
