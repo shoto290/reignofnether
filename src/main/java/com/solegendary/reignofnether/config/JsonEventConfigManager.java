@@ -69,7 +69,34 @@ public class JsonEventConfigManager {
         defaultConfig.events.put("zombie_horde", new EventEntry("PATROL", "Spawn zombie horde", zombiePatrolParameters));
         defaultConfig.events.put("peaceful_animals", new EventEntry("PATROL", "Spawn peaceful animals", peacefulPatrolParameters));
         
+        addAutoEvents(defaultConfig);
+        
         return defaultConfig;
+    }
+    
+    private static void addAutoEvents(JsonEventConfig config) {
+        Map<String, Object> wolfPatrolParams = new HashMap<>();
+        wolfPatrolParams.put("subType", "PATROL");
+        wolfPatrolParams.put("entityType", "minecraft:wolf");
+        wolfPatrolParams.put("minCount", 2);
+        wolfPatrolParams.put("maxCount", 5);
+        wolfPatrolParams.put("isAggressive", true);
+        
+        AutoEventConfig wolfPatrolAutoConfig = new AutoEventConfig(
+            10,
+            1.0,
+            true,
+            20,
+            100,
+            1,
+            null,
+            null,
+            null,
+            true
+        );
+        
+        config.events.put("wolf_patrol", new EventEntry("AUTO", "Spawn aggressive wolf patrol", 
+                                                        wolfPatrolParams, wolfPatrolAutoConfig));
     }
     
     private static void loadEventsConfig(Path configDirPath) throws IOException {

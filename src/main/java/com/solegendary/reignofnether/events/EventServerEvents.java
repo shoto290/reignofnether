@@ -46,6 +46,9 @@ public class EventServerEvents {
             case "PATROL":
                 executePatrolEvent(eventEntry, player);
                 break;
+            case "AUTO":
+                executeAutoEvent(eventEntry, player);
+                break;
             default:
                 player.sendSystemMessage(Component.literal("Unknown event type: " + eventEntry.type));
         }
@@ -138,5 +141,25 @@ public class EventServerEvents {
             " at " + spawnPos.toShortString() + 
             (isAggressive ? " (aggressive)" : " (passive)")
         ));
+    }
+    
+    private static void executeAutoEvent(EventEntry eventEntry, ServerPlayer player) {
+        Object subTypeObj = eventEntry.parameters.get("subType");
+        if (!(subTypeObj instanceof String)) {
+            player.sendSystemMessage(Component.literal("Auto event missing subType parameter"));
+            return;
+        }
+        
+        String subType = (String) subTypeObj;
+        switch (subType) {
+            case "COMMAND":
+                executeCommandEvent(eventEntry, player);
+                break;
+            case "PATROL":
+                executePatrolEvent(eventEntry, player);
+                break;
+            default:
+                player.sendSystemMessage(Component.literal("Unknown auto event subType: " + subType));
+        }
     }
 }
