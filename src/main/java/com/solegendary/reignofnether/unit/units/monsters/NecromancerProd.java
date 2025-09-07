@@ -28,7 +28,7 @@ public class NecromancerProd extends HeroProductionItem {
     public final static ResourceCost cost = ResourceCosts.NECROMANCER;
 
     public NecromancerProd() {
-        super(cost, itemName, new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/necromancer.png"));
+        super(cost, itemName, ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/necromancer.png"));
     }
 
     @Override

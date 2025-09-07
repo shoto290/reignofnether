@@ -43,8 +43,8 @@ public class ResearchPortalForCivilian extends ProductionItem {
     public Button getStartButton(ProductionPlacement prodBuilding, Keybinding hotkey) {
         return new Button(ResearchPortalForCivilian.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/block/cyan_glazed_terracotta.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cyan_glazed_terracotta.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> prodBuilding.productionQueue.size() > 0 || (
@@ -72,8 +72,8 @@ public class ResearchPortalForCivilian extends ProductionItem {
     public Button getCancelButton(ProductionPlacement prodBuilding, boolean first) {
         return new Button(ResearchPortalForCivilian.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/block/cyan_glazed_terracotta.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cyan_glazed_terracotta.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             null,
             () -> false,
             () -> false,

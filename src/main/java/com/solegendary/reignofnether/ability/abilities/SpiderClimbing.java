@@ -34,8 +34,8 @@ public class SpiderClimbing extends Ability {
 
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
-        ResourceLocation rlLadder = new ResourceLocation("minecraft", "textures/block/ladder.png");
-        ResourceLocation rlBarrier = new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/barrier.png");
+        ResourceLocation rlLadder = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/ladder.png");
+        ResourceLocation rlBarrier = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/barrier.png");
 
         AbilityButton ab = new AbilityButton(
                 "Toggle Wall Climbing",

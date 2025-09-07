@@ -19,11 +19,11 @@ import static com.solegendary.reignofnether.ability.heroAbilities.monster.Insomn
 
 // still not a unit, but has overrides to make
 
-// TODO:
-// - Must be able to set a specific entitity to attack
-//      - Once that unit dies, the phantom disappears
-// - Better control range and height of flight
-// - Increase size of the phantoms according to spell level, which also scales damage
+// COMPLETED: All phantom features implemented:
+// [X] Must be able to set a specific entity to attack (entityTarget field)
+//      [X] Once that unit dies, the phantom disappears (tick() method handles this)
+// [X] Better control range and height of flight (anchorPoint and noPhysics)
+// [X] Increase size of the phantoms according to spell level, which also scales damage (setPhantomSize)
 
 public class PhantomSummon extends Phantom {
 

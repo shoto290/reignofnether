@@ -42,8 +42,8 @@ public class ResearchBeaconLevel2 extends ProductionItem {
         return new Button(
                 itemName,
                 14,
-                new ResourceLocation("minecraft", "textures/block/gold_block.png"),
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gold_block.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
                 hotkey,
                 () -> false,
                 () -> itemIsBeingProducedAt(prodBuilding) ||
@@ -67,8 +67,8 @@ public class ResearchBeaconLevel2 extends ProductionItem {
         return new Button(
                 itemName,
                 14,
-                new ResourceLocation("minecraft", "textures/block/gold_block.png"),
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gold_block.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
                 null,
                 () -> false,
                 () -> false,

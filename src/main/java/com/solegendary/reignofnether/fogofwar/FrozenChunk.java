@@ -68,12 +68,14 @@ public class FrozenChunk {
             if (isPosInside(bb.getBlockPos()) && !bb.getBlockState().isAir())
                 bbs.add(bb);
 
+        // Reuse empty list to avoid creating 4096+ ArrayList instances
+        ArrayList<BuildingBlock> emptyList = new ArrayList<>();
         for (int x = 0; x <= 16; x++) {
             for (int y = 0; y <= 16; y++) {
                 for (int z = 0; z <= 16; z++) {
                     BlockPos bp = origin.offset(x,y,z);
                     BlockState bs = MC.level.getBlockState(bp);
-                    saveBlock(bp, bs, new ArrayList<>());
+                    saveBlock(bp, bs, emptyList);
                 }
             }
         }

@@ -42,8 +42,8 @@ public class ResearchWitherClouds extends ProductionItem {
     public Button getStartButton(ProductionPlacement prodBuilding, Keybinding hotkey) {
         return new Button(ResearchWitherClouds.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> ProductionItems.RESEARCH_WITHER_CLOUDS.itemIsBeingProduced(prodBuilding.ownerName)
@@ -66,8 +66,8 @@ public class ResearchWitherClouds extends ProductionItem {
     public Button getCancelButton(ProductionPlacement prodBuilding, boolean first) {
         return new Button(ResearchWitherClouds.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             null,
             () -> false,
             () -> false,

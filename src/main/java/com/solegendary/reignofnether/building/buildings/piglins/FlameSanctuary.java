@@ -38,7 +38,7 @@ public class FlameSanctuary extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.MAGMA_BLOCK;
-        this.icon = new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/magma.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/magma.png");
 
         this.canSetRallyPoint = false;
 
@@ -62,7 +62,7 @@ public class FlameSanctuary extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/magma.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/magma.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.FLAME_SANCTUARY,
             () -> false,

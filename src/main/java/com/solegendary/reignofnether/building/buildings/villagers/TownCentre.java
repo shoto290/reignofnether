@@ -45,7 +45,7 @@ public class TownCentre extends ProductionBuilding {
         super(structureName, cost, true);
         this.name = buildingName;
         this.portraitBlock = Blocks.POLISHED_GRANITE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/polished_granite.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/polished_granite.png");
 
         this.buildTimeModifier = 0.331f; // 100s total build time with 1 villager
         this.canAcceptResources = true;
@@ -74,7 +74,7 @@ public class TownCentre extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                name,
-                new ResourceLocation("minecraft", "textures/block/polished_granite.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/polished_granite.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.TOWN_CENTRE,
                 () -> false,

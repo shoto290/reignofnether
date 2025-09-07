@@ -54,7 +54,7 @@ public class GreedIsGoodPassive extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Greed is Good",
-                new ResourceLocation("minecraft", "textures/block/gold_block.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gold_block.png"),
                 hotkey,
                 this::isAutocasting,
                 () -> rank == 0,
@@ -70,7 +70,7 @@ public class GreedIsGoodPassive extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
                 "Greed is Good",
-                new ResourceLocation("minecraft", "textures/block/gold_block.png")
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gold_block.png")
         );
     }
 

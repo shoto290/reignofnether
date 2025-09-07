@@ -41,7 +41,7 @@ public class LlamaProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
             itemName,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/llama.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/llama.png"),
             null,
             () -> SandboxClientEvents.spawnUnitName.equals(itemName),
             () -> false,

@@ -50,7 +50,7 @@ public class SkeletonProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/skeleton.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/skeleton.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -76,8 +76,8 @@ public class SkeletonProd extends ProductionItem {
             SkeletonProd.itemName,
             14,
             ResearchClient.hasResearch(ProductionItems.RESEARCH_STRAYS) ?
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/stray.png") :
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/skeleton.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/stray.png") :
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/skeleton.png"),
             hotkey,
             () -> false,
             () -> ResearchClient.hasResearch(ProductionItems.RESEARCH_STRAYS),
@@ -101,8 +101,8 @@ public class SkeletonProd extends ProductionItem {
             ResearchClient.hasResearch(ProductionItems.RESEARCH_STRAYS) ? "Stray" : "Skeleton",
             14,
             ResearchClient.hasResearch(ProductionItems.RESEARCH_STRAYS) ?
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/stray.png") :
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/skeleton.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/stray.png") :
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/skeleton.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

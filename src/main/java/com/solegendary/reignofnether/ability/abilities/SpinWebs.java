@@ -49,7 +49,7 @@ public class SpinWebs extends Ability {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Spin Webs",
-                new ResourceLocation("minecraft", "textures/block/cobweb.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobweb.png"),
                 hotkey,
                 () -> CursorClientEvents.getLeftClickAction() == UnitAction.SPIN_WEBS || isAutocasting(),
                 () -> !ResearchClient.hasResearch(ProductionItems.RESEARCH_SPIDER_WEBS),

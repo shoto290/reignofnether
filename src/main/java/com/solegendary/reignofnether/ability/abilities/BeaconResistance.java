@@ -29,7 +29,7 @@ public class BeaconResistance extends BeaconAbility {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Resistance Aura",
-                new ResourceLocation("minecraft", "textures/mob_effect/resistance.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/mob_effect/resistance.png"),
                 hotkey,
                 () -> beacon.getAuraEffect() == AURA_EFFECT,
                 () -> false,

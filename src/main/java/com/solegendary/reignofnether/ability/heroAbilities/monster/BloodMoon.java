@@ -61,7 +61,7 @@ public class BloodMoon extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Blood Moon",
-            new ResourceLocation("minecraft", "textures/block/redstone_block.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/redstone_block.png"),
             hotkey,
             () -> CursorClientEvents.getLeftClickAction() == UnitAction.BLOOD_MOON,
             () -> rank == 0,
@@ -77,7 +77,7 @@ public class BloodMoon extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
             "Blood Moon",
-            new ResourceLocation("minecraft", "textures/block/redstone_block.png")
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/redstone_block.png")
         );
     }
 

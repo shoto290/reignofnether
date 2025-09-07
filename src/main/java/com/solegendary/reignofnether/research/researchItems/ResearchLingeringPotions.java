@@ -42,8 +42,8 @@ public class ResearchLingeringPotions extends ProductionItem {
     public Button getStartButton(ProductionPlacement prodBuilding, Keybinding hotkey) {
         return new Button(ResearchLingeringPotions.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/lingering_potion_regeneration.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/lingering_potion_regeneration.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> ProductionItems.RESEARCH_LINGERING_POTIONS.itemIsBeingProduced(prodBuilding.ownerName)
@@ -67,8 +67,8 @@ public class ResearchLingeringPotions extends ProductionItem {
     public Button getCancelButton(ProductionPlacement prodBuilding, boolean first) {
         return new Button(ResearchLingeringPotions.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/lingering_potion_regeneration.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/lingering_potion_regeneration.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             null,
             () -> false,
             () -> false,

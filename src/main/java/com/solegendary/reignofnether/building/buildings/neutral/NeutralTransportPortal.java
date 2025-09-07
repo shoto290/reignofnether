@@ -25,7 +25,7 @@ public class NeutralTransportPortal extends PortalTransport {
     public NeutralTransportPortal() {
         this.name = buildingName;
         this.portraitBlock = Blocks.BLUE_GLAZED_TERRACOTTA;
-        this.icon = new ResourceLocation("minecraft", "textures/block/blue_glazed_terracotta.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/blue_glazed_terracotta.png");
         this.startingBlockTypes.add(Blocks.LAPIS_BLOCK);
 
         this.invulnerable = true;
@@ -46,7 +46,7 @@ public class NeutralTransportPortal extends PortalTransport {
     @Override
     public AbilityButton getBuildButton(Keybinding hotkey) {
         return new AbilityButton(NeutralTransportPortal.buildingName,
-                new ResourceLocation("minecraft", "textures/block/blue_glazed_terracotta.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/blue_glazed_terracotta.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == this,
                 () -> false,

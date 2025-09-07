@@ -31,7 +31,7 @@ public class Graveyard extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.MOSSY_STONE_BRICKS;
-        this.icon = new ResourceLocation("minecraft", "textures/block/mossy_stone_bricks.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/mossy_stone_bricks.png");
 
         this.startingBlockTypes.add(Blocks.DEEPSLATE_BRICKS);
 
@@ -51,7 +51,7 @@ public class Graveyard extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/mossy_stone_bricks.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/mossy_stone_bricks.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.GRAVEYARD,
             () -> false,

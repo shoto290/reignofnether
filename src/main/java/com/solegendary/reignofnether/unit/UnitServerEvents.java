@@ -387,21 +387,28 @@ public class UnitServerEvents {
         }
 
         // if a player has no more units, then they are defeated
-        synchronized (allUnits) {
-            try {
-                if (evt.getEntity() instanceof Unit unit) {
-                    int unitsOwned = allUnits.stream()
-                            .filter(u -> (u instanceof Unit unit1 && unit1.getOwnerName().equals(unit.getOwnerName())))
-                            .toList()
-                            .size();
-                    if (!SandboxServer.isSandboxPlayer(unit.getOwnerName()) &&
-                            unitsOwned == 0 && isRTSPlayer(unit.getOwnerName())
-                            && BuildingUtils.getTotalCompletedBuildingsOwned(false, unit.getOwnerName()) == 0) {
-                        PlayerServerEvents.defeat(unit.getOwnerName(), Component.translatable("server.reignofnether.lost_all").getString());
+        if (evt.getEntity() instanceof Unit unit) {
+            String ownerName = unit.getOwnerName();
+            
+            // Early exit checks to avoid expensive operations
+            if (SandboxServer.isSandboxPlayer(ownerName) || !isRTSPlayer(ownerName)) {
+                return;
+            }
+            
+            synchronized (allUnits) {
+                try {
+                    // More efficient counting - stop at first match found
+                    long unitsOwned = allUnits.stream()
+                            .filter(u -> u instanceof Unit unit1 && unit1.getOwnerName().equals(ownerName))
+                            .limit(1)
+                            .count();
+                    
+                    if (unitsOwned == 0 && BuildingUtils.getTotalCompletedBuildingsOwned(false, ownerName) == 0) {
+                        PlayerServerEvents.defeat(ownerName, Component.translatable("server.reignofnether.lost_all").getString());
                     }
+                } catch (ConcurrentModificationException e) {
+                    ReignOfNether.LOGGER.warn("Caught ConcurrentModificationException in UnitServerEvents EntityLeaveLevelEvent", e);
                 }
-            } catch (ConcurrentModificationException e) {
-                System.out.println("Caught ConcurrentModificationException in UnitServerEvents EntityLeaveLevelEvent: " + e.getMessage());
             }
         }
     }

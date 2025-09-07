@@ -47,7 +47,7 @@ public class WitherSkeletonProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -82,7 +82,7 @@ public class WitherSkeletonProd extends ProductionItem {
         return new Button(
                 WitherSkeletonProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -97,7 +97,7 @@ public class WitherSkeletonProd extends ProductionItem {
         return new Button(
                 WitherSkeletonProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/wither_skeleton.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

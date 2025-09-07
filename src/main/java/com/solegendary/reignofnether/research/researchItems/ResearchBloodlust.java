@@ -42,8 +42,8 @@ public class ResearchBloodlust extends ProductionItem {
     public Button getStartButton(ProductionPlacement prodBuilding, Keybinding hotkey) {
         return new Button(ResearchBloodlust.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/block/redstone_block.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/redstone_block.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> ProductionItems.RESEARCH_BLOODLUST.itemIsBeingProduced(prodBuilding.ownerName)
@@ -66,8 +66,8 @@ public class ResearchBloodlust extends ProductionItem {
     public Button getCancelButton(ProductionPlacement prodBuilding, boolean first) {
         return new Button(ResearchBloodlust.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/block/redstone_block.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/redstone_block.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             null,
             () -> false,
             () -> false,

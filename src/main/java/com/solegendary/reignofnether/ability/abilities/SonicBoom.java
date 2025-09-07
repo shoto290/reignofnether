@@ -52,7 +52,7 @@ public class SonicBoom extends Ability {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Sonic Boom",
-            new ResourceLocation("minecraft", "textures/block/note_block.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/note_block.png"),
             hotkey,
             () -> CursorClientEvents.getLeftClickAction() == UnitAction.CAST_SONIC_BOOM,
             () -> false,

@@ -29,7 +29,7 @@ public class HauntedHouse extends Building {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.DARK_OAK_LOG;
-        this.icon = new ResourceLocation("minecraft", "textures/block/dark_oak_log.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/dark_oak_log.png");
 
         this.buildTimeModifier = 0.8f;
 
@@ -44,7 +44,7 @@ public class HauntedHouse extends Building {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/dark_oak_log.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/dark_oak_log.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.HAUNTED_HOUSE,
             () -> false,

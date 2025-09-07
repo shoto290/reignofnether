@@ -40,7 +40,7 @@ public class EnchantQuickCharge extends EnchantAbility {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Quick Charge Enchantment",
-                new ResourceLocation("minecraft", "textures/item/crossbow_standby.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/crossbow_standby.png"),
                 hotkey,
                 () -> CursorClientEvents.getLeftClickAction() == ENCHANT_ACTION || library.autoCastEnchant == this,
                 () -> false,

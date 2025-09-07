@@ -35,7 +35,7 @@ public class DarkWatchtower extends Building {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.DEEPSLATE_BRICKS;
-        this.icon = new ResourceLocation("minecraft", "textures/block/deepslate_bricks.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/deepslate_bricks.png");
 
         this.buildTimeModifier = 1.0f;
 
@@ -56,7 +56,7 @@ public class DarkWatchtower extends Building {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/deepslate_bricks.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/deepslate_bricks.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.DARK_WATCHTOWER,
             () -> false,

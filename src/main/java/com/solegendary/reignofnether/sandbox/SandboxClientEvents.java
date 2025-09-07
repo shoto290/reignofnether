@@ -148,10 +148,10 @@ public class SandboxClientEvents {
                 "Toggle Faction",
                 Button.itemIconSize,
                 switch (faction) {
-                    case VILLAGERS -> new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/villager.png");
-                    case MONSTERS -> new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png");
-                    case PIGLINS -> new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/grunt.png");
-                    case NONE -> new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/sheep.png");
+                    case VILLAGERS -> ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/villager.png");
+                    case MONSTERS -> ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png");
+                    case PIGLINS -> ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/grunt.png");
+                    case NONE -> ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/sheep.png");
                 },
                 (Keybinding) null,
                 () -> false,
@@ -188,10 +188,10 @@ public class SandboxClientEvents {
                 "Toggle Relationship",
                 Button.itemIconSize,
                 switch (relationship) {
-                    case OWNED -> new ResourceLocation("minecraft", "textures/block/lime_wool.png");
-                    case FRIENDLY -> new ResourceLocation("minecraft", "textures/block/blue_wool.png");
-                    case NEUTRAL -> new ResourceLocation("minecraft", "textures/block/yellow_wool.png");
-                    case HOSTILE -> new ResourceLocation("minecraft", "textures/block/red_wool.png");
+                    case OWNED -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/lime_wool.png");
+                    case FRIENDLY -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/blue_wool.png");
+                    case NEUTRAL -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/yellow_wool.png");
+                    case HOSTILE -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/red_wool.png");
                 },
                 (Keybinding) null,
                 () -> false,
@@ -223,9 +223,9 @@ public class SandboxClientEvents {
                 "Toggle Building or Units",
                 Button.itemIconSize,
                 switch (sandboxMenuType) {
-                    case BUILDINGS -> new ResourceLocation("minecraft", "textures/block/crafting_table_front.png");
-                    case UNITS -> new ResourceLocation("minecraft", "textures/item/spawn_egg.png");
-                    case OTHER -> new ResourceLocation("minecraft", "textures/item/spawn_egg.png");
+                    case BUILDINGS -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/crafting_table_front.png");
+                    case UNITS -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/spawn_egg.png");
+                    case OTHER -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/spawn_egg.png");
                 },
                 (Keybinding) null,
                 () -> false,
@@ -261,8 +261,8 @@ public class SandboxClientEvents {
                 "Toggle Building Cheats",
                 Button.itemIconSize,
                 hasCheats ?
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/command_block_side.png") :
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/command_block_side_dark.png"),
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/command_block_side.png") :
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/command_block_side_dark.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,
@@ -298,8 +298,8 @@ public class SandboxClientEvents {
                 "Toggle Unit Cheats",
                 Button.itemIconSize,
                 hasCheats ?
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/chain_command_block_side.png") :
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/chain_command_block_side_dark.png"),
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/chain_command_block_side.png") :
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/chain_command_block_side_dark.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,
@@ -337,8 +337,8 @@ public class SandboxClientEvents {
                 "Toggle Full Unit Control",
                 Button.itemIconSize,
                 hasCheat ?
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/repeating_command_block_side.png") :
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/repeating_command_block_side_dark.png"),
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/repeating_command_block_side.png") :
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/repeating_command_block_side_dark.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,
@@ -363,7 +363,7 @@ public class SandboxClientEvents {
         return new Button(
                 "Exit Sandbox Mode",
                 Button.itemIconSize,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/cross.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/cross.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

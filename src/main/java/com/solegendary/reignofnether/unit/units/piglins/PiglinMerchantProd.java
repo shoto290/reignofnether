@@ -28,7 +28,7 @@ public class PiglinMerchantProd extends HeroProductionItem {
     public final static ResourceCost cost = ResourceCosts.PIGLIN_MERCHANT;
 
     public PiglinMerchantProd() {
-        super(cost, itemName, new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/piglin_merchant.png"));
+        super(cost, itemName, ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/piglin_merchant.png"));
     }
 
     @Override

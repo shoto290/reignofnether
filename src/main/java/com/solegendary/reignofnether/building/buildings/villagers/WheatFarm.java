@@ -33,7 +33,7 @@ public class WheatFarm extends AbstractFarm {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.HAY_BLOCK;
-        this.icon = new ResourceLocation("minecraft", "textures/block/hay_block_side.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/hay_block_side.png");
 
         this.startingBlockTypes.add(Blocks.OAK_LOG);
 
@@ -47,7 +47,7 @@ public class WheatFarm extends AbstractFarm {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/hay_block_side.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/hay_block_side.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.WHEAT_FARM,
                 () -> !TutorialClientEvents.isAtOrPastStage(TutorialStage.EXPLAIN_BUILDINGS),

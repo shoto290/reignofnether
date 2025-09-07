@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.solegendary.reignofnether.config.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
@@ -12,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ConfigSaveLoadTest {
+    private static final Logger LOGGER = LogManager.getLogger();
     
     @TempDir
     Path tempDir;
@@ -62,8 +65,8 @@ public class ConfigSaveLoadTest {
         assertEquals(originalCreeper.seconds, loadedCreeper.seconds);
         assertEquals(originalCreeper.population, loadedCreeper.population);
         
-        System.out.println("Separate file structure test passed!");
-        System.out.println("Files created: units.json, buildings.json, research.json, enchantments.json");
+        LOGGER.info("Separate file structure test passed!");
+        LOGGER.info("Files created: units.json, buildings.json, research.json, enchantments.json");
     }
     
     private void saveUnitsConfig(Path configDirPath, JsonConfig config) throws IOException {

@@ -408,7 +408,7 @@ public class HudClientEvents {
                                     nextBuilding = nextPlacement.getBuilding();
                                 }
                                 if (building != nextBuilding) {
-                                    //TODO
+                                    // Display multiple building counts in tooltip
                                     tooltipLines.add(FormattedCharSequence.forward("x" + numBuildings + " " + I18n.get(ReignOfNetherRegistries.BUILDING.getKey(nextBuilding).getPath()),
                                         Style.EMPTY
                                     ));
@@ -632,7 +632,7 @@ public class HudClientEvents {
                         AlliancesClient.canControlAlly(hudSelectedEntity)) {
                         Button returnButton = new Button("Return resources",
                             Button.itemIconSize,
-                            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/chest.png"),
+                            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/chest.png"),
                             Keybindings.keyD,
                             () -> unit.getReturnResourcesGoal().getBuildingTarget() != null,
                             () -> false,
@@ -683,7 +683,7 @@ public class HudClientEvents {
 
                 Button button = new Button(unitName,
                     iconSize,
-                    unit instanceof Unit ? new ResourceLocation(ReignOfNether.MOD_ID, buttonImagePath) : null,
+                    unit instanceof Unit ? ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, buttonImagePath) : null,
                     unit,
                     () -> hudSelectedEntity == null || getModifiedEntityName(hudSelectedEntity).equals(
                         getModifiedEntityName(unit)),
@@ -705,7 +705,7 @@ public class HudClientEvents {
                 );
                 if (unit.isVehicle() && unit instanceof Unit) {
                     String passengerName = MiscUtil.getSimpleEntityName(unit.getFirstPassenger());
-                    button.bgIconResource = new ResourceLocation(ReignOfNether.MOD_ID,
+                    button.bgIconResource = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID,
                         "textures/mobheads/" + passengerName + ".png"
                     );
                 }
@@ -862,16 +862,16 @@ public class HudClientEvents {
                 // GATHER button does not have a static icon
                 if (actionButton == ActionButtons.gather && hudSelectedEntity instanceof WorkerUnit workerUnit) {
                     switch (workerUnit.getGatherResourceGoal().getTargetResourceName()) {
-                        case NONE -> actionButton.iconResource = new ResourceLocation(ReignOfNether.MOD_ID,
+                        case NONE -> actionButton.iconResource = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID,
                                 "textures/icons/items/no_gather.png"
                         );
-                        case FOOD -> actionButton.iconResource = new ResourceLocation(ReignOfNether.MOD_ID,
+                        case FOOD -> actionButton.iconResource = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID,
                                 "textures/icons/items/hoe.png"
                         );
-                        case WOOD -> actionButton.iconResource = new ResourceLocation(ReignOfNether.MOD_ID,
+                        case WOOD -> actionButton.iconResource = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID,
                                 "textures/icons/items/axe.png"
                         );
-                        case ORE -> actionButton.iconResource = new ResourceLocation(ReignOfNether.MOD_ID,
+                        case ORE -> actionButton.iconResource = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID,
                                 "textures/icons/items/pickaxe.png"
                         );
                     }
@@ -1113,7 +1113,7 @@ public class HudClientEvents {
                 ));
 
                 hudZones.add(MyRenderer.renderIconFrameWithBg(evt.getGuiGraphics(),
-                    new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame.png"),
+                    ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame.png"),
                     blitX,
                     blitY,
                     iconFrameSize,
@@ -1121,7 +1121,7 @@ public class HudClientEvents {
                 ));
 
                 MyRenderer.renderIcon(evt.getGuiGraphics(),
-                    new ResourceLocation(ReignOfNether.MOD_ID, rlPath),
+                    ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, rlPath),
                     blitX + 4,
                     blitY + 4,
                     iconSize
@@ -1182,7 +1182,7 @@ public class HudClientEvents {
                 }
 
                 hudZones.add(MyRenderer.renderIconFrameWithBg(evt.getGuiGraphics(),
-                        new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame.png"),
+                        ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame.png"),
                         blitX + 69,
                         blitY,
                         iconFrameSize,

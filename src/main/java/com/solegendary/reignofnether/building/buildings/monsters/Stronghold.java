@@ -40,7 +40,7 @@ public class Stronghold extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.REINFORCED_DEEPSLATE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/reinforced_deepslate_side.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/reinforced_deepslate_side.png");
 
         this.buildTimeModifier = 0.5f;
 
@@ -65,7 +65,7 @@ public class Stronghold extends ProductionBuilding {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation("minecraft", "textures/block/reinforced_deepslate_side.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/reinforced_deepslate_side.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.STRONGHOLD,
             () -> false,

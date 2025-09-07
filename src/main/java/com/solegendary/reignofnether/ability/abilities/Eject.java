@@ -38,7 +38,7 @@ public class Eject extends Ability {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
             "Eject",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/barrier.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/barrier.png"),
             hotkey,
             () -> CursorClientEvents.getLeftClickAction() == UnitAction.EJECT,
             () -> entity.getPassengers().size() == 0,

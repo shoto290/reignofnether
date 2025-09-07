@@ -32,7 +32,7 @@ public class Barracks extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.FLETCHING_TABLE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/fletching_table_front.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/fletching_table_front.png");
 
         this.startingBlockTypes.add(Blocks.POLISHED_ANDESITE_STAIRS);
 
@@ -49,7 +49,7 @@ public class Barracks extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/fletching_table_front.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/fletching_table_front.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.BARRACKS,
                 () -> !TutorialClientEvents.isAtOrPastStage(TutorialStage.EXPLAIN_BUILDINGS),

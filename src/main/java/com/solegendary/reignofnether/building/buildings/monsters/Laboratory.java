@@ -46,7 +46,7 @@ public class Laboratory extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.BREWING_STAND;
-        this.icon = new ResourceLocation("minecraft", "textures/block/brewing_stand.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/brewing_stand.png");
 
         this.buildTimeModifier = 0.85f;
 
@@ -103,7 +103,7 @@ public class Laboratory extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/brewing_stand.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/brewing_stand.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.LABORATORY,
             () -> false,

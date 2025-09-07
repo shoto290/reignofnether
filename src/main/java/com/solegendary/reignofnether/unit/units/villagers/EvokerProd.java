@@ -45,7 +45,7 @@ public class EvokerProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/evoker.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/evoker.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -68,7 +68,7 @@ public class EvokerProd extends ProductionItem {
         return new Button(
             EvokerProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/evoker.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/evoker.png"),
             hotkey,
             () -> false,
             () -> false,
@@ -91,7 +91,7 @@ public class EvokerProd extends ProductionItem {
         return new Button(
             EvokerProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/evoker.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/evoker.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

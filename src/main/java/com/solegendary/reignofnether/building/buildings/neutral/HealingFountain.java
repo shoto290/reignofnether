@@ -38,7 +38,7 @@ public class HealingFountain extends Building {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.ROSE_BUSH;
-        this.icon = new ResourceLocation("minecraft", "textures/block/rose_bush_bottom.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/rose_bush_bottom.png");
 
         this.buildTimeModifier = 0.8f;
 
@@ -63,7 +63,7 @@ public class HealingFountain extends Building {
     public AbilityButton getBuildButton(Keybinding hotkey) {
         return new AbilityButton(
             HealingFountain.buildingName,
-            new ResourceLocation("minecraft", "textures/block/rose_bush_bottom.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/rose_bush_bottom.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == this,
             () -> false,

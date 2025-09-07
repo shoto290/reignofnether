@@ -25,7 +25,7 @@ public class CustomBuilding extends Building {
         this.structurePos = structurePos;
         this.structureSize = structureSize;
         this.portraitBlock = portraitBlock;
-        this.icon = new ResourceLocation("minecraft", "textures/block/command_block.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/command_block.png");
     }
 
     public Faction getFaction() {return Faction.NONE;}

@@ -40,7 +40,7 @@ public class EnchantMultishot extends EnchantAbility {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Multishot Enchantment",
-                new ResourceLocation("minecraft", "textures/item/crossbow_arrow.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/crossbow_arrow.png"),
                 hotkey,
                 () -> CursorClientEvents.getLeftClickAction() == ENCHANT_ACTION || library.autoCastEnchant == this,
                 () -> false,

@@ -71,7 +71,7 @@ public class ThrowTNT extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Throw TNT",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/tnt.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/tnt.png"),
                 hotkey,
                 () -> CursorClientEvents.getLeftClickAction() == UnitAction.THROW_TNT,
                 () -> rank == 0,
@@ -87,7 +87,7 @@ public class ThrowTNT extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
                 "Throw TNT",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/tnt.png")
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/tnt.png")
         );
     }
 

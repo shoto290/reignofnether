@@ -60,7 +60,7 @@ public class TauntingCry extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Taunting Cry",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/ominous_banner.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/ominous_banner.png"),
                 hotkey,
                 () -> false,
                 () -> rank <= 0,
@@ -76,7 +76,7 @@ public class TauntingCry extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
                 "Taunting Cry",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/ominous_banner.png")
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/ominous_banner.png")
         );
     }
 

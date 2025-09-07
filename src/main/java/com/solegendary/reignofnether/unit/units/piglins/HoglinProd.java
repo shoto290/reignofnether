@@ -47,7 +47,7 @@ public class HoglinProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/hoglin.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/hoglin.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -82,7 +82,7 @@ public class HoglinProd extends ProductionItem {
         return new Button(
                 HoglinProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/hoglin.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/hoglin.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -97,7 +97,7 @@ public class HoglinProd extends ProductionItem {
         return new Button(
                 HoglinProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/hoglin.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/hoglin.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

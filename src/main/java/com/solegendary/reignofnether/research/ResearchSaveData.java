@@ -48,7 +48,7 @@ public class ResearchSaveData extends SavedData {
                 }else {
                     String researchName = btag.getString("researchName");
                     researchKey = translateOldData(researchName);
-//                    researchKey = new ResourceLocation(ReignOfNether.MOD_ID, researchName.toLowerCase().replace(' ', '_'));
+//                    researchKey = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, researchName.toLowerCase().replace(' ', '_'));
                 }
                 data.researchItems.add(new Pair<>(ownerName, researchKey));
                 ReignOfNether.LOGGER.info("ResearchSaveData.load: " + ownerName + "|" + researchKey.toString());
@@ -106,6 +106,6 @@ public class ResearchSaveData extends SavedData {
             default: yield researchName.toLowerCase().replace(' ', '_');
         };
 
-        return new ResourceLocation(ReignOfNether.MOD_ID, newName);
+        return ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, newName);
     }
 }

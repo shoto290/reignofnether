@@ -319,10 +319,10 @@ public class SurvivalServerEvents {
     public static void startNextWave(ServerLevel level) {
         saveData(level);
         currentWave = nextWave;
-        System.out.println("starting wave: " + nextWave.faction.name());
+        ReignOfNether.LOGGER.info("Starting wave: " + nextWave.faction.name());
         nextWave.start(level);
         nextWave = Wave.getWave(nextWave.number + 1);
-        System.out.println("next wave: " + nextWave.faction.name());
+        ReignOfNether.LOGGER.info("Next wave: " + nextWave.faction.name());
         SurvivalClientboundPacket.setWaveNumber(nextWave.number);
     }
 

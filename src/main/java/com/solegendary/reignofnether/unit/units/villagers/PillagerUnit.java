@@ -1,5 +1,6 @@
 package com.solegendary.reignofnether.unit.units.villagers;
 
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.ability.Ability;
 import com.solegendary.reignofnether.ability.abilities.EnchantQuickCharge;
 import com.solegendary.reignofnether.ability.abilities.EnchantVigor;
@@ -283,7 +284,7 @@ public class PillagerUnit extends Pillager implements Unit, AttackerUnit, Ranged
                 return;
             }
         } catch (NullPointerException e) {
-            System.out.println("Caught NullPointerException in shootCrossbowProjectile: " + e.getMessage());
+            ReignOfNether.LOGGER.warn("Caught NullPointerException in shootCrossbowProjectile", e);
         }
         if (pTarget == null)
             return;

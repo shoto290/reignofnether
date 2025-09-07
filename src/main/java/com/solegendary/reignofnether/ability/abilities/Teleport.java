@@ -36,7 +36,7 @@ public class Teleport extends Ability {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Teleport",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/enderpearl.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/enderpearl.png"),
             hotkey,
             () -> CursorClientEvents.getLeftClickAction() == UnitAction.TELEPORT,
             () -> false,

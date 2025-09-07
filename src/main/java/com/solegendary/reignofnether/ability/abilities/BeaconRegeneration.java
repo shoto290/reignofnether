@@ -29,7 +29,7 @@ public class BeaconRegeneration extends BeaconAbility {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Regeneration Aura",
-                new ResourceLocation("minecraft", "textures/mob_effect/regeneration.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/mob_effect/regeneration.png"),
                 hotkey,
                 () -> beacon.getAuraEffect() == AURA_EFFECT,
                 () -> false,

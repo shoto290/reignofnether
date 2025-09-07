@@ -127,7 +127,7 @@ public class CustomBuildingServerEvents {
             CustomBuildingSaveData customBuildingData = CustomBuildingSaveData.getInstance(level);
             customBuildingData.customBuildings.forEach(b -> {
                 boolean result = createNewCustomBuilding(
-                        new ResourceLocation(b.structureName.toLowerCase()),
+                        ResourceLocation.parse(b.structureName.toLowerCase()),
                         b.buildingName,
                         level,
                         b.originPos,

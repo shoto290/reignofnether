@@ -47,7 +47,7 @@ public class MagmaCubeProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -82,7 +82,7 @@ public class MagmaCubeProd extends ProductionItem {
         return new Button(
                 MagmaCubeProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -97,7 +97,7 @@ public class MagmaCubeProd extends ProductionItem {
         return new Button(
                 MagmaCubeProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

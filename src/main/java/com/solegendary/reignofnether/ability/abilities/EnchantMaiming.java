@@ -42,7 +42,7 @@ public class EnchantMaiming extends EnchantAbility {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Maiming Enchantment",
-                new ResourceLocation("minecraft", "textures/item/iron_axe.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/iron_axe.png"),
                 hotkey,
                 () -> CursorClientEvents.getLeftClickAction() == ENCHANT_ACTION || library.autoCastEnchant == this,
                 () -> false,

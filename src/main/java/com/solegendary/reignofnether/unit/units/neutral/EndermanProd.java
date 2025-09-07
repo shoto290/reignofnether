@@ -44,7 +44,7 @@ public class EndermanProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/enderman.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/enderman.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -68,7 +68,7 @@ public class EndermanProd extends ProductionItem {
         return new Button(
                 EndermanProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/enderman.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/enderman.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -90,7 +90,7 @@ public class EndermanProd extends ProductionItem {
         return new Button(
                 EndermanProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/enderman.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/enderman.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

@@ -96,7 +96,7 @@ public class ControlGroup {
         // assign the icon resource (won't update if the front entity/building dies)
         if (hudSelectedEntity != null) {
             String unitName = MiscUtil.getSimpleEntityName(hudSelectedEntity);
-            iconRl = new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/" + unitName + ".png");
+            iconRl = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/" + unitName + ".png");
         } else if (hudSelectedPlacement != null) {
             iconRl = hudSelectedPlacement.getBuilding().icon;
         }
@@ -151,7 +151,7 @@ public class ControlGroup {
         return new Button(
             "Control Group " + getKey(),
             Button.itemIconSize,
-            iconRl == null ? new ResourceLocation("") : iconRl,
+            iconRl == null ? ResourceLocation.parse("") : iconRl,
             this.keybinding,
             () -> false,
             () -> false,

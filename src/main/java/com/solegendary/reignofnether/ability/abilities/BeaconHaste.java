@@ -29,7 +29,7 @@ public class BeaconHaste extends BeaconAbility {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Haste Aura",
-                new ResourceLocation("minecraft", "textures/mob_effect/haste.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/mob_effect/haste.png"),
                 hotkey,
                 () -> beacon.getAuraEffect() == AURA_EFFECT,
                 () -> false,

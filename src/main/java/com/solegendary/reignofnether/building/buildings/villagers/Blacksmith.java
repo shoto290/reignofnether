@@ -32,7 +32,7 @@ public class Blacksmith extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.SMITHING_TABLE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/smithing_table_front.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/smithing_table_front.png");
 
         this.buildTimeModifier = 0.85f;
 
@@ -53,7 +53,7 @@ public class Blacksmith extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/smithing_table_front.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/smithing_table_front.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.BLACKSMITH,
                 () -> !TutorialClientEvents.isAtOrPastStage(TutorialStage.ATTACK_ENEMY_BASE),

@@ -51,7 +51,7 @@ public class RaiseDead extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Raise Dead",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png"),
                 hotkey,
                 () -> false,
                 () -> rank <= 0,
@@ -67,7 +67,7 @@ public class RaiseDead extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
             "Raise Dead",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png")
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png")
         );
     }
 

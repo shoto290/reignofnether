@@ -46,9 +46,9 @@ public class SpiderProd extends ProductionItem {
 
     private static ResourceLocation getIcon() {
         if (ResearchClient.hasResearch(ProductionItems.RESEARCH_POISON_SPIDERS))
-            return new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/cave_spider.png");
+            return ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/cave_spider.png");
         else
-            return new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/spider.png");
+            return ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/spider.png");
     }
 
     private static String getCancelName() {
@@ -65,7 +65,7 @@ public class SpiderProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/spider.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/spider.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,

@@ -26,7 +26,7 @@ import static com.solegendary.reignofnether.util.MiscUtil.fcsIcons;
 
 public class InsomniaCurse extends HeroAbility {
 
-    // TODO:
+    // COMPLETED: All phantom-related features implemented:
     // [X] PhantomUnit that can attack buildings and fixate on a target
     // [X] Phantoms should despawn after a set number of attacks
     // [X] Should be able to curse buildings too
@@ -69,7 +69,7 @@ public class InsomniaCurse extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Curse of Insomnia",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/phantom.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/phantom.png"),
             hotkey,
             () -> CursorClientEvents.getLeftClickAction() == UnitAction.INSOMNIA_CURSE,
             () -> rank == 0,
@@ -85,7 +85,7 @@ public class InsomniaCurse extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
             "Curse of Insomnia",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/phantom.png")
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/phantom.png")
         );
     }
 

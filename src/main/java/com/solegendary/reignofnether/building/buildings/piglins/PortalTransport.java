@@ -28,7 +28,7 @@ public class PortalTransport extends AbstractPortal {
         super(structureName, cost);
         this.name = buildingName;
         this.portraitBlock = Blocks.BLUE_GLAZED_TERRACOTTA;
-        this.icon = new ResourceLocation("minecraft", "textures/block/blue_glazed_terracotta.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/blue_glazed_terracotta.png");
         this.canSetRallyPoint = false;
         this.startingBlockTypes.add(Blocks.LAPIS_BLOCK);
     }

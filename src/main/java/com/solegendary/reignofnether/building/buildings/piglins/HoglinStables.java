@@ -32,7 +32,7 @@ public class HoglinStables extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.CRIMSON_STEM;
-        this.icon = new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/crimson_stem.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/crimson_stem.png");
 
         this.canSetRallyPoint = false;
 
@@ -50,7 +50,7 @@ public class HoglinStables extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/crimson_stem.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/crimson_stem.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.HOGLIN_STABLES,
             () -> false,

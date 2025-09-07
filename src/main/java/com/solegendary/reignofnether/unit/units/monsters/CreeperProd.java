@@ -46,7 +46,7 @@ public class CreeperProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 CreeperProd.itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -72,7 +72,7 @@ public class CreeperProd extends ProductionItem {
         return new Button(
             CreeperProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png"),
             hotkey,
             () -> false,
             () -> false,
@@ -96,7 +96,7 @@ public class CreeperProd extends ProductionItem {
         return new Button(
             CreeperProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/creeper.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

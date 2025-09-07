@@ -31,7 +31,7 @@ public class SpiderLair extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.COBWEB;
-        this.icon = new ResourceLocation("minecraft", "textures/block/cobweb.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobweb.png");
 
         this.startingBlockTypes.add(Blocks.DEEPSLATE);
         this.startingBlockTypes.add(Blocks.COBBLED_DEEPSLATE);
@@ -49,7 +49,7 @@ public class SpiderLair extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/cobweb.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobweb.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.SPIDER_LAIR,
                 () -> false,

@@ -37,7 +37,7 @@ public class CentralPortal extends ProductionBuilding {
         super(structureName, cost, true);
         this.name = buildingName;
         this.portraitBlock = Blocks.OBSIDIAN;
-        this.icon = new ResourceLocation("minecraft", "textures/block/obsidian.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/obsidian.png");
 
         this.buildTimeModifier = 0.32f; // 100s total build time with 1 villager
         this.canAcceptResources = true;
@@ -59,7 +59,7 @@ public class CentralPortal extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/obsidian.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/obsidian.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.CENTRAL_PORTAL,
                 () -> false,

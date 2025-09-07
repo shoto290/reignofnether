@@ -28,7 +28,7 @@ public class RoyalGuardProd extends HeroProductionItem {
     public final static ResourceCost cost = ResourceCosts.ROYAL_GUARD;
 
     public RoyalGuardProd() {
-        super(cost, itemName, new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/royal_guard.png"));
+        super(cost, itemName, ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/royal_guard.png"));
     }
 
     @Override

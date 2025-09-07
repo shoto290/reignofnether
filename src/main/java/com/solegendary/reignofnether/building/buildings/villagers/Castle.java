@@ -39,7 +39,7 @@ public class Castle extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.COBBLESTONE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/cobblestone.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobblestone.png");
 
         this.buildTimeModifier = 0.5f;
 
@@ -67,7 +67,7 @@ public class Castle extends ProductionBuilding {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation("minecraft", "textures/block/cobblestone.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobblestone.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.CASTLE,
             TutorialClientEvents::isEnabled,

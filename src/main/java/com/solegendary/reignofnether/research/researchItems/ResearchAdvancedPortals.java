@@ -42,8 +42,8 @@ public class ResearchAdvancedPortals extends ProductionItem {
     public Button getStartButton(ProductionPlacement prodBuilding, Keybinding hotkey) {
         return new Button(ResearchAdvancedPortals.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> ProductionItems.RESEARCH_ADVANCED_PORTALS.itemIsBeingProduced(prodBuilding.ownerName)
@@ -71,8 +71,8 @@ public class ResearchAdvancedPortals extends ProductionItem {
     public Button getCancelButton(ProductionPlacement prodBuilding, boolean first) {
         return new Button(ResearchAdvancedPortals.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             null,
             () -> false,
             () -> false,

@@ -37,7 +37,7 @@ public class Bastion extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.CHISELED_POLISHED_BLACKSTONE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/chiseled_polished_blackstone.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/chiseled_polished_blackstone.png");
 
         this.canSetRallyPoint = false;
 
@@ -65,7 +65,7 @@ public class Bastion extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/chiseled_polished_blackstone.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/chiseled_polished_blackstone.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.BASTION,
                 () -> false,

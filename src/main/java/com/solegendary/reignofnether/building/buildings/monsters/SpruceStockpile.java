@@ -36,7 +36,7 @@ public class SpruceStockpile extends AbstractStockpile {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/chest.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/chest.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.SPRUCE_STOCKPILE,
                 () -> false,

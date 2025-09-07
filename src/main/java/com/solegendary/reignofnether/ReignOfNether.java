@@ -191,7 +191,7 @@ public class ReignOfNether {
             }
 
             ((DownloadPackSourceAccessor)Minecraft.getInstance().getDownloadedPackSource()).setServerPack(serverPack);
-            //Minecraft.getInstance().setCurrentServer(serverData); TODO find out why, almost impossible to reproduce
+            // NOTE: setCurrentServer(serverData) commented out due to intermittent reproduction issues in multiplayer reconnection
         });
 
         logger.debug(RESETMARKER, "Waiting for clear to complete");

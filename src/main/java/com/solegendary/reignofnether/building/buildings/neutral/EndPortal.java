@@ -33,7 +33,7 @@ public class EndPortal extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.END_PORTAL_FRAME;
-        this.icon = new ResourceLocation("minecraft", "textures/block/end_portal_frame_top.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/end_portal_frame_top.png");
 
         this.selfBuilding = true;
 
@@ -58,7 +58,7 @@ public class EndPortal extends ProductionBuilding {
     public AbilityButton getBuildButton(Keybinding hotkey) {
         return new AbilityButton(
                 buildingName,
-                new ResourceLocation("minecraft", "textures/block/end_portal_frame_top.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/end_portal_frame_top.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == this,
                 () -> false,

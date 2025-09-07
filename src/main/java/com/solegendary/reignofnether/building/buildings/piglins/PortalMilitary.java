@@ -17,7 +17,7 @@ public class PortalMilitary extends AbstractPortal {
         super(structureName, cost);
         this.name = buildingName;
         this.portraitBlock = Blocks.RED_GLAZED_TERRACOTTA;
-        this.icon = new ResourceLocation("minecraft", "textures/block/red_glazed_terracotta.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/red_glazed_terracotta.png");
         this.canSetRallyPoint = true;
     }
 

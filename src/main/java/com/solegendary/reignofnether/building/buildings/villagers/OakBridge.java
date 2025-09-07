@@ -33,7 +33,7 @@ public class OakBridge extends AbstractBridge {
         super(cost);
         this.name = buildingName;
         this.portraitBlock = Blocks.OAK_FENCE;
-        this.icon = new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/oak_fence.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/oak_fence.png");
 
         this.buildTimeModifier = 1.0f;
 
@@ -59,7 +59,7 @@ public class OakBridge extends AbstractBridge {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/oak_fence.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/oak_fence.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.OAK_BRIDGE,
             () -> !TutorialClientEvents.isAtOrPastStage(TutorialStage.BUILD_BRIDGE),

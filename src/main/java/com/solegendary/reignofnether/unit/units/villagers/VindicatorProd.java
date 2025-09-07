@@ -45,7 +45,7 @@ public class VindicatorProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -75,7 +75,7 @@ public class VindicatorProd extends ProductionItem {
         return new Button(
             VindicatorProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
             hotkey,
             () -> false,
             () -> false,
@@ -90,7 +90,7 @@ public class VindicatorProd extends ProductionItem {
         return new Button(
             VindicatorProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

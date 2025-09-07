@@ -48,7 +48,7 @@ public class CastSummonVexes extends Ability {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
             "Summon Vexes",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/vex.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/vex.png"),
             hotkey,
             () -> {
                 if (this.evokerUnit.getCastSummonVexesGoal() != null)

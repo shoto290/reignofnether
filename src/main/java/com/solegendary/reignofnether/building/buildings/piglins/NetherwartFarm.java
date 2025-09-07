@@ -28,7 +28,7 @@ public class NetherwartFarm extends AbstractFarm {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.NETHER_WART_BLOCK;
-        this.icon = new ResourceLocation("minecraft", "textures/block/nether_wart_stage2.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/nether_wart_stage2.png");
 
         this.startingBlockTypes.add(Blocks.WARPED_STEM);
 
@@ -42,7 +42,7 @@ public class NetherwartFarm extends AbstractFarm {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/nether_wart_stage2.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/nether_wart_stage2.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.NETHERWART_FARM,
                 () -> false,

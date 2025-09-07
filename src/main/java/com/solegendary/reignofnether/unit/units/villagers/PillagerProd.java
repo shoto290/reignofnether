@@ -45,7 +45,7 @@ public class PillagerProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/pillager.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/pillager.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -75,7 +75,7 @@ public class PillagerProd extends ProductionItem {
         return new Button(
             PillagerProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/pillager.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/pillager.png"),
             hotkey,
             () -> false,
             () -> false,
@@ -90,7 +90,7 @@ public class PillagerProd extends ProductionItem {
         return new Button(
             PillagerProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/pillager.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/pillager.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

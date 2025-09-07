@@ -32,7 +32,7 @@ public class AltarOfDarkness extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.DARK_PRISMARINE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/dark_prismarine.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/dark_prismarine.png");
 
         this.startingBlockTypes.add(Blocks.DARK_PRISMARINE);
         this.startingBlockTypes.add(Blocks.TINTED_GLASS);
@@ -48,7 +48,7 @@ public class AltarOfDarkness extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/dark_prismarine.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/dark_prismarine.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.ALTAR_OF_DARKNESS,
                 () -> !SandboxClientEvents.isSandboxPlayer() && !GameruleClient.allowHeroes,

@@ -63,7 +63,7 @@ public class ClientGameModeHelper {
         return new Button(
                 "Classic",
                 Button.itemIconSize,
-                new ResourceLocation("minecraft", "textures/block/grass_block_side.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/grass_block_side.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,
@@ -86,7 +86,7 @@ public class ClientGameModeHelper {
         return new Button(
                 "King of the Beacon",
                 Button.itemIconSize,
-                new ResourceLocation("minecraft", "textures/item/nether_star.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/nether_star.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,
@@ -114,11 +114,11 @@ public class ClientGameModeHelper {
                     "Survival",
                     Button.itemIconSize,
                     switch (SurvivalClientEvents.difficulty) {
-                        case BEGINNER -> new ResourceLocation("minecraft", "textures/item/wooden_sword.png");
-                        case EASY -> new ResourceLocation("minecraft", "textures/item/stone_sword.png");
-                        case MEDIUM -> new ResourceLocation("minecraft", "textures/item/iron_sword.png");
-                        case HARD -> new ResourceLocation("minecraft", "textures/item/diamond_sword.png");
-                        case EXTREME -> new ResourceLocation("minecraft", "textures/item/netherite_sword.png");
+                        case BEGINNER -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/wooden_sword.png");
+                        case EASY -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/stone_sword.png");
+                        case MEDIUM -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/iron_sword.png");
+                        case HARD -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/diamond_sword.png");
+                        case EXTREME -> ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/netherite_sword.png");
                     },
                     (Keybinding) null,
                     () -> false,
@@ -143,7 +143,7 @@ public class ClientGameModeHelper {
             case SANDBOX -> new Button(
                     "Sandbox",
                     Button.itemIconSize,
-                    new ResourceLocation("minecraft", "textures/block/crafting_table_front.png"),
+                    ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/crafting_table_front.png"),
                     (Keybinding) null,
                     () -> false,
                     () -> false,
@@ -164,7 +164,7 @@ public class ClientGameModeHelper {
             case PERSISTENT -> new Button(
                     "Persistent",
                     Button.itemIconSize,
-                    new ResourceLocation("minecraft", "textures/block/beacon.png"),
+                    ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/beacon.png"),
                     (Keybinding) null,
                     () -> false,
                     () -> false,

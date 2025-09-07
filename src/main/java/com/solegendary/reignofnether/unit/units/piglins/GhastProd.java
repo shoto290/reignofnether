@@ -47,7 +47,7 @@ public class GhastProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/ghast.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/ghast.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -84,7 +84,7 @@ public class GhastProd extends ProductionItem {
         return new Button(
                 GhastProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/ghast.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/ghast.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -99,7 +99,7 @@ public class GhastProd extends ProductionItem {
         return new Button(
                 GhastProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/ghast.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/ghast.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

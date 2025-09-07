@@ -45,7 +45,7 @@ public class DrownedProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 DrownedProd.itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -73,7 +73,7 @@ public class DrownedProd extends ProductionItem {
         return new Button(
             DrownedProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png"),
             hotkey,
             () -> false,
             () -> false,
@@ -99,7 +99,7 @@ public class DrownedProd extends ProductionItem {
         return new Button(
             DrownedProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

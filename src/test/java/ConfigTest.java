@@ -1,10 +1,13 @@
 import com.solegendary.reignofnether.config.JsonConfigManager;
 import com.solegendary.reignofnether.config.JsonConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigTest {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Test
     public void testConfigStructure() {
@@ -27,10 +30,10 @@ public class ConfigTest {
         assertNotNull(config.research.get("golem_smithing"));
         assertNotNull(config.enchantments.get("maiming"));
         
-        System.out.println("Config structure test passed!");
-        System.out.println("Units: " + config.units.size());
-        System.out.println("Buildings: " + config.buildings.size());
-        System.out.println("Research: " + config.research.size());
-        System.out.println("Enchantments: " + config.enchantments.size());
+        LOGGER.info("Config structure test passed!");
+        LOGGER.info("Units: " + config.units.size());
+        LOGGER.info("Buildings: " + config.buildings.size());
+        LOGGER.info("Research: " + config.research.size());
+        LOGGER.info("Enchantments: " + config.enchantments.size());
     }
 }

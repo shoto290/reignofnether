@@ -34,7 +34,7 @@ import java.util.stream.StreamSupport;
 
 public class HealthBarClientEvents {
 
-    private static final ResourceLocation GUI_BARS_TEXTURES = new ResourceLocation(
+    private static final ResourceLocation GUI_BARS_TEXTURES = ResourceLocation.parse(
                 ReignOfNether.MOD_ID + ":textures/hud/healthbars.png");
 
     private static final List<LivingEntity> renderedEntities = new ArrayList<>();

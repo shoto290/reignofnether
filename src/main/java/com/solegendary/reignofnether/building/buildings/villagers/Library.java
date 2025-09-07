@@ -40,7 +40,7 @@ public class Library extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.ENCHANTING_TABLE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/enchanting_table_top.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/enchanting_table_top.png");
 
         this.buildTimeModifier = 1.1f;
 
@@ -71,7 +71,7 @@ public class Library extends ProductionBuilding {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation("minecraft", "textures/block/enchanting_table_top.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/enchanting_table_top.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.LIBRARY,
             TutorialClientEvents::isEnabled,

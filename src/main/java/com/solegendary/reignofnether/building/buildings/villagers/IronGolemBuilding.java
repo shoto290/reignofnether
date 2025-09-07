@@ -38,7 +38,7 @@ public class IronGolemBuilding extends Building {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.IRON_BLOCK;
-        this.icon = new ResourceLocation("minecraft", "textures/block/iron_block.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/iron_block.png");
 
         this.buildTimeModifier = 3.4f;
 
@@ -58,7 +58,7 @@ public class IronGolemBuilding extends Building {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation("minecraft", "textures/block/iron_block.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/iron_block.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.IRON_GOLEM_BUILDING,
             TutorialClientEvents::isEnabled,

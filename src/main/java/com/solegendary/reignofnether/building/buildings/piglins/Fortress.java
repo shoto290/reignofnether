@@ -37,7 +37,7 @@ public class Fortress extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.CHISELED_NETHER_BRICKS;
-        this.icon = new ResourceLocation("minecraft", "textures/block/chiseled_nether_bricks.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/chiseled_nether_bricks.png");
 
         this.buildTimeModifier = 0.5f;
 
@@ -65,7 +65,7 @@ public class Fortress extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/chiseled_nether_bricks.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/chiseled_nether_bricks.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.FORTRESS,
             () -> false,

@@ -67,7 +67,7 @@ public class SoulSiphonPassive extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         AbilityButton button = new AbilityButton("Soul Siphon",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
             hotkey,
             this::isAutocasting,
             () -> rank == 0,
@@ -91,7 +91,7 @@ public class SoulSiphonPassive extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
             "Soul Siphon",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png")
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png")
         );
     }
 

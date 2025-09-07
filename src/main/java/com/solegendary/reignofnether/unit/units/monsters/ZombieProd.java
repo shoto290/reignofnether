@@ -56,11 +56,11 @@ public class ZombieProd extends ProductionItem {
 
     private static ResourceLocation getIcon() {
         if (ResearchClient.hasResearch(ProductionItems.RESEARCH_HUSKS))
-            return new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/husk.png");
+            return ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/husk.png");
         else if (ResearchClient.hasResearch(ProductionItems.RESEARCH_DROWNED))
-            return new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png");
+            return ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/drowned.png");
         else
-            return new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png");
+            return ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png");
     }
 
     private static String getCancelName() {
@@ -75,7 +75,7 @@ public class ZombieProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 ZombieProd.itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/zombie.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,

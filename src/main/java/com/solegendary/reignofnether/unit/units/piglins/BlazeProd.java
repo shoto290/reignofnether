@@ -47,7 +47,7 @@ public class BlazeProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/blaze.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/blaze.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -82,7 +82,7 @@ public class BlazeProd extends ProductionItem {
         return new Button(
                 BlazeProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/blaze.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/blaze.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -97,7 +97,7 @@ public class BlazeProd extends ProductionItem {
         return new Button(
                 BlazeProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/blaze.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/blaze.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

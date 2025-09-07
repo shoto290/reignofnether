@@ -38,7 +38,7 @@ public class Dungeon extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.SPAWNER;
-        this.icon = new ResourceLocation("minecraft", "textures/block/spawner.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/spawner.png");
 
         this.startingBlockTypes.add(Blocks.DEEPSLATE_BRICK_STAIRS);
 
@@ -58,7 +58,7 @@ public class Dungeon extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/spawner.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/spawner.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.DUNGEON,
             () -> false,

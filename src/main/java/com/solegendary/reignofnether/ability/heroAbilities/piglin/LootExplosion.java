@@ -40,7 +40,7 @@ public class LootExplosion extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Loot Explosion",
-                new ResourceLocation("minecraft", "textures/item/iron_chestplate.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/iron_chestplate.png"),
                 hotkey,
                 () -> false,
                 () -> rank == 0,
@@ -66,7 +66,7 @@ public class LootExplosion extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
                 "Loot Explosion",
-                new ResourceLocation("minecraft", "textures/item/iron_chestplate.png")
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/iron_chestplate.png")
         );
     }
 

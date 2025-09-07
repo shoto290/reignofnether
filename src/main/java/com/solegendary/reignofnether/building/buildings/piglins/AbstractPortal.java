@@ -50,7 +50,7 @@ public abstract class AbstractPortal extends ProductionBuilding {
     @Override
     public AbilityButton getBuildButton(Keybinding hotkey) {
         return new AbilityButton(name,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
                 hotkey,
                 () -> false,
                 () -> false,

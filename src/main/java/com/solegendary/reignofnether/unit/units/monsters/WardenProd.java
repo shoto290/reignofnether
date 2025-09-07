@@ -45,7 +45,7 @@ public class WardenProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/warden.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/warden.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -70,7 +70,7 @@ public class WardenProd extends ProductionItem {
         return new Button(
                 WardenProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/warden.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/warden.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -91,7 +91,7 @@ public class WardenProd extends ProductionItem {
         return new Button(
                 WardenProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/warden.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/warden.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

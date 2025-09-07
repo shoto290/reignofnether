@@ -41,7 +41,7 @@ public class Mausoleum extends ProductionBuilding {
         super(structureName, cost, true);
         this.name = buildingName;
         this.portraitBlock = Blocks.DEEPSLATE_TILES;
-        this.icon = new ResourceLocation("minecraft", "textures/block/deepslate_tiles.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/deepslate_tiles.png");
 
         this.buildTimeModifier = 0.274f; // 100s total build time with 1 villager
         this.canAcceptResources = true;
@@ -67,7 +67,7 @@ public class Mausoleum extends ProductionBuilding {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation("minecraft", "textures/block/deepslate_tiles.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/deepslate_tiles.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.MAUSOLEUM,
             () -> false,

@@ -38,13 +38,13 @@ import java.net.URI;
 public class TitleScreenMixin extends Screen {
 
     private static final ResourceLocation MINECRAFT_LOGO =
-            new ResourceLocation("textures/gui/title/minecraft.png");
+            ResourceLocation.parse("textures/gui/title/minecraft.png");
     private static final ResourceLocation MINECRAFT_EDITION =
-            new ResourceLocation("textures/gui/title/edition.png");
+            ResourceLocation.parse("textures/gui/title/edition.png");
     private static final ResourceLocation DISCORD_TEXTURE =
-            new ResourceLocation( "textures/gui/title/discord.png");
+            ResourceLocation.parse("textures/gui/title/discord.png");
     private static final ResourceLocation LILYPAD_TEXTURE =
-            new ResourceLocation( "textures/gui/title/lilypad.png");
+            ResourceLocation.parse("textures/gui/title/lilypad.png");
 
     @Shadow @Final private PanoramaRenderer panorama;
     @Shadow @Final private boolean fading;
@@ -164,7 +164,7 @@ public class TitleScreenMixin extends Screen {
             URI uri = new URI(url);
             Util.getPlatform().openUri(uri);
         } catch (Exception e) {
-            System.err.println("Failed to open URL: " + e.getMessage());
+            ReignOfNether.LOGGER.error("Failed to open URL: " + url, e);
         }
     }
 

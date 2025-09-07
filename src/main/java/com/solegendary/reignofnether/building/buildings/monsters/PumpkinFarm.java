@@ -33,7 +33,7 @@ public class PumpkinFarm extends AbstractFarm {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.PUMPKIN;
-        this.icon = new ResourceLocation("minecraft", "textures/block/pumpkin_side.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/pumpkin_side.png");
 
         this.startingBlockTypes.add(Blocks.DARK_OAK_LOG);
 
@@ -47,7 +47,7 @@ public class PumpkinFarm extends AbstractFarm {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/pumpkin_side.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/pumpkin_side.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.PUMPKIN_FARM,
                 () -> false,

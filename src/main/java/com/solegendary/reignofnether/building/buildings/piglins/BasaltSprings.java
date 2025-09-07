@@ -31,7 +31,7 @@ public class BasaltSprings extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.POLISHED_BASALT;
-        this.icon = new ResourceLocation("minecraft", "textures/block/polished_basalt_top.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/polished_basalt_top.png");
 
         this.canSetRallyPoint = false;
 
@@ -50,7 +50,7 @@ public class BasaltSprings extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/polished_basalt_top.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/polished_basalt_top.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.BASALT_SPRINGS,
             () -> false,

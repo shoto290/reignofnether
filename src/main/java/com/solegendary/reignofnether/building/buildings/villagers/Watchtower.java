@@ -36,7 +36,7 @@ public class Watchtower extends Building {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.STONE_BRICKS;
-        this.icon = new ResourceLocation("minecraft", "textures/block/stone_bricks.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone_bricks.png");
 
         this.buildTimeModifier = 1.0f;
 
@@ -56,7 +56,7 @@ public class Watchtower extends Building {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/stone_bricks.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/stone_bricks.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.WATCHTOWER,
             TutorialClientEvents::isEnabled,

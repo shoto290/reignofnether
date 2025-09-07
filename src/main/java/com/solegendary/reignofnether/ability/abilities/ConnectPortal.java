@@ -35,7 +35,7 @@ public class ConnectPortal extends Ability {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Connect Portal",
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
             hotkey,
             () -> false,
             () -> portalPlacement.getPortalType() != PortalPlacement.PortalType.TRANSPORT,

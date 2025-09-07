@@ -37,7 +37,7 @@ public class InfernalPortal extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.CRYING_OBSIDIAN;
-        this.icon = new ResourceLocation("minecraft", "textures/block/crying_obsidian.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/crying_obsidian.png");
 
         this.startingBlockTypes.add(Blocks.NETHER_BRICKS);
 
@@ -57,7 +57,7 @@ public class InfernalPortal extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/crying_obsidian.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/crying_obsidian.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.INFERNAL_PORTAL,
                 () -> !SandboxClientEvents.isSandboxPlayer() && !GameruleClient.allowHeroes,

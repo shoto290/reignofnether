@@ -1,0 +1,7 @@
+[07Sep2025 13:10:56.171] [Test worker/INFO] [ConfigSaveLoadTest/]: Separate file structure test passed!
+[07Sep2025 13:10:56.172] [Test worker/INFO] [ConfigSaveLoadTest/]: Files created: units.json, buildings.json, research.json, enchantments.json
+[07Sep2025 13:10:56.183] [Test worker/INFO] [ConfigTest/]: Config structure test passed!
+[07Sep2025 13:10:56.183] [Test worker/INFO] [ConfigTest/]: Units: 40
+[07Sep2025 13:10:56.184] [Test worker/INFO] [ConfigTest/]: Buildings: 39
+[07Sep2025 13:10:56.184] [Test worker/INFO] [ConfigTest/]: Research: 3
+[07Sep2025 13:10:56.184] [Test worker/INFO] [ConfigTest/]: Enchantments: 5

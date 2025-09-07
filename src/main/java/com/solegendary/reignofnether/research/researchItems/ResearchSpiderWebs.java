@@ -43,8 +43,8 @@ public class ResearchSpiderWebs extends ProductionItem {
         return new Button(
                 ResearchSpiderWebs.itemName,
                 14,
-                new ResourceLocation("minecraft", "textures/block/cobweb.png"),
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobweb.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
                 hotkey,
                 () -> false,
                 () -> ProductionItems.RESEARCH_SPIDER_WEBS.itemIsBeingProduced(prodBuilding.ownerName) ||
@@ -69,8 +69,8 @@ public class ResearchSpiderWebs extends ProductionItem {
         return new Button(
                 ResearchSpiderWebs.itemName,
                 14,
-                new ResourceLocation("minecraft", "textures/block/cobweb.png"),
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cobweb.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
                 null,
                 () -> false,
                 () -> false,

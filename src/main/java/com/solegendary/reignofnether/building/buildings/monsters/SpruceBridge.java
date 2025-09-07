@@ -33,7 +33,7 @@ public class SpruceBridge extends AbstractBridge {
 
         this.name = buildingName;
         this.portraitBlock = Blocks.DARK_OAK_FENCE;
-        this.icon = new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/spruce_fence.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/spruce_fence.png");
 
         this.buildTimeModifier = 1.0f;
 
@@ -61,7 +61,7 @@ public class SpruceBridge extends AbstractBridge {
         Minecraft MC = Minecraft.getInstance();
         return new AbilityButton(
                 name,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/spruce_fence.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/spruce_fence.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.SPRUCE_BRIDGE,
                 () -> false,

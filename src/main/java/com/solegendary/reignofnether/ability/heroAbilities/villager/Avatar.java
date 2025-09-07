@@ -57,7 +57,7 @@ public class Avatar extends HeroAbility {
     @Override
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Avatar",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png"),
                 hotkey,
                 () -> false,
                 () -> rank == 0,
@@ -73,7 +73,7 @@ public class Avatar extends HeroAbility {
     public Button getRankUpButton() {
         return super.getRankUpButtonProtected(
                 "Avatar",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png")
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/vindicator.png")
         );
     }
 

@@ -34,7 +34,7 @@ public class ArcaneTower extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.AMETHYST_BLOCK;
-        this.icon = new ResourceLocation("minecraft", "textures/block/amethyst_block.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/amethyst_block.png");
 
         this.startingBlockTypes.add(Blocks.STONE_BRICKS);
         this.startingBlockTypes.add(Blocks.ANDESITE_WALL);
@@ -55,7 +55,7 @@ public class ArcaneTower extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/amethyst_block.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/amethyst_block.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.ARCANE_TOWER,
             TutorialClientEvents::isEnabled,

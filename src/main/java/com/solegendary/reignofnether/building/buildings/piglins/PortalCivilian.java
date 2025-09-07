@@ -19,7 +19,7 @@ public class PortalCivilian extends AbstractPortal {
         super(structureName, cost);
         this.name = buildingName;
         this.portraitBlock = Blocks.CYAN_GLAZED_TERRACOTTA;
-        this.icon = new ResourceLocation("minecraft", "textures/block/cyan_glazed_terracotta.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/cyan_glazed_terracotta.png");
         this.canSetRallyPoint = false;
         this.canAcceptResources = true;
     }

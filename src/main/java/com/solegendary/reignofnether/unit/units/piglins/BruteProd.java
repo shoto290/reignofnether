@@ -45,7 +45,7 @@ public class BruteProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/brute.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/brute.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -76,7 +76,7 @@ public class BruteProd extends ProductionItem {
         return new Button(
                 BruteProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/brute.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/brute.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -91,7 +91,7 @@ public class BruteProd extends ProductionItem {
         return new Button(
                 BruteProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/brute.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/brute.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,

@@ -32,7 +32,7 @@ public class CapturableBeacon extends Beacon {
 
         this.name = buildingName;
         this.portraitBlock = Blocks.BEACON;
-        this.icon = new ResourceLocation("minecraft", "textures/item/nether_star.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/nether_star.png");
 
         this.buildTimeModifier = 1.0f;
 
@@ -59,7 +59,7 @@ public class CapturableBeacon extends Beacon {
     public AbilityButton getBuildButton(Keybinding hotkey) {
         return new AbilityButton(
                 buildingName,
-                new ResourceLocation("minecraft", "textures/item/nether_star.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/nether_star.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == this,
                 TutorialClientEvents::isEnabled,

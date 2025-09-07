@@ -33,7 +33,7 @@ public class ShrineOfProsperity extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.ACACIA_LOG;
-        this.icon = new ResourceLocation("minecraft", "textures/block/acacia_log_top.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/acacia_log_top.png");
 
         this.startingBlockTypes.add(Blocks.COBBLESTONE);
 
@@ -48,7 +48,7 @@ public class ShrineOfProsperity extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
                 name,
-                new ResourceLocation("minecraft", "textures/block/acacia_log_top.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/acacia_log_top.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.SHRINE_OF_PROSPERITY,
                 () -> (!SandboxClientEvents.isSandboxPlayer() && !GameruleClient.allowHeroes) || TutorialClientEvents.isEnabled(),

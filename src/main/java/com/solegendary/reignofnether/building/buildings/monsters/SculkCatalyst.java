@@ -41,7 +41,7 @@ public class SculkCatalyst extends Building {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.SCULK_CATALYST;
-        this.icon = new ResourceLocation("minecraft", "textures/block/sculk_catalyst_side.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/sculk_catalyst_side.png");
 
         this.buildTimeModifier = 2.5f;
 
@@ -65,7 +65,7 @@ public class SculkCatalyst extends Building {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation("minecraft", "textures/block/sculk_catalyst_side.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/sculk_catalyst_side.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.SCULK_CATALYST,
             () -> false,

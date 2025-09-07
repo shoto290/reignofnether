@@ -38,8 +38,8 @@ public class ConsumeSlime extends Ability {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton("Consume",
             this.slime instanceof MagmaCubeUnit ?
-                    new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png") :
-                    new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/slime.png"),
+                    ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/magma_cube.png") :
+                    ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/slime.png"),
             hotkey,
             () -> CursorClientEvents.getLeftClickAction() == UnitAction.CONSUME_SLIME || isAutocasting(),
             () -> this.slime.getSize() <= 1,

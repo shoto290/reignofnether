@@ -44,7 +44,7 @@ public class WitchProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/witch.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/witch.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -67,7 +67,7 @@ public class WitchProd extends ProductionItem {
         return new Button(
             WitchProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/witch.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/witch.png"),
             hotkey,
             () -> false,
             () -> false,
@@ -88,7 +88,7 @@ public class WitchProd extends ProductionItem {
         return new Button(
             WitchProd.itemName,
             14,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/witch.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/witch.png"),
             (Keybinding) null,
             () -> false,
             () -> false,

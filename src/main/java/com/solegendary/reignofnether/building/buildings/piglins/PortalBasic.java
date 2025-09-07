@@ -40,7 +40,7 @@ public class PortalBasic extends AbstractPortal {
         super(structureName, cost);
         this.name = buildingName;
         this.portraitBlock = Blocks.GRAY_GLAZED_TERRACOTTA;
-        this.icon = new ResourceLocation("minecraft", "textures/block/gray_glazed_terracotta.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gray_glazed_terracotta.png");
         this.canSetRallyPoint = false;
 
         this.productions.add(ProductionItems.RESEARCH_PORTAL_FOR_CIVILIAN, Keybindings.keyQ);
@@ -65,7 +65,7 @@ public class PortalBasic extends AbstractPortal {
         ResourceLocation key = ReignOfNetherRegistries.BUILDING.getKey(this);
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(name,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/portal.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.PORTAL_BASIC,
             () -> false,

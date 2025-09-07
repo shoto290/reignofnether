@@ -47,7 +47,7 @@ public class ToggleShield extends Ability {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Shield Stance",
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/items/shield.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/items/shield.png"),
                 hotkey,
                 () -> bruteUnit.isHoldingUpShield,
                 () -> !ResearchClient.hasResearch(ProductionItems.RESEARCH_BRUTE_SHIELDS) ||

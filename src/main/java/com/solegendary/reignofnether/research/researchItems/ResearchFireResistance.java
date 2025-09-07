@@ -38,8 +38,8 @@ public class ResearchFireResistance extends ProductionItem {
     public Button getStartButton(ProductionPlacement prodBuilding, Keybinding hotkey) {
         return new Button(ResearchFireResistance.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/mob_effect/fire_resistance.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/mob_effect/fire_resistance.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> ProductionItems.RESEARCH_FIRE_RESISTANCE.itemIsBeingProduced(prodBuilding.ownerName)
@@ -62,8 +62,8 @@ public class ResearchFireResistance extends ProductionItem {
     public Button getCancelButton(ProductionPlacement prodBuilding, boolean first) {
         return new Button(ResearchFireResistance.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/mob_effect/fire_resistance.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/mob_effect/fire_resistance.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             null,
             () -> false,
             () -> false,

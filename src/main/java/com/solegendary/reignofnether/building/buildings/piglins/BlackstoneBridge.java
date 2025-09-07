@@ -32,7 +32,7 @@ public class BlackstoneBridge extends AbstractBridge {
         super(cost);
         this.name = buildingName;
         this.portraitBlock = Blocks.NETHER_BRICK_FENCE;
-        this.icon = new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/netherbrick_fence.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/netherbrick_fence.png");
 
         this.buildTimeModifier = 1.0f;
 
@@ -60,7 +60,7 @@ public class BlackstoneBridge extends AbstractBridge {
         Minecraft MC = Minecraft.getInstance();
         return new AbilityButton(
                 name,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/icons/blocks/netherbrick_fence.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/icons/blocks/netherbrick_fence.png"),
                 hotkey,
                 () -> BuildingClientEvents.getBuildingToPlace() == Buildings.BLACKSTONE_BRIDGE,
                 () -> false,

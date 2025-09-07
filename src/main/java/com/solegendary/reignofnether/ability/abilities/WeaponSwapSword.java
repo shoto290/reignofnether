@@ -42,7 +42,7 @@ public class WeaponSwapSword extends Ability {
     public AbilityButton getButton(Keybinding hotkey) {
         return new AbilityButton(
                 "Weapon Swap",
-                new ResourceLocation("minecraft", "textures/item/stone_sword.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/item/stone_sword.png"),
                 hotkey,
                 () -> false,
                 () -> !ResearchClient.hasResearch(ProductionItems.RESEARCH_MILITIA_BOWS) || !militiaUnit.isUsingBow(),

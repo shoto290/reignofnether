@@ -49,8 +49,8 @@ public class ResearchSculkAmplifiers extends ProductionItem {
         return new Button(
             ResearchSculkAmplifiers.itemName,
             14,
-            new ResourceLocation("minecraft", "textures/block/sculk_shrieker_side.png"),
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/sculk_shrieker_side.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
             hotkey,
             () -> false,
             () -> ProductionItems.RESEARCH_SCULK_AMPLIFIERS.itemIsBeingProduced(prodBuilding.ownerName) ||
@@ -75,8 +75,8 @@ public class ResearchSculkAmplifiers extends ProductionItem {
         return new Button(
                 ResearchSculkAmplifiers.itemName,
                 14,
-                new ResourceLocation("minecraft", "textures/block/sculk_shrieker_side.png"),
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/sculk_shrieker_side.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/hud/icon_frame_bronze.png"),
                 null,
                 () -> false,
                 () -> false,

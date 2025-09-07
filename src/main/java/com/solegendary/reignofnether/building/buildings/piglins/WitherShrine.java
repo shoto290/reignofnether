@@ -32,7 +32,7 @@ public class WitherShrine extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.GILDED_BLACKSTONE;
-        this.icon = new ResourceLocation("minecraft", "textures/block/gilded_blackstone.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gilded_blackstone.png");
 
         this.canSetRallyPoint = false;
 
@@ -50,7 +50,7 @@ public class WitherShrine extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation("minecraft", "textures/block/gilded_blackstone.png"),
+            ResourceLocation.fromNamespaceAndPath("minecraft", "textures/block/gilded_blackstone.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.WITHER_SHRINE,
             () -> false,

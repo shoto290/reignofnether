@@ -33,7 +33,7 @@ public class SlimePit extends ProductionBuilding {
         super(structureName, cost, false);
         this.name = buildingName;
         this.portraitBlock = Blocks.SLIME_BLOCK;
-        this.icon = new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/slime.png");
+        this.icon = ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/slime.png");
 
         this.canSetRallyPoint = true;
 
@@ -52,7 +52,7 @@ public class SlimePit extends ProductionBuilding {
         String name = I18n.get("buildings." + getFaction().name().toLowerCase() + "." + key.getNamespace() + "." + key.getPath());
         return new AbilityButton(
             name,
-            new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/slime.png"),
+            ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/slime.png"),
             hotkey,
             () -> BuildingClientEvents.getBuildingToPlace() == Buildings.SLIME_PIT,
             () -> false,

@@ -3,6 +3,7 @@ package com.solegendary.reignofnether.building;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.solegendary.reignofnether.ReignOfNether;
 import com.solegendary.reignofnether.alliance.AlliancesClient;
 import com.solegendary.reignofnether.api.ReignOfNetherRegistries;
 import com.solegendary.reignofnether.building.buildings.monsters.Laboratory;
@@ -188,7 +189,7 @@ public class BuildingClientEvents {
                 buildingDimensions = BuildingUtils.getBuildingSize(blocksToDraw);
                 buildingRotation = Rotation.NONE;
             } catch (Exception e) {
-                e.printStackTrace();
+                ReignOfNether.LOGGER.error("Error loading building data for placement", e);
             }
             lastBuildingToPlace = buildingToPlace; // avoid loading the same data twice unnecessarily
         }
@@ -319,7 +320,7 @@ public class BuildingClientEvents {
         if (minY < 0) {
             minY -= 1;
         }
-        ResourceLocation rl = new ResourceLocation("forge:textures/white.png");
+        ResourceLocation rl = ResourceLocation.parse("forge:textures/white.png");
         AABB aabb = new AABB(minX, minY, minZ, maxX, minY, maxZ);
         MyRenderer.drawLineBox(matrix, aabb, r, g, 0, 0.5f);
         MyRenderer.drawSolidBox(matrix, aabb, Direction.UP, r, g, 0, 0.5f, rl);
@@ -713,7 +714,7 @@ public class BuildingClientEvents {
                     blocksToDraw = bridge.getRelativeBlockData(MC.level, isBridgeDiagonal());
                     buildingDimensions = BuildingUtils.getBuildingSize(blocksToDraw);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    ReignOfNether.LOGGER.error("Error loading bridge block data", e);
                 }
                 Rotation rotationDelta = List.of(0, 1).contains(bridgePlaceState)
                                          ? Rotation.NONE

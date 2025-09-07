@@ -47,7 +47,7 @@ public class HeadhunterProd extends ProductionItem {
     public AbilityButton getPlaceButton() {
         return new AbilityButton(
                 itemName,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/headhunter.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/headhunter.png"),
                 null,
                 () -> SandboxClientEvents.spawnUnitName.equals(itemName),
                 () -> false,
@@ -80,7 +80,7 @@ public class HeadhunterProd extends ProductionItem {
         return new Button(
                 HeadhunterProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/headhunter.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/headhunter.png"),
                 hotkey,
                 () -> false,
                 () -> false,
@@ -95,7 +95,7 @@ public class HeadhunterProd extends ProductionItem {
         return new Button(
                 HeadhunterProd.itemName,
                 14,
-                new ResourceLocation(ReignOfNether.MOD_ID, "textures/mobheads/headhunter.png"),
+                ResourceLocation.fromNamespaceAndPath(ReignOfNether.MOD_ID, "textures/mobheads/headhunter.png"),
                 (Keybinding) null,
                 () -> false,
                 () -> false,
