@@ -68,8 +68,10 @@ public class ReignOfNether {
         Buildings.init();
         ProductionItems.init();
         MobEffectRegistrar.init();
-        final ClientEventRegistrar clientRegistrar = new ClientEventRegistrar();
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> clientRegistrar::registerClientEvents);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> {
+            final ClientEventRegistrar clientRegistrar = new ClientEventRegistrar();
+            clientRegistrar.registerClientEvents();
+        });
 
         final ServerEventRegistrar serverRegistrar = new ServerEventRegistrar();
         DistExecutor.safeRunWhenOn(Dist.DEDICATED_SERVER, () -> serverRegistrar::registerServerEvents);

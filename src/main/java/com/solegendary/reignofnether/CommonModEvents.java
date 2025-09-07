@@ -118,7 +118,7 @@ public class CommonModEvents {
         evt.put(EntityRegistrar.GRIZZLY_BEAR_UNIT.get(), GrizzlyBearUnit.createAttributes().build());
         evt.put(EntityRegistrar.PANDA_UNIT.get(), PandaUnit.createAttributes().build());
         evt.put(EntityRegistrar.WOLF_UNIT.get(), WolfUnit.createAttributes().build());
-        evt.put(EntityRegistrar.LLAMA_UNIT.get(), WolfUnit.createAttributes().build());
+        evt.put(EntityRegistrar.LLAMA_UNIT.get(), LlamaUnit.createAttributes().build());
         evt.put(EntityRegistrar.PHANTOM_SUMMON.get(), PhantomSummon.createAttributes().build());
 
         evt.put(EntityRegistrar.ZOMBIE_UNIT.get(), ZombieUnit.createAttributes().build());
@@ -176,17 +176,17 @@ public class CommonModEvents {
 
     @SubscribeEvent
     public static void creativeTabSetup(BuildCreativeModeTabContentsEvent event) {
-        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab())==CreativeModeTabs.BUILDING_BLOCKS.location()){
+        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab()).equals(CreativeModeTabs.BUILDING_BLOCKS.location())){
             for(Item item : BlockRegistrar.blockItems.get(CreativeModeTabs.BUILDING_BLOCKS)){
                 event.accept(item);
             }
         }
-        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab())==CreativeModeTabs.FUNCTIONAL_BLOCKS.location()){
+        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab()).equals(CreativeModeTabs.FUNCTIONAL_BLOCKS.location())){
             for(Item item : BlockRegistrar.blockItems.get(CreativeModeTabs.FUNCTIONAL_BLOCKS)){
                 event.accept(item);
             }
         }
-        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab())==CreativeModeTabs.SPAWN_EGGS.location()){
+        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab()).equals(CreativeModeTabs.SPAWN_EGGS.location())){
             event.accept(ItemRegistrar.ZOMBIE_UNIT_SPAWN_EGG);
             event.accept(ItemRegistrar.HUSK_UNIT_SPAWN_EGG);
             event.accept(ItemRegistrar.DROWNED_UNIT_SPAWN_EGG);
@@ -227,7 +227,7 @@ public class CommonModEvents {
             event.accept(ItemRegistrar.GRIZZLY_BEAR_UNIT_SPAWN_EGG);
             event.accept(ItemRegistrar.POLAR_BEAR_UNIT_SPAWN_EGG);
         }
-        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab())==CreativeModeTabs.TOOLS_AND_UTILITIES.location()){
+        if(BuiltInRegistries.CREATIVE_MODE_TAB.getKey(event.getTab()).equals(CreativeModeTabs.TOOLS_AND_UTILITIES.location())){
             event.accept(ItemRegistrar.THROWABLE_TNT);
         }
     }
