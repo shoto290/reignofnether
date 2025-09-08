@@ -29,20 +29,34 @@ public class EventCommand {
     }
 
     private static int executeEvent(CommandContext<CommandSourceStack> context, String eventName) throws CommandSyntaxException {
-        if ((context.getSource() != null &&
-            context.getSource().getPlayer() != null &&
-            context.getSource().getPlayer().hasPermissions(4)) ||
-            (context.getSource() != null &&
-            !context.getSource().isPlayer())) {
-            
-            ServerPlayer player = context.getSource().getPlayerOrException();
-            EventServerEvents.executeEvent(eventName, player);
-            return Command.SINGLE_SUCCESS;
-        } else {
-            if (context.getSource().getPlayer() != null) {
-                context.getSource().getPlayer().sendSystemMessage(Component.literal("You don't have permission to use this command (OP required)"));
+        CommandSourceStack source = context.getSource();
+        
+        if (!hasPermission(source)) {
+            if (source.getPlayer() != null) {
+                source.getPlayer().sendSystemMessage(Component.literal(EventConstants.Messages.NO_PERMISSION));
             }
             return 0;
         }
+        
+        try {
+            ServerPlayer player = source.getPlayerOrException();
+            EventServerEvents.executeEvent(eventName, player);
+            return Command.SINGLE_SUCCESS;
+        } catch (CommandSyntaxException e) {
+            if (source.getPlayer() != null) {
+                source.getPlayer().sendSystemMessage(Component.literal("Failed to execute event: " + e.getMessage()));
+            }
+            throw e;
+        } catch (Exception e) {
+            if (source.getPlayer() != null) {
+                source.getPlayer().sendSystemMessage(Component.literal("Unexpected error executing event: " + e.getMessage()));
+            }
+            return 0;
+        }
+    }
+    
+    private static boolean hasPermission(CommandSourceStack source) {
+        return (source != null && source.getPlayer() != null && source.getPlayer().hasPermissions(4)) ||
+               (source != null && !source.isPlayer());
     }
 }

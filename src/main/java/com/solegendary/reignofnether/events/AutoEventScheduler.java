@@ -4,6 +4,9 @@ import com.solegendary.reignofnether.config.AutoEventConfig;
 import com.solegendary.reignofnether.config.EventEntry;
 import com.solegendary.reignofnether.config.JsonEventConfig;
 import com.solegendary.reignofnether.config.JsonEventConfigManager;
+import com.solegendary.reignofnether.events.handlers.EventHandlerFactory;
+import com.solegendary.reignofnether.events.handlers.EventHandler;
+import com.solegendary.reignofnether.events.exceptions.EventExecutionException;
 import com.solegendary.reignofnether.player.PlayerServerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -17,14 +20,15 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AutoEventScheduler {
     private static final Random RANDOM = new Random();
-    private static final Map<String, Long> lastEventTimes = new HashMap<>();
+    private static final Map<String, Long> lastEventTimes = new ConcurrentHashMap<>();
+    private static final EventHandlerFactory handlerFactory = new EventHandlerFactory();
     
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent evt) {
@@ -57,7 +61,7 @@ public class AutoEventScheduler {
             if (!canEventTrigger(eventName, currentTime, autoConfig, level, rtsPlayers)) continue;
             
             for (ServerPlayer player : rtsPlayers) {
-                if (RANDOM.nextDouble() < autoConfig.getRarity() / 20.0) {
+                if (RANDOM.nextDouble() < autoConfig.getRarity() / EventConstants.RARITY_DIVISION_FACTOR) {
                     BlockPos eventPos = findEventPosition(player, autoConfig, level);
                     if (eventPos != null) {
                         executeAutoEvent(eventName, eventEntry, player, eventPos, level);
@@ -74,9 +78,9 @@ public class AutoEventScheduler {
         if (players.size() < autoConfig.getRequiresPlayers()) return false;
         
         Long lastTime = lastEventTimes.get(eventName);
-        if (lastTime != null && (currentTime - lastTime) < autoConfig.getCooldown() * 1000L) return false;
+        if (lastTime != null && (currentTime - lastTime) < autoConfig.getCooldown() * EventConstants.Time.MILLISECONDS_PER_SECOND) return false;
         
-        long worldTime = level.getDayTime() % 24000;
+        long worldTime = level.getDayTime() % EventConstants.Time.TICKS_PER_DAY;
         int timeMin = autoConfig.getWorldTimeMin();
         int timeMax = autoConfig.getWorldTimeMax();
         
@@ -96,7 +100,7 @@ public class AutoEventScheduler {
     
     private static BlockPos findEventPosition(ServerPlayer player, AutoEventConfig autoConfig, ServerLevel level) {
         int attempts = 0;
-        int maxAttempts = 20;
+        int maxAttempts = EventConstants.MAX_SPAWN_ATTEMPTS;
         
         while (attempts < maxAttempts) {
             double angle = RANDOM.nextDouble() * 2 * Math.PI;
@@ -136,18 +140,25 @@ public class AutoEventScheduler {
         AutoEventConfig autoConfig = eventEntry.autoConfig;
         
         if (autoConfig.isAnnouncement()) {
-            String message = "Event '" + eventName + "' triggered at " + 
-                           eventPos.getX() + ", " + eventPos.getY() + ", " + eventPos.getZ();
+            String message = String.format(EventConstants.Messages.EVENT_TRIGGERED, 
+                eventName, eventPos.getX(), eventPos.getY(), eventPos.getZ());
             level.getServer().getPlayerList().broadcastSystemMessage(
                 Component.literal(message), false);
         }
         
-        ServerPlayer originalPlayer = targetPlayer;
-        try {
-            targetPlayer.setPos(eventPos.getX(), eventPos.getY(), eventPos.getZ());
-            EventServerEvents.executeEvent(eventName, targetPlayer);
-        } finally {
-            targetPlayer.setPos(originalPlayer.getX(), originalPlayer.getY(), originalPlayer.getZ());
+        EventHandler handler = handlerFactory.getHandler(eventEntry.type);
+        if (handler != null) {
+            try {
+                BlockPos originalPos = targetPlayer.blockPosition();
+                try {
+                    targetPlayer.setPos(eventPos.getX(), eventPos.getY(), eventPos.getZ());
+                    handler.execute(eventEntry, targetPlayer, eventPos);
+                } finally {
+                    targetPlayer.setPos(originalPos.getX(), originalPos.getY(), originalPos.getZ());
+                }
+            } catch (EventExecutionException e) {
+                targetPlayer.sendSystemMessage(Component.literal("Auto event failed: " + e.getMessage()));
+            }
         }
     }
 }
